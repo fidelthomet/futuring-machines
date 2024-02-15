@@ -62,24 +62,28 @@ function logHighlight() {
     </button> -->
   </bubble-menu>
   <floating-menu :editor="editor" :tippy-options="{ duration: 100 }" v-if="editor">
-    <button
-      @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
-      :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
-    >
-      H1
-    </button>
-    <button
-      @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
-      :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
-    >
-      H2
-    </button>
-    <button
-      @click="editor.chain().focus().toggleBulletList().run()"
-      :class="{ 'is-active': editor.isActive('bulletList') }"
-    >
-      Bullet List
-    </button>
+    <template v-if="commandStore.followUp == null">
+      <button
+        v-for="command in commandStore.commands.filter((c) => c.type === 'resume')"
+        :key="command.name"
+        @click="command.handler(editor, $event)"
+      >
+        {{ command.name }}
+      </button>
+    </template>
+    <template v-else>
+      <button
+        v-for="option in commandStore.followUp.options"
+        :key="option"
+        @click="
+          commandStore.commands
+            .find((c) => c.name === commandStore.followUp.command)
+            .followUpHandler(editor, option, $event)
+        "
+      >
+        {{ option }}
+      </button>
+    </template>
   </floating-menu>
   <editor-content :editor="editor" class="editor" />
 </template>
