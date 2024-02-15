@@ -1,6 +1,6 @@
-# futuring-machines
+# futuring machines
 
-This template should help get you started developing with Vue 3 in Vite.
+Interface for LLM-Human co-writing of future stories
 
 ## Recommended IDE Setup
 
