@@ -1,0 +1,14 @@
+@import './fonts.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+html {
+  font-family: 'Redaction';
+  font-size: 25px;
+}
