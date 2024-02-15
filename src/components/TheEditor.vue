@@ -104,14 +104,11 @@ function logHighlight() {
 
   &:deep(span.mark-ai) {
     font-family: 'Redaction 50';
+    color: var(--color-accent);
   }
 }
 
 button {
   color: red;
-
-  &.is-active {
-    color: green;
-  }
 }
 </style>

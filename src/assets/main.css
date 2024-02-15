@@ -8,6 +8,10 @@
   font-weight: normal;
 }
 
+:root {
+  --color-accent: #007B69;
+}
+
 html {
   font-family: 'Redaction';
   font-size: 25px;
