@@ -3,7 +3,10 @@ import StarterKit from '@tiptap/starter-kit'
 import { BubbleMenu, FloatingMenu, Editor, EditorContent } from '@tiptap/vue-3'
 import MarkAI from '@/tiptap/mark-ai'
 import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { useCommandStore } from '@/stores/commands'
+
 const editor = ref(null)
+const commandStore = useCommandStore()
 
 onMounted(() => {
   editor.value = new Editor({
@@ -26,21 +29,28 @@ onBeforeUnmount(() => {
 })
 
 function logHighlight() {
-  const { view, state } = editor.value
-  const { from, to } = view.state.selection
-  const text = state.doc.textBetween(from, to, '\n')
-  console.log(text)
+  // const { view, state } = editor.value
+  // const { from, to } = view.state.selection
+  // const text = state.doc.textBetween(from, to, '\n')
+  // console.log(text)
   // editor.value.commands.insertContent(text.split('').reverse().join(''))
 }
 
-function toggleClass() {
-  editor.value.chain().focus().toggleMarkAI().run()
-}
+// function toggleClass() {
+//   editor.value.chain().focus().toggleMarkAI().run()
+// }
 </script>
 
 <template>
   <bubble-menu :editor="editor" :tippy-options="{ duration: 100 }" v-if="editor">
-    <button @click="logHighlight" :class="{ 'is-active': editor.isActive('bold') }">log</button>
+    <button
+      v-for="command in commandStore.commands.filter((c) => c.type === 'selection')"
+      :key="command.name"
+      @click="command.handler(editor, $event)"
+    >
+      {{ command.name }}
+    </button>
+    <!-- <button @click="logHighlight" :class="{ 'is-active': editor.isActive('bold') }">log</button>
     <button @click="toggleClass" :class="{ 'is-active': editor.isActive('mark-ai') }">
       class toggle
     </button>
@@ -49,7 +59,7 @@ function toggleClass() {
       :class="{ 'is-active': editor.isActive('strike') }"
     >
       strike
-    </button>
+    </button> -->
   </bubble-menu>
   <floating-menu :editor="editor" :tippy-options="{ duration: 100 }" v-if="editor">
     <button
