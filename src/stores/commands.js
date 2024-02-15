@@ -1,6 +1,8 @@
 import { ref, computed } from 'vue'
 import { defineStore, acceptHMRUpdate } from 'pinia'
 
+const decoder = new TextDecoder()
+
 export const useCommandStore = defineStore('command', () => {
   const commands = ref([
     {
@@ -17,7 +19,7 @@ export const useCommandStore = defineStore('command', () => {
       name: 'condense',
       type: 'selection',
       handler: async (editor) => {
-        const { view, state, commands } = editor
+        const { view, state } = editor
         const { from, to } = view.state.selection
         const selection = state.doc.textBetween(from, to, '\n')
 
@@ -25,29 +27,29 @@ export const useCommandStore = defineStore('command', () => {
 
         const command = template.replace(/::selection::/, selection)
 
-        const res = await fetch('http://localhost:11434/api/generate', {
+        editor.commands.deleteSelection()
+        const response = await fetch('http://localhost:11434/api/generate', {
           method: 'POST',
           body: JSON.stringify({
             model: 'mistral',
-            stream: false,
             prompt: command
           })
-        }).then((d) => d.json())
-
-        // editor.chain().focus().setMarkAI().run()
-        editor.commands.setMarkAI()
-        // editor.commands.setTextSelection({ from, to })
-        // console.log(res)
-        editor.commands.insertContentAt({ from, to }, res.response, {
-          updateSelection: true,
-          parseOptions: {
-            preserveWhitespace: 'full'
-          }
         })
+        const reader = response.body.getReader()
+        let done, value
+
+        while (!done) {
+          ;({ done, value } = await reader.read())
+
+          const text = decoder.decode(value)
+
+          if (text) {
+            editor.commands.setMarkAI()
+            editor.commands.insertContent(JSON.parse(text).response)
+          }
+        }
 
         editor.commands.unsetMarkAI()
-
-        console.log(command)
       }
     },
     {
