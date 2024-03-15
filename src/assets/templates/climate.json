@@ -3,7 +3,7 @@
   "actions": [
     {
       "type": "generate",
-      "template": "Write the beginning of a story on the climate crisis set in ::2070:: featuring the main character ::main-character:: and their ::companion-type:: companion ::companion-name::"
+      "template": "Write the beginning of a story on the climate crisis set in ::year:: featuring the main character ::main-character:: and their ::companion-type:: companion ::companion-name::"
     }
   ],
   "env": {
