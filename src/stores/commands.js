@@ -3,8 +3,8 @@ import { defineStore, acceptHMRUpdate } from 'pinia'
 import prompts from '@/assets/prompts'
 import templates from '@/assets/templates'
 
-const MODEL = 'mistral'
-const API_URL = 'http://localhost:11434/api/generate'
+const MODEL = import.meta.env.VITE_MODEL
+const API_URL = import.meta.env.VITE_API_URL
 
 const decoder = new TextDecoder()
 
