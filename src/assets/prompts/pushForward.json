@@ -1,0 +1,21 @@
+{
+  "name": "push forward",
+  "trigger": "selection",
+  "mode": "replace",
+  "actions": [
+    {
+      "type": "options",
+      "options": ["10 years", "100 years", "1000 years", "10000 years"],
+      "bind": "option"
+    },
+    {
+      "type": "generate",
+      "template": "rewrite the following text as if it was set ::option:: in the future ::selection::",
+      "bind": "response"
+    },
+    {
+      "type": "generate",
+      "template": "shorten the following text ::response::"
+    }
+  ]
+}

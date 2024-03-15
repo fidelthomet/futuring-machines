@@ -8,20 +8,16 @@ import { useCommandStore } from '@/stores/commands'
 const editor = ref(null)
 const commandStore = useCommandStore()
 
-onMounted(() => {
+onMounted(async () => {
   editor.value = new Editor({
     extensions: [StarterKit, MarkAI],
-    content: `
-        <h1>Story</h1>
-        <p>
-          In a world where technology has advanced beyond our wildest dreams, design practices have evolved to keep pace. As we step into the future, designers are no longer confined by the limitations of physical materials and two-dimensional screens. Instead, they have the power to create immersive experiences that blur the line between reality and imagination. From holographic interfaces to AI-assisted design tools, the future of design is a breathtaking landscape of limitless possibilities. In this story, we'll explore some of the exciting trends and innovations shaping the future of design practice, and how they're transforming the way we live, work, and play. So buckle up, dear reader, as we embark on a journey through the wondrous world of tomorrow's design!
-        </p>
-      `,
+    content: '',
     onSelectionUpdate({ editor }) {
       if (editor.view.state.selection.from === editor.view.state.selection.to)
         editor.chain().focus().unsetMarkAI().run()
     }
   })
+  commandStore.initTemplate(editor.value)
 })
 
 onBeforeUnmount(() => {
@@ -44,11 +40,11 @@ function logHighlight() {
 <template>
   <bubble-menu :editor="editor" :tippy-options="{ duration: 100 }" v-if="editor">
     <button
-      v-for="command in commandStore.commands.filter((c) => c.type === 'selection')"
-      :key="command.name"
-      @click="command.handler(editor, $event)"
+      v-for="prompt in commandStore.promptsEnabled.filter((c) => c.trigger === 'selection')"
+      :key="prompt.name"
+      @click="commandStore.run(editor, prompt, prompt.startIndex ?? 0)"
     >
-      {{ command.name }}
+      {{ prompt.name }}
     </button>
     <!-- <button @click="logHighlight" :class="{ 'is-active': editor.isActive('bold') }">log</button>
     <button @click="toggleClass" :class="{ 'is-active': editor.isActive('mark-ai') }">
@@ -62,28 +58,13 @@ function logHighlight() {
     </button> -->
   </bubble-menu>
   <floating-menu :editor="editor" :tippy-options="{ duration: 100 }" v-if="editor">
-    <template v-if="commandStore.followUp == null">
-      <button
-        v-for="command in commandStore.commands.filter((c) => c.type === 'resume')"
-        :key="command.name"
-        @click="command.handler(editor, $event)"
-      >
-        {{ command.name }}
-      </button>
-    </template>
-    <template v-else>
-      <button
-        v-for="option in commandStore.followUp.options"
-        :key="option"
-        @click="
-          commandStore.commands
-            .find((c) => c.name === commandStore.followUp.command)
-            .followUpHandler(editor, option, $event)
-        "
-      >
-        {{ option }}
-      </button>
-    </template>
+    <button
+      v-for="prompt in commandStore.promptsEnabled.filter((c) => c.trigger === 'continue')"
+      :key="prompt.name"
+      @click="commandStore.run(editor, prompt, prompt.startIndex ?? 0)"
+    >
+      {{ prompt.name }}
+    </button>
   </floating-menu>
   <editor-content :editor="editor" class="editor" />
 </template>
@@ -96,6 +77,7 @@ function logHighlight() {
   font-size: 25px;
   line-height: 1.5;
   letter-spacing: 0.5px;
+  text-rendering: geometricPrecision;
 
   caret-color: rgb(0, 127, 255);
   &:deep(> div:focus) {

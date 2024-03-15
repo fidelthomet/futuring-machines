@@ -1,0 +1,16 @@
+{
+  "name": "continue",
+  "trigger": "continue",
+  "mode": "append",
+  "actions": [
+    {
+      "type": "options",
+      "options": ["poltical", "societal", "cultural"],
+      "bind": "option"
+    },
+    {
+      "type": "generate",
+      "template": "::full:: \n\n continue the story above with one paragraph that focusses on ::option:: aspects"
+    }
+  ]
+}

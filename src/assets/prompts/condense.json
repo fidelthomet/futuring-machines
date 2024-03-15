@@ -1,0 +1,11 @@
+{
+  "name": "condense",
+  "trigger": "selection",
+  "mode": "replace",
+  "actions": [
+    {
+      "type": "generate",
+      "template": "shorten the following text ::selection::"
+    }
+  ]
+}

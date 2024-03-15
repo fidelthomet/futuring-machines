@@ -1,0 +1,15 @@
+{
+  "name": "climate crisis",
+  "actions": [
+    {
+      "type": "generate",
+      "template": "Write the beginning of a story on the climate crisis set in ::2070:: featuring the main character ::main-character:: and their ::companion-type:: companion ::companion-name::"
+    }
+  ],
+  "env": {
+    "year": "2070",
+    "main-character": "Catherine",
+    "companion-type": "dog",
+    "companion-name": "Bonnie"
+  }
+}

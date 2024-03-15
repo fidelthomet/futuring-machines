@@ -1,0 +1,9 @@
+{
+  "name": "empty",
+  "actions": [
+    {
+      "type": "text",
+      "template": ""
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import EditorView from '../views/EditorView.vue'
+import HomeView from '../views/HomeView.vue'
+import { useCommandStore } from '@/stores/commands'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -7,7 +8,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: EditorView
+      component: HomeView
     },
     {
       path: '/about',
@@ -16,8 +17,22 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/SettingsView.vue')
+    },
+    {
+      path: '/:template',
+      name: 'editor',
+      component: () => import('../views/EditorView.vue')
     }
   ]
+})
+
+router.beforeEach(async (to, from) => {
+  const dataStore = useCommandStore()
+  if (to.name === 'editor') {
+    dataStore.templateName = to.params.template
+  } else {
+    dataStore.templateName = null
+  }
 })
 
 export default router
