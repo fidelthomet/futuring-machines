@@ -62,6 +62,11 @@ export const useCommandStore = defineStore('command', () => {
           }
         }))
         break
+      case 'text':
+        editor.commands.insertContent(
+          action.template.replace(/::([^:]+)::/g, (pattern, match) => env.value[match] ?? pattern)
+        )
+        break
 
       default:
         break
