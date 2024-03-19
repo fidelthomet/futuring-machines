@@ -1,5 +1,6 @@
-import design from './design'
+import homes from './homesForLife'
 import climate from './climate'
+import design from './design'
 import empty from './empty'
 
-export default [empty, climate, design]
+export default [homes, climate, design, empty]

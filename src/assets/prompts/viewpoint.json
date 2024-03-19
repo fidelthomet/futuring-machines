@@ -1,0 +1,11 @@
+{
+    "name": "rewrite as inner mologue",
+    "trigger": "selection",
+    "mode": "replace",
+    "actions": [
+      {
+        "type": "generate",
+        "template": "Rewrite the viewpoint of the following text as an inner monologue of the main character. You write with a humorous, yet critical tone. Text: ```::selection::```"
+      }
+    ]
+  }
