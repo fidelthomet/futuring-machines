@@ -1,0 +1,24 @@
+{
+  "name": "climate crisis",
+  "actions": [
+    {
+      "type": "question",
+      "question": "what's the main charactewrs name?",
+      "bind": "main-character"
+    },
+    {
+      "type": "option",
+      "question": "choose a companion for ::main-character:: ",
+      "options": ["dog", "robot", "dragon"],
+      "bind": "companion-type"
+    },
+    {
+      "type": "generate",
+      "template": "Write the beginning of a story on the climate crisis set in ::year:: featuring the main character ::main-character:: and their ::companion-type:: companion ::companion-name::"
+    }
+  ],
+  "env": {
+    "year": "2070",
+    "companion-name": "Bonnie"
+  }
+}

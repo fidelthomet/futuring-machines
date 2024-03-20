@@ -62,6 +62,7 @@ export const useCommandStore = defineStore('command', () => {
           }
         }))
         break
+      case 'static':
         editor.commands.setMarkAI()
         editor.commands.insertContent(
           action.template.replace(/::([^:]+)::/g, (pattern, match) => env.value[match] ?? pattern)
@@ -206,6 +207,7 @@ export const useCommandStore = defineStore('command', () => {
         if (template.value.mode === 'replace') editor.commands.deleteSelection()
         await runGenerate(action, editor, finalize)
         break
+      case 'static':
         editor.commands.setMarkAI()
         editor.commands.insertContent(
           action.template.replace(/::([^:]+)::/g, (pattern, match) => env.value[match] ?? pattern)
