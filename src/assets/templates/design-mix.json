@@ -1,0 +1,14 @@
+{
+  "name": "mixed design template",
+  "actions": [
+    {
+      "type": "generate",
+      "template": "Kim is a designer living in the year 2100. A friend asks her what she does all day. What does she respond?",
+      "bind": "reply"
+    },
+    {
+      "type": "static",
+      "template": "Kim explains \"::reply:: Is this something you'd like to do as well, Alex?\""
+    }
+  ]
+}

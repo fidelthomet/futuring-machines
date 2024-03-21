@@ -2,7 +2,7 @@
   "name": "Empty",
   "actions": [
     {
-      "type": "text",
+      "type": "static",
       "template": ""
     }
   ]

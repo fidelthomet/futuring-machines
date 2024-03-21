@@ -62,10 +62,12 @@ export const useCommandStore = defineStore('command', () => {
           }
         }))
         break
-      case 'text':
+      case 'static':
+        editor.commands.setMarkAI()
         editor.commands.insertContent(
           action.template.replace(/::([^:]+)::/g, (pattern, match) => env.value[match] ?? pattern)
         )
+        editor.commands.unsetMarkAI()
         break
 
       default:
@@ -194,7 +196,7 @@ export const useCommandStore = defineStore('command', () => {
 
     env.value.full = state.doc.textBetween(0, view.state.doc.nodeSize - 2, '\n')
 
-    env.value = { ...template.value.env }
+    env.value = { ...env.value, ...template.value.env }
 
     const action = template.value.actions[index]
     index++
@@ -205,17 +207,19 @@ export const useCommandStore = defineStore('command', () => {
         if (template.value.mode === 'replace') editor.commands.deleteSelection()
         await runGenerate(action, editor, finalize)
         break
-      case 'text':
+      case 'static':
+        editor.commands.setMarkAI()
         editor.commands.insertContent(
           action.template.replace(/::([^:]+)::/g, (pattern, match) => env.value[match] ?? pattern)
         )
+        editor.commands.unsetMarkAI()
         break
 
       default:
         break
     }
 
-    if (!finalize && action.type === 'generate') run(editor, prompt, index)
+    if (!finalize && action.type === 'generate') initTemplate(editor, index)
   }
 
   return { promptsEnabled, templatesEnabled, templateName, template, initTemplate, run }

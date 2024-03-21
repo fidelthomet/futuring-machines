@@ -15,7 +15,7 @@
       "keys": ["title", "continuation"]
     },
     {
-      "type": "text",
+      "type": "static",
       "template": "::continuation::"
     }
   ]
