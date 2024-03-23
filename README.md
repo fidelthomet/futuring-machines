@@ -107,6 +107,104 @@ It is also possible to chain multiple actions. The example below inserts generat
 }
 ```
 
+### Adding Prompts
+Prompts allow writers to interact with the LLM. They are similarily structured to story templates and can currently either be executed on selected text or new lines.
+
+Like story templates they require a name and a list of actions. Additionally a trigger `selection` or `new-line` and a mode `replace` or `append` must be specified.
+
+Here's a simple example to shorten a selected text. The response will replace the selected text. `::selection::` in the template string will be replaced with the user selected text. `::selection::` is only available if the trigger is set to `selection`. Alternatively, you can make use of `::full::` which is replaced by the full text. `::full::` is available on all triggers.
+```json
+{
+  "name": "condense",
+  "trigger": "selection",
+  "mode": "replace",
+  "actions": [
+    {
+      "type": "generate",
+      "template": "shorten the following text ::selection::"
+    }
+  ]
+}
+```
+
+Again, it is possible to chain multiple actions. The action type `options` allows users to select from given options. The `bind` property is used to define a variable `option` which the selected option will be assigned to. In the second action the selected option is inserted into the template string using `::option::`
+
+```json
+{
+  "name": "push forward",
+  "trigger": "selection",
+  "mode": "replace",
+  "actions": [
+    {
+      "type": "options",
+      "options": ["10 years", "100 years", "1000 years", "10000 years"],
+      "bind": "option"
+    },
+    {
+      "type": "generate",
+      "template": "rewrite the following text as if it was set ::option:: in the future ::selection::"
+    }
+  ]
+}
+```
+
+Alternatively, options can also be generated using the action type `generate-options`. The example below first offers static options, followed by generated options and finally uses both selections to generate text.
+
+When using `generate options` it is crucial to state in the template string that the answer should be returned in json along with a set of keys. Additionally the keys must be listed under the `keys` property. These values are used to parse and verify the LLM response. Once the user chooses an option the keys and their respective value become available as variables. The `name` property identifies the key which is used for presenting the options to the user.
+
+```json
+{
+  "name": "diverge",
+  "trigger": "new-line",
+  "mode": "append",
+  "actions": [
+    {
+      "type": "options",
+      "options": ["poltical", "societal", "cultural"],
+      "bind": "option"
+    },
+    {
+      "type": "generate options",
+      "template": "::full:: \n\n suggest three topic ideas to delvelop the above story further while focussing on ::option:: aspects. provide them in json with the following keys: topic, description",
+      "keys": ["topic", "description"],
+      "name": "topic"
+    },
+    {
+      "type": "generate",
+      "template": "::full:: \n\n continue the story above with one paragraph that focusses on ::option:: aspects and the topic of ::topic:: (::description::)"
+    }
+  ]
+}
+```
+
+It might be more efficinet to generate options and final text response in one step. This can be achieved by rephrasing the `generate options` template string and closing with a `static` action that simply returns the value of one of the keys.
+
+```json
+{
+  "name": "diverge alternative",
+  "trigger": "new-line",
+  "mode": "append",
+  "actions": [
+    {
+      "type": "options",
+      "options": ["positive", "neutral", "negative"],
+      "bind": "tone"
+    },
+    {
+      "type": "generate options",
+      "template": "::full:: \n\n suggest three story coninuations to further tell the above story while keeping the tone ::tone::. limit the length of the continuations to 10 words each. provide them in json with the following keys: title, continuation",
+      "keys": ["title", "continuation"],
+      "name": "title"
+    },
+    {
+      "type": "static",
+      "template": "::continuation::"
+    }
+  ]
+}
+
+```
+
 
 
 ## Recommended IDE Setup
