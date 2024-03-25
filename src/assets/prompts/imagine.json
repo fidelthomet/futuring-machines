@@ -1,6 +1,6 @@
 {
   "name": "continue",
-  "trigger": "continue",
+  "trigger": "new-line",
   "mode": "append",
   "actions": [
     {

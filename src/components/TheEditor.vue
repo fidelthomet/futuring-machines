@@ -59,7 +59,7 @@ function logHighlight() {
   </bubble-menu>
   <floating-menu :editor="editor" :tippy-options="{ duration: 100 }" v-if="editor">
     <button
-      v-for="prompt in commandStore.promptsEnabled.filter((c) => c.trigger === 'continue')"
+      v-for="prompt in commandStore.promptsEnabled.filter((c) => c.trigger === 'new-line')"
       :key="prompt.name"
       @click="commandStore.run(editor, prompt, prompt.startIndex ?? 0)"
     >
