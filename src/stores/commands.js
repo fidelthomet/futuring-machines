@@ -102,13 +102,16 @@ export const useCommandStore = defineStore('command', () => {
     // }
   }
 
+  /* 
+    GENERATE
+  */
   async function runGenerate(action, editor, finalize) {
     const prompt = action.template.replace(
       /::([^:]+)::/g,
       (pattern, match) => env.value[match] ?? pattern
     )
-
-    console.log(prompt)
+    
+    console.log("Prompt: \n\n" + prompt)
     const response = await fetch(API_URL, {
       method: 'POST',
       body: JSON.stringify({
@@ -137,7 +140,10 @@ export const useCommandStore = defineStore('command', () => {
       env.value[action.bind] = await response.json().then((d) => d.response)
     }
   }
-
+  
+  /* 
+    GENERATE WITH OPTIONS
+  */
   async function runGenerateOptions(action, sourcePrompt, index) {
     const prompt = action.template.replace(
       /::([^:]+)::/g,
@@ -191,6 +197,9 @@ export const useCommandStore = defineStore('command', () => {
     promptsEnabled.value = options
   }
 
+  /* 
+    INIT TEMPLATE
+  */
   async function initTemplate(editor, index = 0) {
     const { view, state } = editor
 

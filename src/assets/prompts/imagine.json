@@ -4,13 +4,8 @@
   "mode": "append",
   "actions": [
     {
-      "type": "options",
-      "options": ["poltical", "societal", "cultural"],
-      "bind": "option"
-    },
-    {
       "type": "generate",
-      "template": "::full:: \n\n continue the story above with one paragraph that focusses on ::option:: aspects"
+      "template": "Write the next paragraph of the following story. The paragraph should be no more than one sentence long. Follow up the event prompted in the last sentence or paragraph.  \n\n Story: ::full::"
     }
   ]
 }

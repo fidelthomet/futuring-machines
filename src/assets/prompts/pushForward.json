@@ -10,12 +10,8 @@
     },
     {
       "type": "generate",
-      "template": "rewrite the following text as if it was set ::option:: in the future ::selection::",
+      "template": "Rewrite the following text as if it was set ::option:: in the future. Text: ::selection::",
       "bind": "response"
-    },
-    {
-      "type": "generate",
-      "template": "shorten the following text ::response::"
     }
   ]
 }

@@ -1,0 +1,16 @@
+{
+    "name": "Homes for Life (Start)",
+    "actions": [
+      {
+        "type": "generate",
+        "template": "You are a world-famous science fiction author and Hugo Award winner. You specialize in fast narratives with short sentences. Write the first paragraph of a short speculative fiction about ::topics:: in the year ::year::. The main character is named ::main-character::. Their everyday companion is a ::companion-type::. The paragraph should be no more than two sentences long. Leave the last sentence incomplete. The first paragraph should start '::story-start::'"
+      }
+    ],
+    "env": {
+      "year": "2050",
+      "main-character": "Herbert",
+      "topics": "smart homes, dementia, community living in a near future",
+      "companion-type": "pair of Smart Shoes",
+      "story-start": "Herbert is a senior citizen who is friendly and open to his fellow human beings. He really wanted to move into one of these smart houses. They are called 'Homes for Life'. The house is"
+    }
+  }

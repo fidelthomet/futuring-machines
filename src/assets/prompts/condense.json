@@ -5,7 +5,7 @@
   "actions": [
     {
       "type": "generate",
-      "template": "shorten the following text ::selection::"
+      "template": "Shorten the following text ::selection::"
     }
   ]
 }
