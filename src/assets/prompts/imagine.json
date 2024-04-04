@@ -5,7 +5,7 @@
   "actions": [
     {
       "type": "generate",
-      "template": "Write the next paragraph of the following story. The paragraph should be no more than one sentence long. Follow up the event prompted in the last sentence or paragraph.  \n\n Story: ::full::"
+      "template": "Continue the following story with up to one sentence. Follow up the event prompted in the last sentence or paragraph.  \n\n Story: ::full::"
     }
   ]
 }

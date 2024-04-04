@@ -164,6 +164,8 @@ export const useCommandStore = defineStore('command', () => {
 
           // Add streamed response to the editor – adding linebreaks
           editor.commands.insertContent(responseStr.replace(/\n/g, '<br>'))
+          // editor.commands.insertContent(JSON.parse(text).response.replace(/\n/g, '<br>'))
+
         }
       }
 

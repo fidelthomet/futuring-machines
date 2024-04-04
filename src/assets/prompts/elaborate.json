@@ -5,12 +5,12 @@
   "actions": [
     {
       "type": "options",
-      "options": ["critical", "optimistic"],
+      "options": ["critical", "optimistic", "pessimistic"],
       "bind": "option"
     },
     {
       "type": "generate",
-      "template": "Write the next paragraph of the following story. The paragraph should be no more than one sentence long. Elaborate the aspect addressed in the following text with a ::option:: tone. Text: ::selection::. If the perspective \n\n Story: ::full::",
+      "template": "Continue the following story with up to one sentence. Elaborate the aspect addressed in the following text with a ::option:: tone. Text: ::selection::. \n\n Story: ::full::",
       "bind": "response"
     }
   ]

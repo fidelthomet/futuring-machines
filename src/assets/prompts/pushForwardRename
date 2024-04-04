@@ -1,7 +1,7 @@
 {
   "name": "push forward",
   "trigger": "selection",
-  "mode": "append",
+  "mode": "replace",
   "actions": [
     {
       "type": "options",
@@ -10,7 +10,7 @@
     },
     {
       "type": "generate",
-      "template": "Continue the following story with up to one sentence. Elaborate the aspect addressed in the following text as if it was set ::option:: in the future. \n\n Input text: ::selection::.  \n\n Story: ::full::",
+      "template": "Rewrite the following text as if it was set ::option:: in the future. Text: ::selection::",
       "bind": "response"
     }
   ]

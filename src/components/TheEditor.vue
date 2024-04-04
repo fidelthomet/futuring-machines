@@ -5,6 +5,20 @@ import MarkAI from '@/tiptap/mark-ai'
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useCommandStore } from '@/stores/commands'
 
+/* 
+    >>>> MENUS
+    https://tiptap.dev/docs/editor/guide/menus
+
+    > Bubble Menu
+    – A bubble menu is one that appears when selecting text.
+    – https://tiptap.dev/docs/editor/api/extensions/bubble-menu
+
+    > Floating Menu 
+    – A floating menu appears in the editor when you place the cursor on an new line.
+    - Docs: https://tiptap.dev/docs/editor/api/extensions/bubble-menu
+*/
+
+
 const editor = ref(null)
 const commandStore = useCommandStore()
 
@@ -38,7 +52,7 @@ function logHighlight() {
 </script>
 
 <template>
-  <bubble-menu :editor="editor" :tippy-options="{ duration: 100 }" v-if="editor">
+  <bubble-menu :editor="editor" :tippy-options="{ duration: 100, placement: 'top-start' }" v-if="editor">
     <button
       v-for="prompt in commandStore.promptsEnabled.filter((c) => c.trigger === 'selection')"
       :key="prompt.name"

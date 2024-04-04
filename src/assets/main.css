@@ -9,18 +9,14 @@
 }
 
 :root {
-  /* --color-text: #000000;
-  --color-accent: #007B69;
-  --color-selection: rgba(0, 127, 255, 0.5);
-  --color-cursor: rgb(0, 127, 255); */
-
-  /* --color-base: #572E6B;
-  --color-high: #FF937F;
-  --color-selection: #FF937F30; */
-
   --color-base: #333333;
   --color-high: #0000FF;
   --color-selection: #00FF0040;
+  
+  /* Prototype Fund Color Schema */
+  /* --color-base: #572E6B;
+  --color-high: #FF937F;
+  --color-selection: #FF937F30; */
 
   --color-text: var(--color-high);
   --color-accent: var(--color-base);
