@@ -29,10 +29,16 @@ const commandStore = useCommandStore()
   grid-column: center-start / center-end;
   grid-row: center-start / center-end;
 
-  font-size: 25px;
+  /* font-size: 25px;
   line-height: 1.5;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.5px; */
   text-rendering: geometricPrecision;
+
+  a {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+  
 
   caret-color: rgb(0, 127, 255);
   &:deep(> div:focus) {
@@ -44,7 +50,7 @@ const commandStore = useCommandStore()
   }
 
   &:deep(span.mark-ai) {
-    font-family: 'Redaction 50';
+    /* font-family: 'Redaction 50'; */
     color: var(--color-accent);
   }
 }

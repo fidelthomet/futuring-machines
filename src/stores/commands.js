@@ -21,6 +21,10 @@ export const useCommandStore = defineStore('command', () => {
 
   const env = ref({})
 
+  /************* 
+    RUN
+  **************/
+
   async function run(editor, prompt, index = 0) {
     // const prompt = promptsEnabled.value.find((prompt) => prompt.name === name)
 
@@ -102,16 +106,17 @@ export const useCommandStore = defineStore('command', () => {
     // }
   }
 
-  /* 
+  /************* 
     GENERATE
-  */
+  **************/
+
   async function runGenerate(action, editor, finalize) {
     const prompt = action.template.replace(
       /::([^:]+)::/g,
       (pattern, match) => env.value[match] ?? pattern
     )
     
-    console.log("Prompt: \n\n" + prompt)
+    console.log("Generate text. Prompt: \n\n" + prompt)
     const response = await fetch(API_URL, {
       method: 'POST',
       body: JSON.stringify({
@@ -120,10 +125,12 @@ export const useCommandStore = defineStore('command', () => {
         stream: finalize
       })
     })
+
+    // Response
     if (finalize) {
       const reader = response.body.getReader()
+      let done, value, start = true, responseStr
 
-      let done, value
       while (!done) {
         ;({ done, value } = await reader.read())
 
@@ -131,7 +138,17 @@ export const useCommandStore = defineStore('command', () => {
 
         if (text) {
           editor.commands.setMarkAI()
-          editor.commands.insertContent(JSON.parse(text).response.replace(/\n/g, '<br>'))
+
+          responseStr = JSON.parse(text).response
+
+          // Removes leading whitespace at the beginning of the string
+          if (start) {
+            responseStr = responseStr.replace(/^\s+/, '')
+            start = false
+          } 
+
+          // Add streamed response to the editor – adding linebreaks
+          editor.commands.insertContent(responseStr.replace(/\n/g, '<br>'))
         }
       }
 
@@ -140,17 +157,19 @@ export const useCommandStore = defineStore('command', () => {
       env.value[action.bind] = await response.json().then((d) => d.response)
     }
   }
-  
-  /* 
+
+  /************************ 
     GENERATE WITH OPTIONS
-  */
+  *************************/
+
   async function runGenerateOptions(action, sourcePrompt, index) {
     const prompt = action.template.replace(
       /::([^:]+)::/g,
       (pattern, match) => env.value[match] ?? pattern
     )
 
-    console.log(prompt)
+    console.log("Generate with options. Prompt: \n\n" + prompt)
+
     const response = await fetch(API_URL, {
       method: 'POST',
       body: JSON.stringify({
