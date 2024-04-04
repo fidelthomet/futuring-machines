@@ -1,5 +1,5 @@
 {
-    "name": "rewrite as inner mologue",
+    "name": "inner mologue",
     "trigger": "selection",
     "mode": "replace",
     "actions": [

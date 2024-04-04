@@ -79,13 +79,13 @@ function logHighlight() {
   letter-spacing: 0.5px; */
   text-rendering: geometricPrecision;
 
-  caret-color: rgb(0, 127, 255);
+  caret-color: var(--color-cursor);
   &:deep(> div:focus) {
     outline: none;
   }
 
   &:deep(*::selection) {
-    background-color: rgba(0, 127, 255, 0.5);
+    background-color: var(--color-selection);
   }
 
   &:deep(span.mark-ai) {
@@ -95,6 +95,8 @@ function logHighlight() {
 }
 
 button {
-  color: red;
+  /* color: red; */
+  margin-right: 0px;
+  margin-bottom: -1px;
 }
 </style>

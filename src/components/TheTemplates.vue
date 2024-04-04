@@ -40,13 +40,13 @@ const commandStore = useCommandStore()
   }
   
 
-  caret-color: rgb(0, 127, 255);
+  caret-color: var(--color-cursor);
   &:deep(> div:focus) {
     outline: none;
   }
 
   &:deep(*::selection) {
-    background-color: rgba(0, 127, 255, 0.5);
+    background-color: var(--color-selection);
   }
 
   &:deep(span.mark-ai) {
@@ -55,7 +55,7 @@ const commandStore = useCommandStore()
   }
 }
 
-button {
+/* button {
   color: red;
-}
+} */
 </style>
