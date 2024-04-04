@@ -1,11 +1,11 @@
 {
-    "name": "inner mologue",
+    "name": "rewrite as inner mologue",
     "trigger": "selection",
     "mode": "replace",
     "actions": [
       {
         "type": "generate",
-        "template": "Rewrite the viewpoint of the following text as an inner monologue of the main character. The length of the generated text should be up to the length of the input text. You write with a humorous, yet critical tone. Input text: ::selection::"
+        "template": "Rewrite the viewpoint of the following text as an inner monologue of the main character. The paragraph should be no more than one sentence long. You write with a humorous, yet critical tone. Input text: ::selection::"
       }
     ]
   }

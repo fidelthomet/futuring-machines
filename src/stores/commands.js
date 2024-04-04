@@ -37,6 +37,7 @@ export const useCommandStore = defineStore('command', () => {
     if (prompt.trigger === 'selection') {
       const { from, to } = view.state.selection
       env.value.selection = state.doc.textBetween(from, to, '\n')
+      console.log("Selection: " + env.value.selection)
     }
 
     console.log(env.value)
@@ -47,10 +48,15 @@ export const useCommandStore = defineStore('command', () => {
     index++
     const finalize = index == prompt.actions.length
 
+    console.log("> prompt trigger: " + prompt.trigger)
+    console.log("> prompt mode: " + prompt.mode)
+    console.log("> action type: " + action.type)
+    console.log(prompt)
+
     switch (action.type) {
       case 'generate':
         if (prompt.mode === 'replace') editor.commands.deleteSelection()
-        await runGenerate(action, editor, finalize)
+        await runGenerate(action, prompt.trigger, prompt.mode, editor, finalize)
         break
       case 'generate options':
         await runGenerateOptions(action, prompt, index)
@@ -110,13 +116,14 @@ export const useCommandStore = defineStore('command', () => {
     GENERATE
   **************/
 
-  async function runGenerate(action, editor, finalize) {
+  async function runGenerate(action, promptTrigger, promptMode, editor, finalize) {
+
     const prompt = action.template.replace(
       /::([^:]+)::/g,
       (pattern, match) => env.value[match] ?? pattern
     )
     
-    console.log("Generate text. Prompt: \n\n" + prompt)
+    console.log("Generate text ——— Prompt: \n\n" + prompt)
     const response = await fetch(API_URL, {
       method: 'POST',
       body: JSON.stringify({
@@ -131,6 +138,14 @@ export const useCommandStore = defineStore('command', () => {
       const reader = response.body.getReader()
       let done, value, start = true, responseStr
 
+      // Set the cursor to the end of the editor position
+      console.log("> prompt trigger: " + promptTrigger)
+      console.log("> prompt mode: " + promptMode)
+      if (promptTrigger === 'selection' && promptMode === 'append') {
+        console.log(">>>>>>> push to the end")
+        editor.commands.focus('end')
+      }
+
       while (!done) {
         ;({ done, value } = await reader.read())
 
@@ -141,8 +156,8 @@ export const useCommandStore = defineStore('command', () => {
 
           responseStr = JSON.parse(text).response
 
-          // Removes leading whitespace at the beginning of the string
-          if (start) {
+          // Removes leading whitespace at the beginning of the string (When start and new line)
+          if (start && (promptTrigger === null || promptTrigger === 'new-line')) {
             responseStr = responseStr.replace(/^\s+/, '')
             start = false
           }
@@ -168,7 +183,7 @@ export const useCommandStore = defineStore('command', () => {
       (pattern, match) => env.value[match] ?? pattern
     )
 
-    console.log("Generate with options. Prompt: \n\n" + prompt)
+    console.log("Generate with options ——— Prompt: \n\n" + prompt)
 
     const response = await fetch(API_URL, {
       method: 'POST',
@@ -233,7 +248,7 @@ export const useCommandStore = defineStore('command', () => {
     switch (action.type) {
       case 'generate':
         if (template.value.mode === 'replace') editor.commands.deleteSelection()
-        await runGenerate(action, editor, finalize)
+        await runGenerate(action, null, null, editor, finalize)
         break
       case 'static':
         editor.commands.setMarkAI()

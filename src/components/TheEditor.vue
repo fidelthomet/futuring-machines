@@ -96,7 +96,5 @@ function logHighlight() {
 
 button {
   /* color: red; */
-  margin-right: 0px;
-  margin-bottom: -1px;
 }
 </style>
