@@ -10,13 +10,13 @@
     },
     {
       "type": "generate options",
-      "template": "::full:: \n\n suggest three topic ideas to delvelop the above story further while focussing on ::option:: aspects. provide them in json with the following keys: topic, description",
+      "template": "::full:: \n\n Suggest three topic ideas to further develop the above story while focussing on ::option:: aspects. Provide them in json with the following keys: topic, description",
       "name": "topic",
       "keys": ["topic", "description"]
     },
     {
       "type": "generate",
-      "template": "::full:: \n\n continue the story above with one paragraph that focusses on ::option:: aspects and the topic of ::topic:: (::description::)"
+      "template": "::full:: \n\n Continue the story above with one paragraph that focusses on ::option:: aspects and the topic of ::topic:: (::description::). The paragraph should have up to one sentence."
     }
   ]
 }

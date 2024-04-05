@@ -84,7 +84,9 @@ export const useCommandStore = defineStore('command', () => {
         break
     }
 
-    if (!finalize && action.type === 'generate') run(editor, prompt, index)
+    if (!finalize && action.type === 'generate') {
+      run(editor, prompt, index)
+    }
 
     if (finalize) {
       promptsEnabled.value = promptsAvailable.value
