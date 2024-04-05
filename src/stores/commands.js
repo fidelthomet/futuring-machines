@@ -27,19 +27,23 @@ export const useCommandStore = defineStore('command', () => {
 
   async function run(editor, prompt, index = 0) {
     // const prompt = promptsEnabled.value.find((prompt) => prompt.name === name)
-
+    
     const { view, state } = editor
 
+    // This is the full story as it's being written in the editor. We add it to the story template.
     env.value.full = state.doc.textBetween(0, view.state.doc.nodeSize - 2, '\n')
 
+    // This is sort of a Context object – Combines: Story template + Story Text + Prompt
     env.value = { ...env.value, ...prompt.env }
 
+    // When text selected
     if (prompt.trigger === 'selection') {
       const { from, to } = view.state.selection
       env.value.selection = state.doc.textBetween(from, to, '\n')
       console.log("Selection: " + env.value.selection)
     }
 
+    console.log("env.value: ")
     console.log(env.value)
 
     // const command = prompt.template.replace(/::selection::/, selection)
@@ -85,6 +89,7 @@ export const useCommandStore = defineStore('command', () => {
     }
 
     if (!finalize && action.type === 'generate') {
+      console.log("no finalize")
       run(editor, prompt, index)
     }
 
@@ -188,7 +193,8 @@ export const useCommandStore = defineStore('command', () => {
     )
 
     console.log("Generate with options ——— Prompt: \n\n" + prompt)
-
+    
+    // API Call
     const response = await fetch(API_URL, {
       method: 'POST',
       body: JSON.stringify({
@@ -198,18 +204,25 @@ export const useCommandStore = defineStore('command', () => {
         format: 'json'
       })
     })
+
+    // LLM Response
     const res = await response.json().then((d) => d.response)
-    console.log(res)
     const obj = JSON.parse(res)
 
     const options = []
     for (const key in obj) {
       const option = obj[key]
+      console.log("Create options")
 
+      // Create "diverge" options
       if (action.keys.every((k) => Object.prototype.hasOwnProperty.call(option, k))) {
+        // Option = the selected "diverge" option
+        // Action = the related prompt to be performed after selecting that option
         options.push({
           ...sourcePrompt,
-          name: option[action.name],
+          // name: option[action.name],
+          name: option[action.name] + '. ',
+          description: option["description"],
           startIndex: index,
           env: {
             ...prompt.env,
@@ -219,7 +232,6 @@ export const useCommandStore = defineStore('command', () => {
       } else {
         for (const key in option) {
           const option2 = option[key]
-          console.log(option2)
           options.push({
             ...sourcePrompt,
             name: option2[action.name],

@@ -5,12 +5,12 @@
   "actions": [
     {
       "type": "options",
-      "options": ["positive", "neutral", "negative"],
+      "options": ["positive", "critical", "fearful"],
       "bind": "tone"
     },
     {
       "type": "generate options",
-      "template": "::full:: \n\n Suggest three story continuations to further develop the above story while keeping the tone ::tone::. Limit the length of the continuations to 10 words each. Provide them in json with the following keys: title, continuation",
+      "template": "::full:: \n\n suggest three story continuations to further tell the above story while keeping the tone ::tone::. limit the length of the continuations to 10 words each. provide them in json with the following keys: title, continuation",
       "name": "title",
       "keys": ["title", "continuation"]
     },

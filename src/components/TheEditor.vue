@@ -77,7 +77,7 @@ function logHighlight() {
       :key="prompt.name"
       @click="commandStore.run(editor, prompt, prompt.startIndex ?? 0)"
     >
-      {{ prompt.name }}
+      {{ prompt.name }} {{ prompt.description }}
     </button>
   </floating-menu>
   <editor-content :editor="editor" class="editor" />
