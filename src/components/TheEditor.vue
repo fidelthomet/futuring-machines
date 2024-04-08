@@ -66,7 +66,7 @@ function onCustomPrompt(editor, trigger = "new-line", mode = "append") {
     "actions": [
       {
         "type": "generate",
-        "template": "Considering the following story, which is delimited with triple backticks, perform the following task. \n\nTask: " + customPrompt.value + ". \n\nKeep your answer as short as possible.\n\nStory: ```::full::```"
+        "template": "Considering the following story, which is delimited with triple backticks, perform the following task. \n\nTask: " + customPrompt.value + ". \n\nGenerate one short sentence, using at most 10 words. Write in a narrative way, keeping the tone and style of the story. \n\nStory: ```::full::```"
       }
     ]
   }
