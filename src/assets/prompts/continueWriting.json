@@ -5,7 +5,7 @@
   "actions": [
     {
       "type": "generate",
-      "template": "Continue the following story with up to one sentence. Follow up the event prompted in the last sentence or paragraph.  \n\n Story: ::full::"
+      "template": "Continue the following story, which is delimited with triple backticks. Consider to follow up the event prompted in the last sentence or paragraph or just go for a complete different and unexpected direction that brings conflict to the story. \n\nContinue the story in one short sentence. Then ask a question about a possible continuation of the story, but encapsulate this question as part of the story in a narrative way. Keep your answer as short as possible.\n\nStory: ```::full::```"
     }
   ]
 }

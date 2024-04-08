@@ -22,6 +22,8 @@ import { useCommandStore } from '@/stores/commands'
 const editor = ref(null)
 const commandStore = useCommandStore()
 
+const isGenerating = ref(false)
+
 onMounted(async () => {
   editor.value = new Editor({
     extensions: [StarterKit, MarkAI],
@@ -49,17 +51,40 @@ function logHighlight() {
 // function toggleClass() {
 //   editor.value.chain().focus().toggleMarkAI().run()
 // }
+
+async function run(editor, prompt) {
+
+  commandStore.run(editor, prompt, prompt.startIndex ?? 0)
+  
+  // const index = prompt.startIndex ?? 0;
+  // const action = prompt.actions[index]
+  // console.log(">>>>>>>> RUN! index: " + index + ", action: " + action.type)
+
+  // switch (action.type) {
+  //     case 'generate':
+  //     case 'generate options':
+  //       isGenerating.value = true;
+  //       // generating.value = commandStore.isGenerating.value;
+  //       break
+  //     default:
+  //       break
+  // }
+}
+
 </script>
 
 <template>
-  <bubble-menu :editor="editor" :tippy-options="{ duration: 100, placement: 'top-start' }" v-if="editor">
-    <button
-      v-for="prompt in commandStore.promptsEnabled.filter((c) => c.trigger === 'selection')"
-      :key="prompt.name"
-      @click="commandStore.run(editor, prompt, prompt.startIndex ?? 0)"
-    >
-      {{ prompt.name }}
-    </button>
+  <bubble-menu :editor="editor" :tippy-options="{ duration: 100, placement: 'top-start', maxWidth: 800 }" v-if="editor">
+    
+    <div v-if="!commandStore.isGenerating">
+      <button
+        v-for="prompt in commandStore.promptsEnabled.filter((c) => c.trigger === 'selection')"
+        :key="prompt.name"
+        @click="run(editor, prompt)"
+      >
+        {{ prompt.name }}
+      </button>
+    </div>
     <!-- <button @click="logHighlight" :class="{ 'is-active': editor.isActive('bold') }">log</button>
     <button @click="toggleClass" :class="{ 'is-active': editor.isActive('mark-ai') }">
       class toggle
@@ -71,16 +96,23 @@ function logHighlight() {
       strike
     </button> -->
   </bubble-menu>
-  <floating-menu :editor="editor" :tippy-options="{ duration: 100 }" v-if="editor">
-    <button
-      v-for="prompt in commandStore.promptsEnabled.filter((c) => c.trigger === 'new-line')"
-      :key="prompt.name"
-      @click="commandStore.run(editor, prompt, prompt.startIndex ?? 0)"
-    >
-      {{ prompt.name }} {{ prompt.description }}
-    </button>
+  <floating-menu :editor="editor" :tippy-options="{ duration: 100, placement: 'bottom-start', maxWidth: 800 }" v-if="editor">
+    <div v-if="!commandStore.isGenerating">
+      <button
+        v-for="prompt in commandStore.promptsEnabled.filter((c) => c.trigger === 'new-line')"
+        :key="prompt.name"
+        @click="run(editor, prompt)"
+      >
+        {{ prompt.name }} {{ prompt.description }}
+      </button>
+    </div>
   </floating-menu>
+
   <editor-content :editor="editor" class="editor" />
+
+  <div class="is-generating" v-if="editor">
+    <span v-if="commandStore.isGenerating">Loading...</span>
+  </div>
 </template>
 
 <style scoped>
@@ -91,7 +123,7 @@ function logHighlight() {
   /* font-size: 25px;
   line-height: 1.5;
   letter-spacing: 0.5px; */
-  text-rendering: geometricPrecision;
+  /* text-rendering: geometricPrecision; */
 
   caret-color: var(--color-cursor);
   &:deep(> div:focus) {
@@ -108,7 +140,14 @@ function logHighlight() {
   }
 }
 
+.is-generating {
+  grid-column: center-start;
+  grid-row: center-end;
+  color: #999999;
+}
+
 button {
   /* color: red; */
+  /* max-width: 30%; */
 }
 </style>

@@ -1,5 +1,5 @@
 {
-  "name": "diverge tone",
+  "name": "develop mood",
   "trigger": "new-line",
   "mode": "append",
   "actions": [
@@ -10,8 +10,8 @@
     },
     {
       "type": "generate options",
-      "template": "::full:: \n\n suggest three story continuations to further tell the above story while keeping the tone ::tone::. limit the length of the continuations to 10 words each. provide them in json with the following keys: title, continuation",
-      "name": "title",
+      "template": "Continue the following story, which is delimited with triple backticks. Generate three different continuations. The tone in the development of events should be ::tone::. Continuations should be written in a narrative style and use at most 10 words. \n\nFormat each continuation as a JSON object with 'title' and 'continuation' as the keys. Format your response as a JSON object with 'cont1', 'cont2' and 'cont3' as the keys. \n\nStory: ```::full::```",
+      "name": "continuation",
       "keys": ["title", "continuation"]
     },
     {

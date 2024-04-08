@@ -1,16 +1,16 @@
 {
-  "name": "push forward",
-  "trigger": "selection",
+  "name": "push timeline",
+  "trigger": "new-line",
   "mode": "append",
   "actions": [
     {
       "type": "options",
-      "options": ["10 years", "100 years", "1000 years", "10000 years"],
+      "options": ["10 years", "100 years", "1000 years"],
       "bind": "option"
     },
     {
       "type": "generate",
-      "template": "Continue the following story with up to one sentence. Elaborate the aspect addressed in the following text as if it was set ::option:: in the future. \n\n Input text: ::selection::.  \n\n Story: ::full::",
+      "template": "Continue the following story pushing the timeline ::option:: in the future. Write only one sentence. Elaborate possible implications or consequences of the key events mentioned in the story. \n\n Story: ::full::",
       "bind": "response"
     }
   ]

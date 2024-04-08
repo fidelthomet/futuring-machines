@@ -19,6 +19,7 @@ main {
     var(--padding) [center-start] 1fr
     [center-end] var(--padding);
 
-  min-height: 100vh;
+  /* min-height: 100vh; */
+  text-rendering: geometricPrecision;
 }
 </style>

@@ -1,5 +1,5 @@
 {
-  "name": "push forward",
+  "name": "push timeline",
   "trigger": "selection",
   "mode": "replace",
   "actions": [

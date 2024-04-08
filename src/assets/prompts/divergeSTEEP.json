@@ -1,5 +1,5 @@
 {
-  "name": "diverge",
+  "name": "implications",
   "trigger": "new-line",
   "mode": "append",
   "actions": [
@@ -10,13 +10,13 @@
     },
     {
       "type": "generate options",
-      "template": "::full:: \n\n Suggest three topic ideas to further develop the above story while focussing on ::option:: aspects. Provide them in json with the following keys: topic, description",
+      "template": "Suggest three topic ideas to further develop the following story, which is delimited with triple backticks. The topic ideas should focus on political aspects. For each topic idea generate also a short description. Limit the length of each description to up to 10 words. \n\nFormat each idea as a JSON object with 'topic' and 'description' as the keys. Format your response as a JSON object with 'topic1', 'topic2' and 'topic3' as the keys. \n\nStory: ```::full::```",
       "name": "topic",
       "keys": ["topic", "description"]
     },
     {
       "type": "generate",
-      "template": "::full:: \n\n Continue the story above with one paragraph that focusses on ::option:: aspects and the topic of ::topic:: (::description::). The paragraph should have up to one sentence."
+      "template": "Continue the following story, which is delimited with triple backticks. Address the topic ::topic:: (::description::) in a narrative way. \n\nContinue the story in one sentence of at most 10 words.\n\nStory: ```::full::```"
     }
   ]
 }

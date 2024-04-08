@@ -19,6 +19,8 @@ export const useCommandStore = defineStore('command', () => {
 
   const template = computed(() => templatesEnabled.value.find((t) => t.name === templateName.value))
 
+  const isGenerating = ref(false)
+
   const env = ref({})
 
   /************* 
@@ -57,6 +59,7 @@ export const useCommandStore = defineStore('command', () => {
     console.log("> action type: " + action.type)
     console.log(prompt)
 
+    // Different behaviours for different prompt types
     switch (action.type) {
       case 'generate':
         if (prompt.mode === 'replace') editor.commands.deleteSelection()
@@ -89,10 +92,10 @@ export const useCommandStore = defineStore('command', () => {
     }
 
     if (!finalize && action.type === 'generate') {
-      console.log("no finalize")
       run(editor, prompt, index)
     }
 
+    // Stream finalized
     if (finalize) {
       promptsEnabled.value = promptsAvailable.value
     }
@@ -131,6 +134,9 @@ export const useCommandStore = defineStore('command', () => {
     )
     
     console.log("Generate text ——— Prompt: \n\n" + prompt)
+
+    isGenerating.value = true
+
     const response = await fetch(API_URL, {
       method: 'POST',
       body: JSON.stringify({
@@ -140,16 +146,20 @@ export const useCommandStore = defineStore('command', () => {
       })
     })
 
+    isGenerating.value = false
+
     // Response
     if (finalize) {
       const reader = response.body.getReader()
       let done, value, start = true, responseStr
 
-      // Set the cursor to the end of the editor position
       console.log("> prompt trigger: " + promptTrigger)
       console.log("> prompt mode: " + promptMode)
+      
+      
+
+      // For 'append' mode: set the cursor to the end of the editor position
       if (promptTrigger === 'selection' && promptMode === 'append') {
-        console.log(">>>>>>> push to the end")
         editor.commands.focus('end')
       }
 
@@ -176,7 +186,9 @@ export const useCommandStore = defineStore('command', () => {
         }
       }
 
+      // Set AI text style
       editor.commands.unsetMarkAI()
+
     } else if (action.bind != null) {
       env.value[action.bind] = await response.json().then((d) => d.response)
     }
@@ -193,6 +205,8 @@ export const useCommandStore = defineStore('command', () => {
     )
 
     console.log("Generate with options ——— Prompt: \n\n" + prompt)
+
+    isGenerating.value = true
     
     // API Call
     const response = await fetch(API_URL, {
@@ -207,17 +221,25 @@ export const useCommandStore = defineStore('command', () => {
 
     // LLM Response
     const res = await response.json().then((d) => d.response)
+
+    isGenerating.value = false
+
+    console.log(">>>>>> Response: ")
+    console.log(res)
     const obj = JSON.parse(res)
 
     const options = []
     for (const key in obj) {
       const option = obj[key]
-      console.log("Create options")
+
+      console.log("- Create option " + key + ": " + option[action.name])
 
       // Create "diverge" options
       if (action.keys.every((k) => Object.prototype.hasOwnProperty.call(option, k))) {
         // Option = the selected "diverge" option
         // Action = the related prompt to be performed after selecting that option
+
+        console.log("------ OPTIONS 1")  
         options.push({
           ...sourcePrompt,
           // name: option[action.name],
@@ -230,6 +252,8 @@ export const useCommandStore = defineStore('command', () => {
           }
         })
       } else {
+        console.log("------ OPTIONS 2")
+
         for (const key in option) {
           const option2 = option[key]
           options.push({
@@ -281,7 +305,7 @@ export const useCommandStore = defineStore('command', () => {
     if (!finalize && action.type === 'generate') initTemplate(editor, index)
   }
 
-  return { promptsEnabled, templatesEnabled, templateName, template, initTemplate, run }
+  return { promptsEnabled, templatesEnabled, templateName, template, initTemplate, run, isGenerating }
 })
 
 if (import.meta.hot) {
