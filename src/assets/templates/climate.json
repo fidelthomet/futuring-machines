@@ -3,12 +3,12 @@
   "actions": [
     {
       "type": "generate",
-      "template": "Write the beginning of a story on the climate crisis set in ::year:: featuring the main character ::main-character:: and their ::companion-type:: companion ::companion-name::"
+      "template": "Write the beginning of a short speculative fiction about climate crisis in the year ::year::. The main character is named ::main-character::. Their everyday companion is a ::companion-type:: called ::companion-name::. \n\nGenerate one paragraph using at most two sentences. Leave the last sentence incomplete.\n\nWrite in a plain and simple style. Avoid purple prose AT ALL COSTS."
     }
   ],
   "env": {
     "year": "2070",
-    "main-character": "Catherine",
+    "main-character": "Ava",
     "companion-type": "dog",
     "companion-name": "Bonnie"
   }
