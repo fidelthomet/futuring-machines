@@ -64,6 +64,14 @@ button:hover {
   color: var(--color-high); */
 }
 
+button:disabled,
+button[disabled] {
+  opacity: 0.1;
+  background-color: white;
+  color: var(--color-high);
+  cursor: default;
+}
+
 input:focus {
   outline: none;
 }

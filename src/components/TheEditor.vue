@@ -108,6 +108,7 @@ function onShowModal() {
         v-for="prompt in commandStore.promptsEnabled.filter((c) => c.trigger === 'new-line')"
         :key="prompt.name"
         @click="run(editor, prompt)"
+        :disabled="customPrompt !== ''"
       >
         {{ prompt.name }} {{ prompt.description }}
       </button>
