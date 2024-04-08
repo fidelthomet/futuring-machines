@@ -23,6 +23,7 @@ const editor = ref(null)
 const commandStore = useCommandStore()
 
 const customPrompt = ref('')
+const startIndex = ref(0)
 
 onMounted(async () => {
   editor.value = new Editor({
@@ -53,8 +54,8 @@ function logHighlight() {
 // }
 
 async function run(editor, prompt) {
-  console.log(prompt)
   commandStore.run(editor, prompt, prompt.startIndex ?? 0)
+  startIndex.value = prompt.startIndex + 1
 }
 
 function onCustomPrompt(editor, trigger = "new-line", mode = "append") {
@@ -74,7 +75,7 @@ function onCustomPrompt(editor, trigger = "new-line", mode = "append") {
 }
 
 function onShowModal() {
-  customPrompt.value = '';
+  customPrompt.value = ''
 }
 
 </script>
@@ -110,9 +111,9 @@ function onShowModal() {
         @click="run(editor, prompt)"
         :disabled="customPrompt !== ''"
       >
-        {{ prompt.name }} {{ prompt.description }}
+        {{ prompt.name }} {{ prompt.description }} 
       </button>
-      <input :editor="editor" v-model="customPrompt" placeholder="...or write here a custom prompt and press ENTER!" @keyup.enter="onCustomPrompt(editor, 'new-line', 'append')"/>
+      <input v-if="startIndex === 0" :editor="editor" v-model="customPrompt" placeholder="...or write here a custom prompt and press ENTER!" @keyup.enter="onCustomPrompt(editor, 'new-line', 'append')"/>
     </div>
   </floating-menu>
 
