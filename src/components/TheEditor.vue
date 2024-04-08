@@ -22,7 +22,7 @@ import { useCommandStore } from '@/stores/commands'
 const editor = ref(null)
 const commandStore = useCommandStore()
 
-const isGenerating = ref(false)
+const customPrompt = ref('')
 
 onMounted(async () => {
   editor.value = new Editor({
@@ -53,22 +53,28 @@ function logHighlight() {
 // }
 
 async function run(editor, prompt) {
-
+  console.log(prompt)
   commandStore.run(editor, prompt, prompt.startIndex ?? 0)
-  
-  // const index = prompt.startIndex ?? 0;
-  // const action = prompt.actions[index]
-  // console.log(">>>>>>>> RUN! index: " + index + ", action: " + action.type)
+}
 
-  // switch (action.type) {
-  //     case 'generate':
-  //     case 'generate options':
-  //       isGenerating.value = true;
-  //       // generating.value = commandStore.isGenerating.value;
-  //       break
-  //     default:
-  //       break
-  // }
+function onCustomPrompt(editor, trigger = "new-line", mode = "append") {
+
+  let customPromptObj = {
+    "name": "continue",
+    "trigger": trigger,
+    "mode": mode,
+    "actions": [
+      {
+        "type": "generate",
+        "template": "Considering the following story, which is delimited with triple backticks, perform the following task. \n\nTask: " + customPrompt.value + ". \n\nKeep your answer as short as possible.\n\nStory: ```::full::```"
+      }
+    ]
+  }
+  commandStore.run(editor, customPromptObj, 0)
+}
+
+function onShowModal() {
+  customPrompt.value = '';
 }
 
 </script>
@@ -96,7 +102,7 @@ async function run(editor, prompt) {
       strike
     </button> -->
   </bubble-menu>
-  <floating-menu :editor="editor" :tippy-options="{ duration: 100, placement: 'bottom-start', maxWidth: 800 }" v-if="editor">
+  <floating-menu :editor="editor" :tippy-options="{ duration: 100, placement: 'bottom-start', maxWidth: 800, onShow: onShowModal }" v-if="editor">
     <div v-if="!commandStore.isGenerating">
       <button
         v-for="prompt in commandStore.promptsEnabled.filter((c) => c.trigger === 'new-line')"
@@ -105,6 +111,7 @@ async function run(editor, prompt) {
       >
         {{ prompt.name }} {{ prompt.description }}
       </button>
+      <input :editor="editor" v-model="customPrompt" placeholder="...or write here a custom prompt and press ENTER!" @keyup.enter="onCustomPrompt(editor, 'new-line', 'append')"/>
     </div>
   </floating-menu>
 
@@ -140,18 +147,24 @@ async function run(editor, prompt) {
   }
 }
 
+button {
+  /* max-width: 33vh; */
+  text-align: left;
+}
+
+input {
+  width: 100%;
+  display: block;
+  margin-top: 10px;
+  /* color: black;
+  border-color: black;
+  box-shadow: 0px 2px 0px black; */
+}
+
 .is-generating {
   grid-column: center-start;
   grid-row: center-end;
   color: #999999;
 }
 
-button {
-
-}
-
-#tippy-2 button {
-  /* max-width: 33vh; */
-  text-align: left;
-}
 </style>

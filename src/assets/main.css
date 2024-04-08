@@ -36,7 +36,7 @@ html {
   background-color: var(--background-color);
 }
 
-button {
+button, input {
   border: none;
   cursor: pointer;
   padding: 8px;
@@ -62,4 +62,8 @@ button:hover {
   color: white;
   /* background-color: white;
   color: var(--color-high); */
+}
+
+input:focus {
+  outline: none;
 }
