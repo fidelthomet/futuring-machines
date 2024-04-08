@@ -147,7 +147,11 @@ async function run(editor, prompt) {
 }
 
 button {
-  /* color: red; */
-  /* max-width: 30%; */
+
+}
+
+#tippy-2 button {
+  /* max-width: 33vh; */
+  text-align: left;
 }
 </style>
