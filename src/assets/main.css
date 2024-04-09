@@ -36,6 +36,10 @@ html {
   background-color: var(--background-color);
 }
 
+h1, h2, h3, h4, h5 {
+  /* color: var(--color-base);  */
+}
+
 button, input {
   border: none;
   cursor: pointer;
@@ -74,4 +78,9 @@ button[disabled] {
 
 input:focus {
   outline: none;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
 }
