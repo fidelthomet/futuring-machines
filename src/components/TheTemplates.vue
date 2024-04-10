@@ -17,7 +17,7 @@ const commandStore = useCommandStore()
         :to="{ name: 'editor', params: { template: template.name } }"
       >
         <li>
-          <button>{{ template.name }}</button>
+          <button>{{ template.description }}</button>
         </li>
       </RouterLink>
     </ul>

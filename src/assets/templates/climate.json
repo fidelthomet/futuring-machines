@@ -1,5 +1,6 @@
 {
   "name": "Climate Crisis",
+  "description": "How will we live in the climate crisis in 50 years?",
   "actions": [
     {
       "type": "generate",
@@ -7,7 +8,7 @@
     }
   ],
   "env": {
-    "year": "2070",
+    "year": "2074",
     "main-character": "Ava",
     "companion-type": "dog",
     "companion-name": "Bonnie"

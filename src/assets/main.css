@@ -76,6 +76,9 @@ button[disabled] {
   cursor: default;
 }
 
+input {
+  cursor: text;
+}
 input:focus {
   outline: none;
 }

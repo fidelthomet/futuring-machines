@@ -1,5 +1,6 @@
 {
-  "name": "Homes for Life (story start)",
+  "name": "Homes for Life",
+  "description": "What will the future of care look like when I retire?",
   "actions": [
     {
       "type": "static",
