@@ -278,13 +278,6 @@ export const useCommandStore = defineStore('command', () => {
     const { view, state } = editor
 
     env.value.full = state.doc.textBetween(0, view.state.doc.nodeSize - 2, '\n')
-
-    console.log("INIT TEMPLATE")
-    console.log("env.value:")
-    console.log(env.value)
-    console.log("template.value:")
-    console.log(template.value)
-
     env.value = { ...env.value, ...template.value.env }
 
     const action = template.value.actions[index]
@@ -308,6 +301,7 @@ export const useCommandStore = defineStore('command', () => {
         break
     }
 
+    // Mixed templates
     if (!finalize && action.type === 'generate') initTemplate(editor, index)
   }
 
