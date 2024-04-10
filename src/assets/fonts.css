@@ -57,7 +57,8 @@
 
 @font-face {
   font-family: 'SF Mono';
-  src: url('@/assets/fonts/sf-mono/SFMono-Regular.otf') format('otf');
+  src: url('@/assets/fonts/sf-mono/sf-mono-regular.woff2') format('woff2'),
+       url('@/assets/fonts/sf-mono/sf-mono-regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
