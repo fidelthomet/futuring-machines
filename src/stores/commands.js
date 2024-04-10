@@ -171,7 +171,7 @@ export const useCommandStore = defineStore('command', () => {
         if (text) {
           editor.commands.setMarkAI()
 
-          responseStr = JSON.parse(text).response
+          responseStr = text.trim().split("\n").map(json => JSON.parse(json).response).join("")
 
           // Removes leading whitespace at the beginning of the string (When start and new line)
           if (start && (promptTrigger === null || promptTrigger === 'new-line')) {
