@@ -1,7 +1,12 @@
-import condense from './condense'
-import pushForward from './pushForward'
-import imagine from './imagine'
-import diverge from './diverge'
-import diverge2 from './diverge2'
+import continueWriting from './continueWriting'
+import divergeSTEEP from './divergeSTEEP'
+import divergeTone from './divergeTone'
+import perspective from './perspective'
+import question from './question'
+import wildcards from './wildcards'
+import elaborate from './elaborate'
+import innerMonologue from './innerMonologue'
+import pushForwardSelection from './pushForwardSelection'
 
-export default [condense, pushForward, diverge, imagine, diverge2]
+export default [continueWriting, divergeSTEEP, divergeTone, perspective, question, wildcards,   // New Line
+                elaborate, pushForwardSelection, innerMonologue]                                // Selection

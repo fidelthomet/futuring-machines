@@ -1,0 +1,18 @@
+{
+  "name": "new perspective",
+  "trigger": "new-line",
+  "mode": "append",
+  "actions": [
+    {
+      "type": "options",
+      "options": ["object", "new character"],
+      "bind": "option"
+    },
+    {
+      "type": "generate",
+      "template": "Continue the following story, which is delimited with triple backticks, from the perspective of a ::option::. The continuation should be written in a narrative style and use at most 10 words. \n\nStory: ```::full::```",
+      "bind": "response"
+    }
+  ]
+}
+

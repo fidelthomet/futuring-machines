@@ -1,6 +1,6 @@
-import design from './design'
+import careStories from './careStoriesStem'
+import homesStart from './homesForLifeStart'
 import designMix from './design-mix'
 import climate from './climate'
-import empty from './empty'
 
-export default [empty, climate, design, designMix]
+export default [careStories, homesStart, climate, designMix]

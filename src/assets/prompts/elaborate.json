@@ -1,0 +1,17 @@
+{
+  "name": "elaborate",
+  "trigger": "selection",
+  "mode": "append",
+  "actions": [
+    {
+      "type": "options",
+      "options": ["positive", "critical", "pessimistic", "ironical"],
+      "bind": "option"
+    },
+    {
+      "type": "generate",
+      "template": "Continue the following story with up to one sentence. Use at most 20 words. Elaborate the aspect addressed in the following text with a ::option:: tone. Text: '::selection::'. \n\nStory: ::full::",
+      "bind": "response"
+    }
+  ]
+}
