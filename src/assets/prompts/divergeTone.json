@@ -1,11 +1,11 @@
 {
-  "name": "develop mood",
+  "name": "change tone",
   "trigger": "new-line",
   "mode": "append",
   "actions": [
     {
       "type": "options",
-      "options": ["positive", "critical", "fearful"],
+      "options": ["positive", "critical", "empowering", "ironical", "fearful"],
       "bind": "tone"
     },
     {

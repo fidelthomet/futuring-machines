@@ -5,7 +5,7 @@
   "actions": [
     {
       "type": "options",
-      "options": ["object", "new character"],
+      "options": ["new human character", "object", "animal", "plant"],
       "bind": "option"
     },
     {

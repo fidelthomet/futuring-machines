@@ -1,11 +1,11 @@
 {
-  "name": "address in inner monologue",
+  "name": "elaborate as inner monologue",
   "trigger": "selection",
   "mode": "append",
   "actions": [
     {
       "type": "options",
-      "options": ["critical", "optimistic", "cynical"],
+      "options": ["critical", "optimistic", "empowering", "fearful", "cynical"],
       "bind": "option"
     },
     {

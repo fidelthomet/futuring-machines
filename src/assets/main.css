@@ -20,7 +20,7 @@
 
   --color-text: var(--color-high);
   --color-accent: var(--color-base);
-  --color-cursor: var(--color-high);;
+  --color-cursor: var(--color-high);
   --background-color: #F1F1F1;
 
   --font-mono: 'SF Mono', SFMono-Regular, ui-monospace,
@@ -39,6 +39,7 @@ html {
 
 h1, h2, h3, h4, h5 {
   /* color: var(--color-base);  */
+  font-weight: bold;
 }
 
 button, input {

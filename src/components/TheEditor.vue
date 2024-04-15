@@ -56,6 +56,8 @@ function logHighlight() {
 async function run(editor, prompt) {
   commandStore.run(editor, prompt, prompt.startIndex ?? 0)
   startIndex.value = prompt.startIndex + 1
+  console.log("------ index: " + prompt.startIndex)
+  console.log("index: " + startIndex.value)
 }
 
 function onCustomPrompt(editor, trigger = "new-line", mode = "append") {
@@ -110,6 +112,7 @@ function onShowModal() {
         :key="prompt.name"
         @click="run(editor, prompt)"
         :disabled="customPrompt !== ''"
+        :class="{ 'diverge': prompt.startIndex }"
       >
         {{ prompt.name }} {{ prompt.description }} 
       </button>
@@ -155,6 +158,10 @@ h1 {
 button {
   /* max-width: 33vh; */
   text-align: left;
+}
+
+button.diverge {
+  
 }
 
 input {

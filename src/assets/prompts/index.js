@@ -9,4 +9,4 @@ import innerMonologue from './innerMonologue'
 import pushForwardSelection from './pushForwardSelection'
 
 export default [continueWriting, divergeSTEEP, divergeTone, perspective, question, wildcards,   // New Line
-                elaborate, pushForwardSelection, innerMonologue]                                // Selection
+                elaborate, innerMonologue, pushForwardSelection]                                // Selection
