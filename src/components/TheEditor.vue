@@ -56,8 +56,11 @@ function logHighlight() {
 async function run(editor, prompt) {
   commandStore.run(editor, prompt, prompt.startIndex ?? 0)
   startIndex.value = prompt.startIndex + 1
-  console.log("------ index: " + prompt.startIndex)
-  console.log("index: " + startIndex.value)
+
+  // Flat prompt after generate options
+  if (prompt.actions[prompt.startIndex ?? 0].type === 'generate options') {
+    prompt.generateOptionsFlag = true
+  }
 }
 
 function onCustomPrompt(editor, trigger = "new-line", mode = "append") {
@@ -112,7 +115,7 @@ function onShowModal() {
         :key="prompt.name"
         @click="run(editor, prompt)"
         :disabled="customPrompt !== ''"
-        :class="{ 'diverge': prompt.startIndex }"
+        :class="{ 'diverge': prompt.generateOptionsFlag && prompt.actions[prompt.startIndex ?? 0].type !== 'generate options' }"
       >
         {{ prompt.name }} {{ prompt.description }} 
       </button>
@@ -160,17 +163,22 @@ button {
   text-align: left;
 }
 
+div:has(> button.diverge) { 
+  display: grid;
+  grid-auto-rows: 1fr;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 0.3em;
+  grid-row-gap: 0.3em;
+}
 button.diverge {
-  
+  padding: 14px 18px;
+  display: inline-flex;
 }
 
 input {
   width: 100%;
   display: block;
   margin-top: 10px;
-  /* color: black;
-  border-color: black;
-  box-shadow: 0px 2px 0px black; */
 }
 
 .is-generating {
