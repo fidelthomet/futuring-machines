@@ -23,5 +23,6 @@ main {
 
   /* min-height: 100vh; */
   text-rendering: geometricPrecision;
+  padding-bottom: 500px;
 }
 </style>

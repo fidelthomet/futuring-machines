@@ -156,8 +156,6 @@ h1 {
     /* font-family: 'Redaction 50'; */
     color: var(--color-accent);
   }
-
-  padding-bottom: 500px;
 }
 
 button {
