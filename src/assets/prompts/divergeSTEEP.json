@@ -1,5 +1,5 @@
 {
-  "name": "develop impacts",
+  "name": "address impacts",
   "trigger": "new-line",
   "mode": "append",
   "actions": [
