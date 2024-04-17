@@ -1,11 +1,21 @@
 {
-    "name": "rewrite as inner mologue",
-    "trigger": "selection",
-    "mode": "replace",
-    "actions": [
-      {
-        "type": "generate",
-        "template": "Rewrite the viewpoint of the following text as an inner monologue of the main character. The paragraph should be no more than one sentence long. You write with a humorous, yet critical tone. Input text: ::selection::"
-      }
-    ]
-  }
+  "name": "rewrite in first person",
+  "trigger": "selection",
+  "mode": "replace",
+  "actions": [
+    {
+      "type": "options",
+      "options": ["critical", "optimistic", "ironical", "angry", "fearful"],
+      "bind": "option"
+    },
+    {
+      "type": "generate",
+      "template": "Rewrite the following text from the viewpoint of the main character with a humorous, yet ::option:: tone. Write up to one sentence of at most 10 words. \n\n Input text: '::selection::'.",
+      "bind": "response"
+    },
+    {
+      "type": "static",
+      "template": "\"::response::\""
+    }
+  ]
+}

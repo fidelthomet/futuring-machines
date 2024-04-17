@@ -6,7 +6,8 @@ import question from './question'
 import wildcards from './wildcards'
 import elaborate from './elaborate'
 import innerMonologue from './innerMonologue'
+import innerMonologueRewrite from './innerMonologueRewrite'
 import pushForwardSelection from './pushForwardSelection'
 
 export default [continueWriting, divergeSTEEP, divergeTone, perspective, question, wildcards,   // New Line
-                elaborate, innerMonologue, pushForwardSelection]                                // Selection
+                elaborate, innerMonologue, innerMonologueRewrite, pushForwardSelection]         // Selection
