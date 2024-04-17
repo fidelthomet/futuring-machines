@@ -5,7 +5,7 @@
   "actions": [
     {
       "type": "options",
-      "options": ["critical", "optimistic", "empowering", "fearful", "cynical"],
+      "options": ["critical", "optimistic", "empowering", "fearful", "ironical"],
       "bind": "option"
     },
     {

@@ -9,7 +9,7 @@ const commandStore = useCommandStore()
 
 <template>
   <div class="templates">
-    <h1>Templates</h1>
+    <h1>Story Templates</h1>
     <ul>
       <RouterLink
         v-for="template in commandStore.templatesEnabled"
@@ -50,12 +50,19 @@ const commandStore = useCommandStore()
   }
 
   &:deep(span.mark-ai) {
-    /* font-family: 'Redaction 50'; */
     color: var(--color-accent);
   }
-}
 
-/* button {
-  color: red;
-} */
+  h1 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+  }
+
+  button {
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+}
 </style>

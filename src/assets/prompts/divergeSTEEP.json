@@ -5,7 +5,7 @@
   "actions": [
     {
       "type": "options",
-      "options": ["social", "political", "cultural", "environmental", "economical"],
+      "options": ["social", "technological", "environmental", "economical", "political"],
       "bind": "option"
     },
     {
