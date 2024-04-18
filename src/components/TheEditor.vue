@@ -117,7 +117,7 @@ function onShowModal() {
         :disabled="customPrompt !== ''"
         :class="{ 'diverge': prompt.generateOptionsFlag && prompt.actions[prompt.startIndex ?? 0].type !== 'generate options' }"
       >
-        {{ prompt.name }} {{ prompt.description }} 
+        {{ prompt.name }}{{ prompt.description }} 
       </button>
       <input v-if="startIndex === 0" :editor="editor" v-model="customPrompt" placeholder="...or write here a custom prompt and press ENTER!" @keyup.enter="onCustomPrompt(editor, 'new-line', 'append')"/>
     </div>

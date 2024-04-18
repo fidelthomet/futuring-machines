@@ -249,8 +249,8 @@ export const useCommandStore = defineStore('command', () => {
         options.push({
           ...sourcePrompt,
           // name: option[action.name],
-          name: option[action.name] + '. ',
-          description: option["description"],
+          name: option[action.name],
+          description: option["description"] ? ('. ' + option["description"] + '.') : '',
           startIndex: index,
           env: {
             ...prompt.env,
