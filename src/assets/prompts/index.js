@@ -7,8 +7,8 @@ import wildcards from './wildcards'
 import condense from './condense'
 import elaborate from './elaborate'
 import innerMonologue from './innerMonologue'
-import innerMonologueRewrite from './innerMonologueRewrite'
+import rewrite from './rewrite'
 import pushForwardSelection from './pushForwardSelection'
 
 export default [continueWriting, divergeSTEEP, divergeTone, perspective, question, wildcards,       // New Line
-                condense, elaborate, innerMonologue, innerMonologueRewrite, pushForwardSelection]   // Selection
+                condense, rewrite, elaborate, innerMonologue, pushForwardSelection]   // Selection

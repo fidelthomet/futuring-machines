@@ -10,7 +10,7 @@
     },
     {
       "type": "generate",
-      "template": "Rewrite the following text from the viewpoint of the main character with a humorous, yet ::option:: tone. Write up to one sentence of at most 10 words. \n\n Input text: '::selection::'.",
+      "template": "Rewrite the following text from the viewpoint of the main character with a humorous, yet ::option:: tone. Write up to one sentence of at most 10 words. \n\n Input text: ```::selection::```.",
       "bind": "response"
     },
     {
