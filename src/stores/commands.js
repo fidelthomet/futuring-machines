@@ -29,7 +29,7 @@ export const useCommandStore = defineStore('command', () => {
 
   async function run(editor, prompt, index = 0) {
     // const prompt = promptsEnabled.value.find((prompt) => prompt.name === name)
-    
+
     const { view, state } = editor
 
     // This is the full story as it's being written in the editor. We add it to the story template.
@@ -42,10 +42,10 @@ export const useCommandStore = defineStore('command', () => {
     if (prompt.trigger === 'selection') {
       const { from, to } = view.state.selection
       env.value.selection = state.doc.textBetween(from, to, '\n')
-      console.log("Selection: " + env.value.selection)
+      console.log('Selection: ' + env.value.selection)
     }
 
-    console.log("env.value: ")
+    console.log('env.value: ')
     console.log(env.value)
 
     // const command = prompt.template.replace(/::selection::/, selection)
@@ -54,9 +54,9 @@ export const useCommandStore = defineStore('command', () => {
     index++
     const finalize = index == prompt.actions.length
 
-    console.log("> prompt trigger: " + prompt.trigger)
-    console.log("> prompt mode: " + prompt.mode)
-    console.log("> action type: " + action.type)
+    console.log('> prompt trigger: ' + prompt.trigger)
+    console.log('> prompt mode: ' + prompt.mode)
+    console.log('> action type: ' + action.type)
     console.log(prompt)
 
     // Different behaviours for different prompt types
@@ -127,19 +127,16 @@ export const useCommandStore = defineStore('command', () => {
   **************/
 
   async function runGenerate(action, promptTrigger, promptMode, editor, finalize) {
-
     const prompt = action.template.replace(
       /::([^:]+)::/g,
       (pattern, match) => env.value[match] ?? pattern
     )
-    
-    console.log("GENERATE")
-    console.log("API_URL: " + API_URL + ", Model: " + MODEL)
-    console.log("Prompt: \n\n" + prompt)
+
+    console.log('GENERATE')
+    console.log('API_URL: ' + API_URL + ', Model: ' + MODEL)
+    console.log('Prompt: \n\n' + prompt)
 
     isGenerating.value = true
-
-    
 
     const response = await fetch(API_URL, {
       method: 'POST',
@@ -155,12 +152,13 @@ export const useCommandStore = defineStore('command', () => {
     // Response
     if (finalize) {
       const reader = response.body.getReader()
-      let done, value, start = true, responseStr
+      let done,
+        value,
+        start = true,
+        responseStr
 
-      console.log("> prompt trigger: " + promptTrigger)
-      console.log("> prompt mode: " + promptMode)
-      
-      
+      console.log('> prompt trigger: ' + promptTrigger)
+      console.log('> prompt mode: ' + promptMode)
 
       // For 'append' mode: set the cursor to the end of the editor position
       if (promptTrigger === 'selection' && promptMode === 'append') {
@@ -175,7 +173,11 @@ export const useCommandStore = defineStore('command', () => {
         if (text) {
           editor.commands.setMarkAI()
 
-          responseStr = text.trim().split("\n").map(json => JSON.parse(json).response).join("")
+          responseStr = text
+            .trim()
+            .split('\n')
+            .map((json) => JSON.parse(json).response)
+            .join('')
 
           // Removes leading whitespace at the beginning of the string (When start and new line)
           if (start && (promptTrigger === null || promptTrigger === 'new-line')) {
@@ -186,13 +188,11 @@ export const useCommandStore = defineStore('command', () => {
           // Add streamed response to the editor – adding linebreaks
           editor.commands.insertContent(responseStr.replace(/\n/g, '<br>'))
           // editor.commands.insertContent(JSON.parse(text).response.replace(/\n/g, '<br>'))
-
         }
       }
 
       // Set AI text style
       editor.commands.unsetMarkAI()
-
     } else if (action.bind != null) {
       env.value[action.bind] = await response.json().then((d) => d.response)
     }
@@ -208,12 +208,12 @@ export const useCommandStore = defineStore('command', () => {
       (pattern, match) => env.value[match] ?? pattern
     )
 
-    console.log("GENERATE WITH OPTIONS")
-    console.log("API_URL: " + API_URL + ", Model: " + MODEL)
-    console.log("Prompt: \n\n" + prompt)
+    console.log('GENERATE WITH OPTIONS')
+    console.log('API_URL: ' + API_URL + ', Model: ' + MODEL)
+    console.log('Prompt: \n\n' + prompt)
 
     isGenerating.value = true
-    
+
     // API Call
     const response = await fetch(API_URL, {
       method: 'POST',
@@ -230,7 +230,7 @@ export const useCommandStore = defineStore('command', () => {
 
     isGenerating.value = false
 
-    console.log(">>>>>> Response: ")
+    console.log('>>>>>> Response: ')
     console.log(res)
     const obj = JSON.parse(res)
 
@@ -238,19 +238,19 @@ export const useCommandStore = defineStore('command', () => {
     for (const key in obj) {
       const option = obj[key]
 
-      console.log("- Create option " + key + ": " + option[action.name])
+      console.log('- Create option ' + key + ': ' + option[action.name])
 
       // Create "diverge" options
       if (action.keys.every((k) => Object.prototype.hasOwnProperty.call(option, k))) {
         // Option = the selected "diverge" option
         // Action = the related prompt to be performed after selecting that option
 
-        console.log("------ OPTIONS 1")  
+        console.log('------ OPTIONS 1')
         options.push({
           ...sourcePrompt,
           // name: option[action.name],
           name: option[action.name],
-          description: option["description"] ? ('. ' + option["description"] + '.') : '',
+          description: option['description'] ? '. ' + option['description'] + '.' : '',
           startIndex: index,
           env: {
             ...prompt.env,
@@ -258,7 +258,7 @@ export const useCommandStore = defineStore('command', () => {
           }
         })
       } else {
-        console.log("------ OPTIONS 2")
+        console.log('------ OPTIONS 2')
 
         for (const key in option) {
           const option2 = option[key]
@@ -311,7 +311,15 @@ export const useCommandStore = defineStore('command', () => {
     if (!finalize && action.type === 'generate') initTemplate(editor, index)
   }
 
-  return { promptsEnabled, templatesEnabled, templateName, template, initTemplate, run, isGenerating }
+  return {
+    promptsEnabled,
+    templatesEnabled,
+    templateName,
+    template,
+    initTemplate,
+    run,
+    isGenerating
+  }
 })
 
 if (import.meta.hot) {
