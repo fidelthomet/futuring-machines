@@ -40,18 +40,6 @@ onBeforeUnmount(() => {
   editor.value.destroy()
 })
 
-function logHighlight() {
-  // const { view, state } = editor.value
-  // const { from, to } = view.state.selection
-  // const text = state.doc.textBetween(from, to, '\n')
-  // console.log(text)
-  // editor.value.commands.insertContent(text.split('').reverse().join(''))
-}
-
-// function toggleClass() {
-//   editor.value.chain().focus().toggleMarkAI().run()
-// }
-
 async function run(editor, prompt) {
   commandStore.run(editor, prompt, prompt.startIndex ?? 0)
   startIndex.value = prompt.startIndex + 1
