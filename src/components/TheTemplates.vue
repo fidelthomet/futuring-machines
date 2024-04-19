@@ -34,14 +34,23 @@ const commandStore = useCommandStore()
   nav {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: 10px;
 
     a {
       text-decoration: none;
-      background-color: white;
-      padding: 8px 16px;
+      background-color: var(--color-ui-secondary);
+      color: var(--color-ui-primary);
+      border: 1.5px solid var(--color-ui-primary);
+      box-shadow: 0px 2px 0px var(--color-ui-primary);
+      padding: 4px 16px;
       border-radius: 30px;
       font-size: 20px;
+
+      &:hover {
+        background-color: var(--color-ui-primary);
+        color: var(--color-ui-secondary);
+      }
     }
   }
 }

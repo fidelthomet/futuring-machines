@@ -149,13 +149,9 @@ h1 {
 .editor {
   grid-column: center-start / center-end;
   grid-row: center-start / center-end;
+  color: var(--color-editor-user);
 
-  /* font-size: 25px;
-  line-height: 1.5;
-  letter-spacing: 0.5px; */
-  /* text-rendering: geometricPrecision; */
-
-  caret-color: var(--color-cursor);
+  caret-color: var(--color-ui-primary);
   &:deep(> div:focus) {
     outline: none;
   }
@@ -165,13 +161,11 @@ h1 {
   }
 
   &:deep(span.mark-ai) {
-    /* font-family: 'Redaction 50'; */
-    color: var(--color-accent);
+    color: var(--color-editor-ai);
   }
 }
 
 button {
-  /* max-width: 33vh; */
   text-align: left;
 }
 

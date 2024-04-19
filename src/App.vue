@@ -18,11 +18,6 @@ main {
   grid-template-rows:
     var(--padding) [center-start] 1fr
     [center-end] var(--padding);
-
-  /* grid-template-columns: repeat(4, 1fr); */
-
-  /* min-height: 100vh; */
-  text-rendering: geometricPrecision;
-  padding-bottom: 500px;
+  /* padding-bottom: 500px; */
 }
 </style>
