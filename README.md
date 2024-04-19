@@ -1,6 +1,6 @@
-# futuring machines
+# Futuring Machines
 
-Interface for LLM-Human co-writing of future stories.
+A tool for Human-AI collaborative writing of speculative fiction stories.
 
 ## Project Setup
 
