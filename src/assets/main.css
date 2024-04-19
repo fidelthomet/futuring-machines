@@ -1,4 +1,4 @@
-@import './fonts.css';
+/* @import './fonts.css'; */
 
 *,
 *::before,
@@ -9,10 +9,82 @@
 }
 
 :root {
-  --color-accent: #007B69;
+  --color-base: #333333;
+  --color-high: #0000FF;
+  --color-selection: #00FF0040;
+  
+  /* Prototype Fund Color Schema */
+  /* --color-base: #572E6B;
+  --color-high: #FF937F;
+  --color-selection: #FF937F30; */
+
+  --color-text: var(--color-high);
+  --color-accent: var(--color-base);
+  --color-cursor: var(--color-high);
+  --background-color: #F1F1F1;
+
+  --font-mono: 'SF Mono', SFMono-Regular, ui-monospace,
+  'DejaVu Sans Mono', Menlo, Consolas, monospace;
 }
 
 html {
-  font-family: 'Redaction';
-  font-size: 25px;
+  font-family: var(--font-mono);
+  font-size: 20px;
+  line-height: 1.5;
+  letter-spacing: 0.5px;
+
+  color: var(--color-text);
+  background-color: var(--background-color);
+}
+
+h1, h2, h3, h4, h5 {
+  
+}
+
+button, input {
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 20px;
+  box-sizing: border-box;
+
+  font-size: 14px;
+  font-family: var(--font-mono);
+
+  /* Colouring */
+  background-color: white;
+  color: var(--color-high);
+  border: 1.5px solid var(--color-high);
+  /* background-color: var(--color-high);
+  color: white;
+  border: 1.5px solid var(--color-high); */
+
+  box-shadow: 0px 2px 0px var(--color-high)
+}
+
+button:hover {
+  background-color: var(--color-high);
+  color: white;
+  /* background-color: white;
+  color: var(--color-high); */
+}
+
+button:disabled,
+button[disabled] {
+  opacity: 0.1;
+  background-color: white;
+  color: var(--color-high);
+  cursor: default;
+}
+
+input {
+  cursor: text;
+}
+input:focus {
+  outline: none;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
 }

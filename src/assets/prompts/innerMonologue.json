@@ -1,0 +1,17 @@
+{
+  "name": "elaborate in inner monologue",
+  "trigger": "selection",
+  "mode": "append",
+  "actions": [
+    {
+      "type": "options",
+      "options": ["critical", "optimistic", "empowering", "fearful", "ironical"],
+      "bind": "option"
+    },
+    {
+      "type": "generate",
+      "template": "Continue the following story from the viewpoint of the main character. Write up to one sentence. You reflect on the following text with a humorous, yet ::option:: tone. Give the response within quotes. \n\n Input text: '::selection::'. \n\n Story: ::full::",
+      "bind": "response"
+    }
+  ]
+}

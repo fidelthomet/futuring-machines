@@ -1,0 +1,17 @@
+{
+  "name": "wildcards",
+  "trigger": "new-line",
+  "mode": "append",
+  "actions": [
+    {
+      "type": "generate options",
+      "template": "Continue the following story, which is delimited with triple backticks. Generate three different continuations. Each continuation builds on an unexpected event that brings conflict to the story. Continuations should start with start with 'One day,' or 'Suddenly,'. Continuations should be written in a narrative style and use at most 10 words. \n\nFormat each continuation as a JSON object with 'title' and 'continuation' as the keys. Format your response as a JSON object with 'cont1', 'cont2' and 'cont3' as the keys. \n\nStory: ```::full::```",
+      "name": "continuation",
+      "keys": ["title", "continuation"]
+    },
+    {
+      "type": "static",
+      "template": "::continuation::. Because of that"
+    }
+  ]
+}

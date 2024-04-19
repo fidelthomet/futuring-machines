@@ -1,0 +1,10 @@
+{
+  "name": "Homes for Life",
+  "description": "What will the future of care look like when I retire?",
+  "actions": [
+    {
+      "type": "static",
+      "template": "Herbert is a senior citizen who is friendly and open to his fellow human beings. He really wanted to move into one of these smart houses. They are called 'Homes for Life'. The house is"
+    }
+  ]
+}

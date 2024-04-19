@@ -9,7 +9,7 @@ const commandStore = useCommandStore()
 
 <template>
   <div class="templates">
-    <h1>Templates</h1>
+    <h1>Story Templates</h1>
     <ul>
       <RouterLink
         v-for="template in commandStore.templatesEnabled"
@@ -17,7 +17,7 @@ const commandStore = useCommandStore()
         :to="{ name: 'editor', params: { template: template.name } }"
       >
         <li>
-          {{ template.name }}
+          <button>{{ template.description }}</button>
         </li>
       </RouterLink>
     </ul>
@@ -29,27 +29,40 @@ const commandStore = useCommandStore()
   grid-column: center-start / center-end;
   grid-row: center-start / center-end;
 
-  font-size: 25px;
+  /* font-size: 25px;
   line-height: 1.5;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.5px; */
   text-rendering: geometricPrecision;
 
-  caret-color: rgb(0, 127, 255);
+  a {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+  
+
+  caret-color: var(--color-cursor);
   &:deep(> div:focus) {
     outline: none;
   }
 
   &:deep(*::selection) {
-    background-color: rgba(0, 127, 255, 0.5);
+    background-color: var(--color-selection);
   }
 
   &:deep(span.mark-ai) {
-    font-family: 'Redaction 50';
     color: var(--color-accent);
   }
-}
 
-button {
-  color: red;
+  h1 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+  }
+
+  button {
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
 }
 </style>

@@ -112,7 +112,32 @@ Prompts allow writers to interact with the LLM. They are similarily structured t
 
 Like story templates they require a name and a list of actions. Additionally a trigger `selection` or `new-line` and a mode `replace` or `append` must be specified.
 
-Here's a simple example to shorten a selected text. The response will replace the selected text. `::selection::` in the template string will be replaced with the user selected text. `::selection::` is only available if the trigger is set to `selection`. Alternatively, you can make use of `::full::` which is replaced by the full text. `::full::` is available on all triggers.
+
+##### Example: Adding a mode that is triggered on new line
+
+Here's a simple example to continue the story. The response will be appended at the end of the existing text. Here you can use the flag `::full::`, which will be replaced by the full story text.
+
+```json
+{
+  "name": "continue writing",
+  "trigger": "new-line",
+  "mode": "append",
+  "actions": [
+    {
+      "type": "generate",
+      "template": "Continue the following story, which is delimited with triple backticks. \n\nStory: ```::full::```"
+    }
+  ]
+}
+```
+
+**Note:** Notice in the example above the use of triple backticks around `::full::`. When prompting it is important to write clear and specific instructions, especially when prompts get long. One tactic is using delimiters to clearly indicate distinct parts of the input. Delimiters can be anything like triple backticks (```), triple dashes (---), angle brackets (< >) or XML tags (<tag> </tag>), among others.
+
+
+##### Example: Adding a mode that is triggered on text selection and that will replace the selected text
+
+Here's a simple example to shorten a selected text. The response will replace the selected text. `::selection::` in the template string will be replaced with the user selected text. `::selection::` is only available if the trigger is set to `selection`. Here you can also use `::full::` which is replaced by the full story text. `::full::` is available on all triggers.
+
 ```json
 {
   "name": "condense",
@@ -121,11 +146,31 @@ Here's a simple example to shorten a selected text. The response will replace th
   "actions": [
     {
       "type": "generate",
-      "template": "shorten the following text ::selection::"
+      "template": "Shorten the following text: ::selection::"
     }
   ]
 }
 ```
+
+##### Example: Adding a mode that is triggered on text selection and that will append text at the end of the story
+
+Here's a simple example to make the model further elaborate the idea (term, concept, etc.) behind a selected text. The response will be appended at the end of the story. `::selection::` in the template string will be replaced with the user selected text. Notice that you can also use `::full::`, which is replaced by the full story text. `::full::` is available on all triggers.
+
+```json
+{
+  "name": "elaborate",
+  "trigger": "selection",
+  "mode": "append",
+  "actions": [
+    {
+      "type": "generate",
+      "template": "Continue the following story further elaborating the aspect addressed in the following text. Text: '::selection::'. \n\nStory: ::full::",
+    }
+  ]
+}
+```
+
+##### Example: Chaining multiple actions in a same interaction mode
 
 Again, it is possible to chain multiple actions. The action type `options` allows users to select from given options. The `bind` property is used to define a variable `option` which the selected option will be assigned to. In the second action the selected option is inserted into the template string using `::option::`
 
@@ -147,6 +192,8 @@ Again, it is possible to chain multiple actions. The action type `options` allow
   ]
 }
 ```
+
+##### Example: Tell the model to generate options
 
 Alternatively, options can also be generated using the action type `generate-options`. The example below first offers static options, followed by generated options and finally uses both selections to generate text.
 
@@ -204,8 +251,6 @@ It might be more efficinet to generate options and final text response in one st
 }
 
 ```
-
-
 
 ## Recommended IDE Setup
 

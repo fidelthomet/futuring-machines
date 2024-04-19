@@ -1,0 +1,22 @@
+{
+  "name": "change tone",
+  "trigger": "new-line",
+  "mode": "append",
+  "actions": [
+    {
+      "type": "options",
+      "options": ["positive", "critical", "empowering", "ironical", "fearful"],
+      "bind": "tone"
+    },
+    {
+      "type": "generate options",
+      "template": "Continue the following story, which is delimited with triple backticks. Generate three different continuations. The tone in the development of events should be ::tone::. Continuations should be written in a narrative style and use at most 10 words. \n\nFormat each continuation as a JSON object with 'title' and 'continuation' as the keys. Format your response as a JSON object with 'cont1', 'cont2' and 'cont3' as the keys. \n\nStory: ```::full::```",
+      "name": "continuation",
+      "keys": ["title", "continuation"]
+    },
+    {
+      "type": "static",
+      "template": "::continuation::"
+    }
+  ]
+}

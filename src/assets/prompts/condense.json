@@ -5,7 +5,7 @@
   "actions": [
     {
       "type": "generate",
-      "template": "shorten the following text ::selection::"
+      "template": "Shorten the following text from a fiction story, delimited by triple backticks, in at most 10 words. Write in a narrative way, keeping the tone and style of the input text. \n\nText: ```::selection::```"
     }
   ]
 }

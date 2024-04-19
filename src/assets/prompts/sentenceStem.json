@@ -1,0 +1,11 @@
+{
+  "name": "sentence stem",
+  "trigger": "new-line",
+  "mode": "append",
+  "actions": [
+    {
+      "type": "generate",
+      "template": "Continue the following story, which is delimited with triple backticks. Consider to follow up the event prompted in the last sentence or paragraph or just go for a complete different and unexpected direction that brings conflict to the story. \n\nFirst, continue the story with no more than 10 words. Then, generate a sentence that ends in a sentence stem.\n\nStory: ```::full::```"
+    }
+  ]
+}

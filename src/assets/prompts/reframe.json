@@ -1,0 +1,16 @@
+{
+  "name": "reframe",
+  "trigger": "selection",
+  "mode": "replace",
+  "actions": [
+    {
+      "type": "options",
+      "options": ["positive", "critical", "ironical", "empowering", "angry", "fearful"],
+      "bind": "option"
+    },
+    {
+      "type": "generate",
+      "template": "Rewrite the following text in a more ::option:: tone. Write in a narrative way. Keep the text short, using at most the same mount of words than the input text. \n\n Input text: ```::selection::```."
+    }
+  ]
+}
