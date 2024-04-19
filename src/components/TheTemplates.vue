@@ -1,14 +1,12 @@
 <script setup>
 import { useCommandStore } from '@/stores/commands'
-
 import { RouterLink } from 'vue-router'
-
 const commandStore = useCommandStore()
 </script>
 
 <template>
   <div class="templates">
-    <h1>Story Templates</h1>
+    <h1>Futuring Machines</h1>
     <nav>
       <RouterLink
         v-for="template in commandStore.templatesEnabled"
