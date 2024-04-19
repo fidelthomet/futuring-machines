@@ -10,21 +10,16 @@
 
 :root {
   --color-base: #333333;
-  --color-high: #0000FF;
-  --color-selection: #00FF0040;
-  
-  /* Prototype Fund Color Schema */
-  /* --color-base: #572E6B;
-  --color-high: #FF937F;
-  --color-selection: #FF937F30; */
+  --color-high: #0000ff;
+  --color-selection: #00ff0040;
 
   --color-text: var(--color-high);
   --color-accent: var(--color-base);
   --color-cursor: var(--color-high);
-  --background-color: #F1F1F1;
+  --background-color: #f1f1f1;
 
-  --font-mono: 'SF Mono', SFMono-Regular, ui-monospace,
-  'DejaVu Sans Mono', Menlo, Consolas, monospace;
+  --font-mono: 'SF Mono', SFMono-Regular, ui-monospace, 'DejaVu Sans Mono', Menlo, Consolas,
+    monospace;
 }
 
 html {
@@ -37,11 +32,15 @@ html {
   background-color: var(--background-color);
 }
 
-h1, h2, h3, h4, h5 {
-  
+h1,
+h2,
+h3,
+h4,
+h5 {
 }
 
-button, input {
+button,
+input {
   border: none;
   cursor: pointer;
   padding: 8px;
@@ -59,7 +58,7 @@ button, input {
   color: white;
   border: 1.5px solid var(--color-high); */
 
-  box-shadow: 0px 2px 0px var(--color-high)
+  box-shadow: 0px 2px 0px var(--color-high);
 }
 
 button:hover {

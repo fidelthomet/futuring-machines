@@ -5,7 +5,7 @@ import MarkAI from '@/tiptap/mark-ai'
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useCommandStore } from '@/stores/commands'
 
-/* 
+/*
     >>>> MENUS
     https://tiptap.dev/docs/editor/guide/menus
 
@@ -13,11 +13,10 @@ import { useCommandStore } from '@/stores/commands'
     – A bubble menu is one that appears when selecting text.
     – https://tiptap.dev/docs/editor/api/extensions/bubble-menu
 
-    > Floating Menu 
+    > Floating Menu
     – A floating menu appears in the editor when you place the cursor on an new line.
     - Docs: https://tiptap.dev/docs/editor/api/extensions/bubble-menu
 */
-
 
 const editor = ref(null)
 const commandStore = useCommandStore()
@@ -63,16 +62,18 @@ async function run(editor, prompt) {
   }
 }
 
-function onCustomPrompt(editor, trigger = "new-line", mode = "append") {
-
+function onCustomPrompt(editor, trigger = 'new-line', mode = 'append') {
   let customPromptObj = {
-    "name": "continue",
-    "trigger": trigger,
-    "mode": mode,
-    "actions": [
+    name: 'continue',
+    trigger: trigger,
+    mode: mode,
+    actions: [
       {
-        "type": "generate",
-        "template": "Considering the following story, which is delimited with triple backticks, perform the following task. \n\nTask: " + customPrompt.value + ". \n\nGenerate one short sentence, using at most 10 words. Write in a narrative way, keeping the tone and style of the story. \n\nStory: ```::full::```"
+        type: 'generate',
+        template:
+          'Considering the following story, which is delimited with triple backticks, perform the following task. \n\nTask: ' +
+          customPrompt.value +
+          '. \n\nGenerate one short sentence, using at most 10 words. Write in a narrative way, keeping the tone and style of the story. \n\nStory: ```::full::```'
       }
     ]
   }
@@ -82,12 +83,14 @@ function onCustomPrompt(editor, trigger = "new-line", mode = "append") {
 function onShowModal() {
   customPrompt.value = ''
 }
-
 </script>
 
 <template>
-  <bubble-menu :editor="editor" :tippy-options="{ duration: 100, placement: 'top-start', maxWidth: 800 }" v-if="editor">
-    
+  <bubble-menu
+    :editor="editor"
+    :tippy-options="{ duration: 100, placement: 'top-start', maxWidth: 800 }"
+    v-if="editor"
+  >
     <div v-if="!commandStore.isGenerating">
       <button
         v-for="prompt in commandStore.promptsEnabled.filter((c) => c.trigger === 'selection')"
@@ -97,32 +100,41 @@ function onShowModal() {
         {{ prompt.name }}
       </button>
     </div>
-    <!-- <button @click="logHighlight" :class="{ 'is-active': editor.isActive('bold') }">log</button>
-    <button @click="toggleClass" :class="{ 'is-active': editor.isActive('mark-ai') }">
-      class toggle
-    </button>
-    <button
-      @click="editor.chain().focus().toggleStrike().run()"
-      :class="{ 'is-active': editor.isActive('strike') }"
-    >
-      strike
-    </button> -->
   </bubble-menu>
-  <floating-menu :editor="editor" :tippy-options="{ duration: 100, placement: 'bottom-start', maxWidth: 800, onShow: onShowModal }" v-if="editor">
+  <floating-menu
+    :editor="editor"
+    :tippy-options="{
+      duration: 100,
+      placement: 'bottom-start',
+      maxWidth: 800,
+      onShow: onShowModal
+    }"
+    v-if="editor"
+  >
     <div v-if="!commandStore.isGenerating">
       <button
         v-for="prompt in commandStore.promptsEnabled.filter((c) => c.trigger === 'new-line')"
         :key="prompt.name"
         @click="run(editor, prompt)"
         :disabled="customPrompt !== ''"
-        :class="{ 'diverge': prompt.generateOptionsFlag && prompt.actions[prompt.startIndex ?? 0].type !== 'generate options' }"
+        :class="{
+          diverge:
+            prompt.generateOptionsFlag &&
+            prompt.actions[prompt.startIndex ?? 0].type !== 'generate options'
+        }"
       >
-        {{ prompt.name }}{{ prompt.description }} 
+        {{ prompt.name }}{{ prompt.description }}
       </button>
-      <input v-if="startIndex === 0" :editor="editor" v-model="customPrompt" placeholder="...or write here a custom prompt and press ENTER!" @keyup.enter="onCustomPrompt(editor, 'new-line', 'append')"/>
+      <input
+        v-if="startIndex === 0"
+        :editor="editor"
+        v-model="customPrompt"
+        placeholder="...or write here a custom prompt and press ENTER!"
+        @keyup.enter="onCustomPrompt(editor, 'new-line', 'append')"
+      />
     </div>
   </floating-menu>
-  
+
   <editor-content :editor="editor" class="editor" />
 
   <div class="is-generating" v-if="editor">
@@ -163,7 +175,7 @@ button {
   text-align: left;
 }
 
-div:has(> button.diverge) { 
+div:has(> button.diverge) {
   display: grid;
   grid-auto-rows: 1fr;
   grid-template-columns: repeat(3, 1fr);
@@ -186,5 +198,4 @@ input {
   grid-row: center-end;
   color: #999999;
 }
-
 </style>
