@@ -31,9 +31,22 @@ onMounted(async () => {
     onSelectionUpdate({ editor }) {
       if (editor.view.state.selection.from === editor.view.state.selection.to)
         editor.chain().focus().unsetMarkAI().run()
+    },
+    onUpdate({ editor }) {
+      if (editor.isEmpty) {
+        sessionStorage.removeItem(commandStore.templateName)
+      } else {
+        sessionStorage.setItem(commandStore.templateName, JSON.stringify(editor.getJSON()))
+      }
     }
   })
-  commandStore.initTemplate(editor.value)
+  if (sessionStorage.getItem(commandStore.templateName)) {
+    editor.value.commands.insertContent(
+      JSON.parse(sessionStorage.getItem(commandStore.templateName))
+    )
+  } else {
+    commandStore.initTemplate(editor.value)
+  }
 })
 
 onBeforeUnmount(() => {
