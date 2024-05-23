@@ -16,7 +16,11 @@ export const useEditorStore = defineStore('editor', () => {
         const cursorCenter = cursorCoords.top + cursorHeight / 2
         const windowCenter = window.innerHeight / 2
         const offset = cursorCenter - windowCenter
-        window.scrollBy(0, offset)
+        window.scrollBy({
+          top: offset,
+          left: 0,
+          behavior: 'smooth'
+        })
         if (editor.view.state.selection.from === editor.view.state.selection.to)
           editor.chain().focus().unsetMarkAI().run()
       }
