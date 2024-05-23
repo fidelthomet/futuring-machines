@@ -1,9 +1,8 @@
 <script setup>
-import StarterKit from '@tiptap/starter-kit'
-import { BubbleMenu, FloatingMenu, Editor, EditorContent } from '@tiptap/vue-3'
-import MarkAI from '@/tiptap/mark-ai'
+import { BubbleMenu, FloatingMenu, EditorContent } from '@tiptap/vue-3'
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useCommandStore } from '@/stores/commands'
+import { useEditorStore } from '@/stores/editor'
 
 /*
     >>>> MENUS
@@ -17,40 +16,18 @@ import { useCommandStore } from '@/stores/commands'
     – A floating menu appears in the editor when you place the cursor on an new line.
     - Docs: https://tiptap.dev/docs/editor/api/extensions/bubble-menu
 */
-
-const editor = ref(null)
+const editorStore = useEditorStore()
 const commandStore = useCommandStore()
 
 const customPrompt = ref('')
 const startIndex = ref(0)
 
 onMounted(async () => {
-  editor.value = new Editor({
-    extensions: [StarterKit, MarkAI],
-    content: '',
-    onSelectionUpdate({ editor }) {
-      if (editor.view.state.selection.from === editor.view.state.selection.to)
-        editor.chain().focus().unsetMarkAI().run()
-    },
-    onUpdate({ editor }) {
-      if (editor.isEmpty) {
-        sessionStorage.removeItem(commandStore.templateName)
-      } else {
-        sessionStorage.setItem(commandStore.templateName, JSON.stringify(editor.getJSON()))
-      }
-    }
-  })
-  if (sessionStorage.getItem(commandStore.templateName)) {
-    editor.value.commands.insertContent(
-      JSON.parse(sessionStorage.getItem(commandStore.templateName))
-    )
-  } else {
-    commandStore.initTemplate(editor.value)
-  }
+  commandStore.initTemplate(editorStore.editor)
 })
 
 onBeforeUnmount(() => {
-  editor.value.destroy()
+  editorStore.editor.destroy()
 })
 
 async function run(editor, prompt) {
@@ -88,35 +65,35 @@ function onShowModal() {
 
 <template>
   <bubble-menu
-    :editor="editor"
+    :editor="editorStore.editor"
     :tippy-options="{ duration: 100, placement: 'top-start', maxWidth: 800 }"
-    v-if="editor"
+    v-if="editorStore.editor"
   >
     <div v-if="!commandStore.isGenerating">
       <button
         v-for="prompt in commandStore.promptsEnabled.filter((c) => c.trigger === 'selection')"
         :key="prompt.name"
-        @click="run(editor, prompt)"
+        @click="run(editorStore.editor, prompt)"
       >
         {{ prompt.name }}
       </button>
     </div>
   </bubble-menu>
   <floating-menu
-    :editor="editor"
+    :editor="editorStore.editor"
     :tippy-options="{
       duration: 100,
       placement: 'bottom-start',
       maxWidth: 800,
       onShow: onShowModal
     }"
-    v-if="editor"
+    v-if="editorStore.editor"
   >
     <div v-if="!commandStore.isGenerating">
       <button
         v-for="prompt in commandStore.promptsEnabled.filter((c) => c.trigger === 'new-line')"
         :key="prompt.name"
-        @click="run(editor, prompt)"
+        @click="run(editorStore.editor, prompt)"
         :disabled="customPrompt !== ''"
         :class="{
           diverge:
@@ -128,7 +105,7 @@ function onShowModal() {
       </button>
       <input
         v-if="startIndex === 0"
-        :editor="editor"
+        :editor="editorStore.editor"
         v-model="customPrompt"
         placeholder="...or write here a custom prompt and press ENTER!"
         @keyup.enter="onCustomPrompt(editor, 'new-line', 'append')"
@@ -136,9 +113,9 @@ function onShowModal() {
     </div>
   </floating-menu>
 
-  <editor-content :editor="editor" class="editor" />
+  <editor-content :editor="editorStore.editor" class="editor" />
 
-  <div class="is-generating" v-if="editor">
+  <div class="is-generating" v-if="editorStore.editor">
     <span v-if="commandStore.isGenerating">Loading...</span>
   </div>
 </template>
