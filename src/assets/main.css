@@ -7,9 +7,6 @@
 }
 
 :root {
-  --color-base: #333333;
-  --color-high: #0000ff;
-
   --color-text: #333;
   --color-background: #f1f1f1;
 
@@ -19,12 +16,11 @@
 
   --color-ui-primary: #00f;
   --color-ui-secondary: #fff;
-
 }
 
 html {
   font-family: 'SF Mono', SFMono-Regular, ui-monospace, 'DejaVu Sans Mono', Menlo, Consolas,
-  monospace;
+    monospace;
   font-size: 20px;
   line-height: 1.5;
   letter-spacing: 0.5px;
@@ -45,7 +41,7 @@ input {
 
   background-color: var(--color-ui-secondary);
   color: var(--color-ui-primary);
-  
+
   border: 1.5px solid var(--color-ui-primary);
   box-shadow: 0px 2px 0px var(--color-ui-primary);
 
