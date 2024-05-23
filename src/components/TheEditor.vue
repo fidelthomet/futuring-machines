@@ -125,6 +125,8 @@ h1 {
   grid-column: center-start;
 }
 .editor {
+  margin-top: 50vh;
+  margin-bottom: 50vh;
   grid-column: center-start / center-end;
   grid-row: center-start / center-end;
   color: var(--color-editor-user);
