@@ -10,17 +10,31 @@ export const useEditorStore = defineStore('editor', () => {
     new Editor({
       extensions: [StarterKit, MarkAI],
       content: '',
-      onSelectionUpdate({ editor }) {
-        const cursorCoords = editor.view.coordsAtPos(editor.view.state.selection.anchor)
-        const cursorHeight = cursorCoords.bottom - cursorCoords.top
-        const cursorCenter = cursorCoords.top + cursorHeight / 2
-        const windowCenter = window.innerHeight / 2
-        const offset = cursorCenter - windowCenter
-        window.scrollBy({
-          top: offset,
-          left: 0,
-          behavior: 'smooth'
-        })
+      onSelectionUpdate({ editor, transaction }) {
+        function centerEditor() {
+          const cursorStartY = editor.view.coordsAtPos(editor.view.state.selection.from).top
+          const cursorEndY = editor.view.coordsAtPos(editor.view.state.selection.to).bottom
+          const cursorHeight = cursorEndY - cursorStartY
+          const cursorCenter = cursorStartY + cursorHeight / 2
+          const windowCenter = window.innerHeight / 2
+          const offset = cursorCenter - windowCenter
+          window.scrollBy({
+            top: offset,
+            left: 0,
+            behavior: 'smooth'
+          })
+        }
+        if (!transaction.meta.pointer) {
+          centerEditor()
+        } else {
+          addEventListener(
+            'mouseup',
+            () => {
+              centerEditor()
+            },
+            { once: true }
+          )
+        }
         if (editor.view.state.selection.from === editor.view.state.selection.to)
           editor.chain().focus().unsetMarkAI().run()
       }
