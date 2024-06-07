@@ -3,18 +3,13 @@
 @import url(./variables.css);
 
 html {
-  font-family: 'SF Mono', SFMono-Regular, ui-monospace, 'DejaVu Sans Mono', Menlo, Consolas,
-    monospace;
-  font-size: 20px;
-  line-height: 1.5;
-  letter-spacing: 0.5px;
-
-  color: var(--color-text);
-  background-color: var(--color-background);
+  font: var(--font-ui);
   text-rendering: geometricPrecision;
+  color: var(--color-ai);
+  background-color: var(--color-background);
 }
 
-button,
+/* button,
 input {
   padding: 8px;
   border-radius: 20px;
@@ -48,4 +43,4 @@ input {
   &:focus {
     outline: none;
   }
-}
+} */

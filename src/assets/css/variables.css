@@ -1,11 +1,14 @@
 :root {
-  --color-text: #333;
-  --color-background: #f1f1f1;
+  --color-background: #fff;
+  --color-user: #226a6d;
+  --color-ai: #c68a20;
 
-  --color-editor-user: #00f;
-  --color-editor-ai: #333;
-  --color-selection: #bcf;
+  --font-size: 25px;
+  --font-size-ui: 20px;
+  --line-height: 1.5;
+  
 
-  --color-ui-primary: #00f;
-  --color-ui-secondary: #fff;
+  --font-text: 400 var(--font-size) / var(--line-height) 'Redaction', serif;
+  --font-heading: 700 var(--font-size) / var(--line-height) 'Inter', sans-serif;
+  --font-ui: 400 var(--font-size-ui) / var(--line-height) 'Inter', sans-serif;
 }

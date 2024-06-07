@@ -1,0 +1,14 @@
+@font-face {
+  font-family: 'Inter';
+  src: url("@/assets/fonts/Inter.var.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: oblique 0deg 10deg;
+}
+
+@font-face {
+  font-family: 'Redaction';
+  src: url('@/assets/fonts/Redaction-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}

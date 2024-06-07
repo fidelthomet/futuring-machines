@@ -121,27 +121,40 @@ function onShowModal() {
 </template>
 
 <style scoped>
-h1 {
-  grid-column: center-start;
-}
 .editor {
   margin-top: 50vh;
   margin-bottom: 50vh;
   grid-column: center-start / center-end;
   grid-row: center-start / center-end;
-  color: var(--color-editor-user);
 
-  caret-color: var(--color-ui-primary);
+  font: var(--font-text);
+  letter-spacing: 0.5px;
+  color: var(--color-user);
+
+  caret-color: var(--color-user);
   &:deep(> div:focus) {
     outline: none;
   }
 
   &:deep(*::selection) {
-    background-color: var(--color-selection);
+    background-color: color-mix(in lab, var(--color-user), transparent 85%);
   }
 
   &:deep(span.mark-ai) {
-    color: var(--color-editor-ai);
+    color: var(--color-ai);
+  }
+
+  &:deep(span.mark-ai::selection) {
+    background-color: color-mix(in lab, var(--color-ai), transparent 85%);
+  }
+
+  &:deep(p + p) {
+    margin-top: calc(var(--font-size) * var(--line-height));
+  }
+
+  &:deep(h1, h2, h3, h4) {
+    font: var(--font-heading);
+    letter-spacing: 0;
   }
 }
 
