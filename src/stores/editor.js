@@ -4,35 +4,33 @@ import { defineStore, acceptHMRUpdate } from 'pinia'
 import StarterKit from '@tiptap/starter-kit'
 import { Editor } from '@tiptap/vue-3'
 import MarkAI from '@/tiptap/mark-ai'
+import { centerEditor } from '@/assets/js/utils'
+
+let controller = new AbortController()
 
 export const useEditorStore = defineStore('editor', () => {
+  const selection = ref(null)
   const editor = ref(
     new Editor({
       extensions: [StarterKit, MarkAI],
       content: '',
       onSelectionUpdate({ editor, transaction }) {
-        function centerEditor() {
-          const cursorStartY = editor.view.coordsAtPos(editor.view.state.selection.from).top
-          const cursorEndY = editor.view.coordsAtPos(editor.view.state.selection.to).bottom
-          const cursorHeight = cursorEndY - cursorStartY
-          const cursorCenter = cursorStartY + cursorHeight / 2
-          const windowCenter = window.innerHeight / 2
-          const offset = cursorCenter - windowCenter
-          window.scrollBy({
-            top: offset,
-            left: 0,
-            behavior: 'smooth'
-          })
-        }
         if (!transaction.meta.pointer) {
-          centerEditor()
+          centerEditor(editor)
+          const { from, to } = editor.view.state.selection
+          selection.value = editor.state.doc.textBetween(from, to, '\n') || null
         } else {
+          selection.value = null
           addEventListener(
             'mouseup',
             () => {
-              centerEditor()
+              const { from, to } = editor.view.state.selection
+              selection.value = editor.state.doc.textBetween(from, to, '\n') || null
+              controller.abort()
+              controller = new AbortController()
+              centerEditor(editor)
             },
-            { once: true }
+            { once: true, signal: controller.signal }
           )
         }
         if (editor.view.state.selection.from === editor.view.state.selection.to)
@@ -48,7 +46,8 @@ export const useEditorStore = defineStore('editor', () => {
     })
   )
   return {
-    editor
+    editor,
+    selection
   }
 })
 

@@ -1,8 +1,9 @@
 <script setup>
-import { BubbleMenu, FloatingMenu, EditorContent } from '@tiptap/vue-3'
+import { EditorContent } from '@tiptap/vue-3'
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useCommandStore } from '@/stores/commands'
 import { useEditorStore } from '@/stores/editor'
+import TheCommandPalette from '@/components/TheCommandPalette.vue'
 
 /*
     >>>> MENUS
@@ -61,63 +62,15 @@ function onCustomPrompt(editor, trigger = 'new-line', mode = 'append') {
 function onShowModal() {
   customPrompt.value = ''
 }
+
+function onKeyDown(e) {
+  console.log(e, 'keydown')
+}
 </script>
 
 <template>
-  <bubble-menu
-    :editor="editorStore.editor"
-    :tippy-options="{ duration: 100, placement: 'top-start', maxWidth: 800 }"
-    v-if="editorStore.editor"
-  >
-    <div v-if="!commandStore.isGenerating">
-      <button
-        v-for="prompt in commandStore.promptsEnabled.filter((c) => c.trigger === 'selection')"
-        :key="prompt.name"
-        @click="run(editorStore.editor, prompt)"
-      >
-        {{ prompt.name }}
-      </button>
-    </div>
-  </bubble-menu>
-  <floating-menu
-    :editor="editorStore.editor"
-    :tippy-options="{
-      duration: 100,
-      placement: 'bottom-start',
-      maxWidth: 800,
-      onShow: onShowModal
-    }"
-    v-if="editorStore.editor"
-  >
-    <div v-if="!commandStore.isGenerating">
-      <button
-        v-for="prompt in commandStore.promptsEnabled.filter((c) => c.trigger === 'new-line')"
-        :key="prompt.name"
-        @click="run(editorStore.editor, prompt)"
-        :disabled="customPrompt !== ''"
-        :class="{
-          diverge:
-            prompt.generateOptionsFlag &&
-            prompt.actions[prompt.startIndex ?? 0].type !== 'generate options'
-        }"
-      >
-        {{ prompt.name }}{{ prompt.description }}
-      </button>
-      <input
-        v-if="startIndex === 0"
-        :editor="editorStore.editor"
-        v-model="customPrompt"
-        placeholder="...or write here a custom prompt and press ENTER!"
-        @keyup.enter="onCustomPrompt(editor, 'new-line', 'append')"
-      />
-    </div>
-  </floating-menu>
-
   <editor-content :editor="editorStore.editor" class="editor" />
-
-  <div class="is-generating" v-if="editorStore.editor">
-    <span v-if="commandStore.isGenerating">Loading...</span>
-  </div>
+  <TheCommandPalette />
 </template>
 
 <style scoped>

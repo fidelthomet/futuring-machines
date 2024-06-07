@@ -1,7 +1,8 @@
-import { computed, ref } from 'vue'
+import { computed, nextTick, ref } from 'vue'
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import prompts from '@/assets/prompts'
 import templates from '@/assets/templates'
+import { centerEditor } from '@/assets/js/utils'
 
 const MODEL = import.meta.env.VITE_MODEL
 const API_URL = import.meta.env.VITE_API_URL
@@ -301,6 +302,7 @@ export const useCommandStore = defineStore('command', () => {
           action.template.replace(/::([^:]+)::/g, (pattern, match) => env.value[match] ?? pattern)
         )
         editor.commands.unsetMarkAI()
+        nextTick(() => centerEditor(editor, true))
         break
 
       default:
