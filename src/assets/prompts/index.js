@@ -10,5 +10,16 @@ import innerMonologue from './innerMonologue'
 import reframe from './reframe'
 import pushForwardSelection from './pushForwardSelection'
 
-export default [continueWriting, divergeSTEEP, divergeTone, perspective, question, wildcards,       // New Line
-                condense, reframe, elaborate, innerMonologue, pushForwardSelection]   // Selection
+export default [
+  continueWriting,
+  divergeSTEEP,
+  divergeTone,
+  perspective,
+  question,
+  wildcards,
+  condense,
+  reframe,
+  elaborate,
+  innerMonologue,
+  pushForwardSelection
+]
