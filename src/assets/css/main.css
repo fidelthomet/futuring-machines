@@ -1,22 +1,6 @@
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  font-weight: normal;
-}
-
-:root {
-  --color-text: #333;
-  --color-background: #f1f1f1;
-
-  --color-editor-user: #00f;
-  --color-editor-ai: #333;
-  --color-selection: #bcf;
-
-  --color-ui-primary: #00f;
-  --color-ui-secondary: #fff;
-}
+@import url(./base.css);
+@import url(./fonts.css);
+@import url(./variables.css);
 
 html {
   font-family: 'SF Mono', SFMono-Regular, ui-monospace, 'DejaVu Sans Mono', Menlo, Consolas,
