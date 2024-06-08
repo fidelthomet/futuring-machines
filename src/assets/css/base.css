@@ -5,3 +5,10 @@
   margin: 0;
   font-weight: normal;
 }
+
+body {
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

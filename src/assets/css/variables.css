@@ -1,10 +1,10 @@
 :root {
   --color-background: #fff;
-  --color-user: #226a6d;
-  --color-ai: #c68a20;
+  --color-user: #b13514;
+  --color-ai: #2f297f;
 
   --font-size: 25px;
-  --font-size-ui: 20px;
+  --font-size-ui: 16px;
   --line-height: 1.5;
 
   --font-text: 400 var(--font-size) / var(--line-height) 'Redaction', serif;

@@ -1,19 +1,18 @@
 <script setup>
-import { ref } from 'vue'
-
 defineProps({
-  tag: {
-    type: String,
-    default: 'button'
+  crumbs: {
+    type: Array,
+    default: () => ['Prompts']
   }
 })
 </script>
 <template>
-  <component :is="tag" class="button-tile">
-    <h2>
-      <slot name="title"></slot>
-    </h2>
-  </component>
+  <div class="breadcrumb-navigation">
+    <template v-for="(crumb, i) in crumbs" :key="i">
+      <span>{{ crumb }}</span>
+      <span v-if="i < crumbs.length - 1"> / </span>
+    </template>
+  </div>
 </template>
 <style scoped>
 .button-tile {
@@ -27,17 +26,10 @@ defineProps({
   color: var(--color-ai);
   font: var(--font-ui);
   text-align: left;
-  transition:
-    background-color 0.2s,
-    color 0.2s;
 
   h2 {
     font: var(--font-ui);
     font-weight: 500;
-  }
-
-  &:hover {
-    background-color: color-mix(in lab, var(--color-ai), transparent 95%);
   }
 }
 </style>

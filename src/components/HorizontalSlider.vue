@@ -51,8 +51,12 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="horizontal-slider">
-    <button :disabled="!enableArrowLeft" class="arrow left" @click="slide(-1)">←</button>
-    <button :disabled="!enableArrowRight" class="arrow right" @click="slide(1)">→</button>
+    <button :disabled="!enableArrowLeft" tabindex="-1" class="arrow left" @click="slide(-1)">
+      ←
+    </button>
+    <button :disabled="!enableArrowRight" tabindex="-1" class="arrow right" @click="slide(1)">
+      →
+    </button>
     <div
       ref="wrapper"
       class="wrapper"
@@ -102,10 +106,21 @@ onBeforeUnmount(() => {
     border: none;
     /* background: none; */
     color: var(--color-user);
-    transition: color 0.2s;
+    transition:
+      color 0.2s,
+      font-size 0.2s,
+      font-weight 0.2s;
+
+    &:not(:disabled) {
+      &:hover {
+        font-size: 1em;
+        font-weight: 310;
+      }
+    }
 
     &:disabled {
       color: color-mix(in lab, var(--color-user), transparent 70%);
+      cursor: default;
     }
 
     &.left {
