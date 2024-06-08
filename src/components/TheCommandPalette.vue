@@ -33,24 +33,24 @@ const availablePrompts = computed(() =>
 
 const showPrompts = computed(() => openPrompts.value || editorStore.selection != null)
 
-function closeEditor(force) {
+function closePromptSelection(force) {
   openPrompts.value = false
-  editorStore.editor.off('update', closeEditor)
-  editorStore.editor.off('selectionUpdate', closeEditor)
+  editorStore.editor.off('update', closePromptSelection)
+  editorStore.editor.off('selectionUpdate', closePromptSelection)
   if (force) {
     editorStore.editor.commands.setTextSelection(editorStore.editor.view.state.selection.to)
     editorStore.selection = null
   }
 }
 
-function openEditor() {
+function openPromptSelection() {
   openPrompts.value = true
-  editorStore.editor.on('update', closeEditor)
-  editorStore.editor.on('selectionUpdate', closeEditor)
+  editorStore.editor.on('update', closePromptSelection)
+  editorStore.editor.on('selectionUpdate', closePromptSelection)
 }
 
-function toggleEditor(force) {
-  showPrompts.value ? closeEditor(force) : openEditor()
+function togglePromptSelection(force) {
+  showPrompts.value ? closePromptSelection(force) : openPromptSelection()
 }
 
 let onKeyDownListener = null
@@ -58,17 +58,17 @@ onMounted(() => {
   onKeyDownListener = window.addEventListener('keydown', (e) => {
     if (e.key === 'Tab' && !showPrompts.value) {
       e.preventDefault()
-      openEditor()
+      openPromptSelection()
     } else if (e.key === 'Escape' && showPrompts.value) {
       e.preventDefault()
-      closeEditor()
+      closePromptSelection()
     }
   })
 })
 onBeforeUnmount(() => {
   window.removeEventListener('keydown', onKeyDownListener)
-  editorStore.editor.off('update', closeEditor)
-  editorStore.editor.off('selectionUpdate', closeEditor)
+  editorStore.editor.off('update', closePromptSelection)
+  editorStore.editor.off('selectionUpdate', closePromptSelection)
 })
 </script>
 <template>
@@ -90,7 +90,7 @@ onBeforeUnmount(() => {
     <hr />
     <div class="controls">
       <span class="left">
-        <ButtonDefault @click="toggleEditor(true)" :active="showPrompts">AI</ButtonDefault>
+        <ButtonDefault @click="togglePromptSelection(true)" :active="showPrompts">AI</ButtonDefault>
       </span>
       <span class="right">
         <ButtonDefault
