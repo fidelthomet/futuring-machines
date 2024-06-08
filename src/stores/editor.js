@@ -4,6 +4,8 @@ import { defineStore, acceptHMRUpdate } from 'pinia'
 import StarterKit from '@tiptap/starter-kit'
 import { Editor } from '@tiptap/vue-3'
 import MarkAI from '@/tiptap/mark-ai'
+import Placeholder from '@/tiptap/placeholder'
+import Start from '@/tiptap/start'
 import { centerEditor } from '@/assets/js/utils'
 
 let controller = new AbortController()
@@ -12,7 +14,7 @@ export const useEditorStore = defineStore('editor', () => {
   const selection = ref(null)
   const editor = ref(
     new Editor({
-      extensions: [StarterKit, MarkAI],
+      extensions: [StarterKit, MarkAI, Placeholder, Start],
       content: '',
       onSelectionUpdate({ editor, transaction }) {
         if (!transaction.meta.pointer) {

@@ -13,6 +13,8 @@ export const useCommandStore = defineStore('command', () => {
   const promptsAvailable = ref(prompts)
   const promptsEnabled = ref(promptsAvailable.value)
 
+  const aiEnabled = ref(true)
+
   const templatesAvailable = ref(templates)
   const templatesEnabled = ref(templatesAvailable.value)
 
@@ -301,10 +303,12 @@ export const useCommandStore = defineStore('command', () => {
         await runGenerate(action, null, null, editor, finalize)
         break
       case 'static':
-        editor.commands.setMarkAI()
-        editor.commands.insertContent(
+        editor.commands.setContent(
           action.template.replace(/::([^:]+)::/g, (pattern, match) => env.value[match] ?? pattern)
         )
+        editor.commands.selectAll()
+        editor.commands.setMarkAI()
+        editor.commands.selectTextblockEnd()
         editor.commands.unsetMarkAI()
         nextTick(() => centerEditor(editor, true))
         break
@@ -325,7 +329,8 @@ export const useCommandStore = defineStore('command', () => {
     initTemplate,
     run,
     isGenerating,
-    resetPrompts
+    resetPrompts,
+    aiEnabled
   }
 })
 

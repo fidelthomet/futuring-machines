@@ -31,7 +31,9 @@ const availablePrompts = computed(() =>
     : commandStore.promptsEnabled.filter((prompt) => prompt.trigger !== 'selection')
 )
 
-const showPrompts = computed(() => openPrompts.value || editorStore.selection != null)
+const showPrompts = computed(
+  () => (openPrompts.value || editorStore.selection != null) && commandStore.aiEnabled
+)
 
 function closePromptSelection(force) {
   openPrompts.value = false
@@ -92,7 +94,11 @@ onBeforeUnmount(() => {
     <hr />
     <div class="controls">
       <span class="left">
-        <ButtonDefault @click="togglePromptSelection(true)" :active="showPrompts" primary
+        <ButtonDefault
+          @click="togglePromptSelection(true)"
+          :active="showPrompts"
+          :disabled="!commandStore.aiEnabled"
+          primary
           >AI</ButtonDefault
         >
       </span>

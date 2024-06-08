@@ -1,6 +1,4 @@
 <script setup>
-import { ref } from 'vue'
-
 defineProps({
   tag: {
     type: String,
