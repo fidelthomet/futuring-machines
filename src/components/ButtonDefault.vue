@@ -8,6 +8,10 @@ defineProps({
     type: Boolean,
     default: false
   },
+  primary: {
+    type: Boolean,
+    default: false
+  },
   disabled: {
     type: Boolean,
     default: false
@@ -15,7 +19,7 @@ defineProps({
 })
 </script>
 <template>
-  <component :is="tag" class="button" :class="{ active }" :disabled="disabled">
+  <component :is="tag" class="button" :class="{ active, primary }" :disabled="disabled">
     <slot />
   </component>
 </template>
@@ -30,6 +34,7 @@ defineProps({
   border-radius: 5px;
   transition:
     background-color 0.2s,
+    border-color 0.2s,
     color 0.2s;
 
   &.active {
@@ -39,6 +44,10 @@ defineProps({
     /* &:not(:disabled):hover {
       background-color: color-mix(in lab, var(--color-ai), transparent 90%);
     } */
+  }
+
+  &.primary {
+    /* border: 1px solid currentColor; */
   }
 
   &:not(:disabled):hover {

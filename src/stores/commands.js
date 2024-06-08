@@ -98,7 +98,7 @@ export const useCommandStore = defineStore('command', () => {
 
     // Stream finalized
     if (finalize) {
-      promptsEnabled.value = promptsAvailable.value
+      resetPrompts()
     }
 
     // const response = await fetch(API_URL, {
@@ -121,6 +121,10 @@ export const useCommandStore = defineStore('command', () => {
     //     editor.commands.insertContent(JSON.parse(text).response)
     //   }
     // }
+  }
+
+  function resetPrompts() {
+    promptsEnabled.value = promptsAvailable.value
   }
 
   /************* 
@@ -320,7 +324,8 @@ export const useCommandStore = defineStore('command', () => {
     template,
     initTemplate,
     run,
-    isGenerating
+    isGenerating,
+    resetPrompts
   }
 })
 

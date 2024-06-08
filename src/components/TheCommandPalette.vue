@@ -44,6 +44,8 @@ function closePromptSelection(force) {
 }
 
 function openPromptSelection() {
+  startIndex.value = 0
+  commandStore.resetPrompts()
   openPrompts.value = true
   editorStore.editor.on('update', closePromptSelection)
   editorStore.editor.on('selectionUpdate', closePromptSelection)
@@ -90,7 +92,9 @@ onBeforeUnmount(() => {
     <hr />
     <div class="controls">
       <span class="left">
-        <ButtonDefault @click="togglePromptSelection(true)" :active="showPrompts">AI</ButtonDefault>
+        <ButtonDefault @click="togglePromptSelection(true)" :active="showPrompts" primary
+          >AI</ButtonDefault
+        >
       </span>
       <span class="right">
         <ButtonDefault
