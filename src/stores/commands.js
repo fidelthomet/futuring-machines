@@ -289,7 +289,6 @@ export const useCommandStore = defineStore('command', () => {
     INIT TEMPLATE
   */
   async function initTemplate(editor, index = 0) {
-    console.log('init template', storyId.value, localStorage.getItem(`story-${storyId.value}`))
     const save = localStorage.getItem(`story-${storyId.value}`)
     if (save != null) {
       editor.commands.setContent(JSON.parse(save).editor)
