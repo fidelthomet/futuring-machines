@@ -16,7 +16,7 @@ const commandStore = useCommandStore()
         :key="template.name"
         :to="{ name: 'editor', params: { template: template.name } }"
       >
-        <ButtonTile tag="div" :height="260" width="210">
+        <ButtonTile tag="div" :height="260" :width="210">
           <template v-slot:title>{{ template.name }}</template>
           <template v-slot:description>{{ template.description }}</template>
         </ButtonTile>

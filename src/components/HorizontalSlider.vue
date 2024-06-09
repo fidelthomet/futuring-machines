@@ -2,7 +2,12 @@
 import { onMounted, ref, onBeforeUnmount, computed, nextTick } from 'vue'
 // import { approximatelyEqual, isClient } from '../../utils'
 
-defineProps({})
+const props = defineProps({
+  itemWidth: {
+    type: Number,
+    default: 210
+  }
+})
 
 const wrapper = ref(null)
 
@@ -36,9 +41,9 @@ function onScroll() {
 }
 
 const slide = (dir) => {
-  const itemWidth = 210
-  const offset = Math.min(800, window.innerWidth - 40) - itemWidth / 2
-  wrapper.value.scrollBy({ left: offset * dir, behavior: 'smooth' })
+  const contentWidth = Math.min(800, window.innerWidth - 80)
+  const offset = Math.max(Math.floor(contentWidth / props.itemWidth), 1)
+  wrapper.value.scrollBy({ left: offset * props.itemWidth * dir, behavior: 'smooth' })
 }
 
 onMounted(() => {
