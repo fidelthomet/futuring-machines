@@ -1,36 +1,89 @@
 <script setup>
 import { useCommandStore } from '@/stores/commands'
+import { useStoryStore } from '@/stores/story'
 import { RouterLink } from 'vue-router'
+import HorizontalSlider from './HorizontalSlider.vue'
+import ButtonTile from './ButtonTile.vue'
+import { onMounted } from 'vue'
+import ButtonDefault from './ButtonDefault.vue'
 const commandStore = useCommandStore()
+const storyStore = useStoryStore()
+
+onMounted(() => {
+  storyStore.update()
+})
 </script>
 
 <template>
   <div class="templates">
     <h1>Futuring Machines</h1>
-    <nav>
+    <h2>Templates</h2>
+    <HorizontalSlider>
       <RouterLink
         v-for="template in commandStore.templatesEnabled"
         :key="template.name"
         :to="{ name: 'editor', params: { template: template.name } }"
       >
-        {{ template.description }}
+        <ButtonTile tag="div" :height="260" :width="210">
+          <template v-slot:title>{{ template.name }}</template>
+          <template v-slot:description>{{ template.description }}</template>
+        </ButtonTile>
       </RouterLink>
-    </nav>
+    </HorizontalSlider>
+    <template v-if="storyStore.stories?.length > 0">
+      <h2>Recent stories</h2>
+      <ul class="selection-list">
+        <RouterLink
+          v-for="story in storyStore.stories"
+          :key="story.id"
+          :to="{ name: 'editor', params: { template: story.template, id: story.id } }"
+        >
+          <li>
+            {{ story.template }} {{ story.updated.toLocaleString() }}
+            <ButtonDefault @click.stop.prevent="storyStore.deleteStory(story.id)"
+              >delete</ButtonDefault
+            >
+          </li>
+        </RouterLink>
+      </ul>
+    </template>
   </div>
 </template>
 
 <style scoped>
 .templates {
-  grid-column: center-start / center-end;
-  grid-row: center-start / center-end;
+  display: grid;
+  grid: inherit;
+  grid-column: 1 / -1;
+  row-gap: var(--spacing);
+  /* grid-row: center-start / center-end; */
+  margin-top: calc(var(--spacing) * 4);
 
   h1 {
     font-size: 1.5em;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
+    font: var(--font-heading);
+    grid-column: center-start / center-end;
+  }
+
+  h2 {
+    font: var(--font-ui);
+    grid-column: center-start / center-end;
+  }
+
+  .horizontal-slider,
+  .selection-list {
+    grid-column: outer-start / outer-end;
+
+    a {
+      text-decoration: none;
+      color: var(--color-user);
+    }
   }
 
   nav {
     display: flex;
+    grid-column: outer-start / outer-end;
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;

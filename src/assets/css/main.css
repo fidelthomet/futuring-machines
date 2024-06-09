@@ -1,0 +1,46 @@
+@import url(./base.css);
+@import url(./fonts.css);
+@import url(./variables.css);
+
+html {
+  font: var(--font-ui);
+  text-rendering: geometricPrecision;
+  color: var(--color-ai);
+  background-color: var(--color-background);
+}
+
+/* button,
+input {
+  padding: 8px;
+  border-radius: 20px;
+  box-sizing: border-box;
+
+  font-size: 14px;
+  font-family: inherit;
+
+  background-color: var(--color-ui-secondary);
+  color: var(--color-ui-primary);
+
+  border: 1.5px solid var(--color-ui-primary);
+  box-shadow: 0px 2px 0px var(--color-ui-primary);
+
+  &:hover {
+    background-color: var(--color-ui-primary);
+    color: var(--color-ui-secondary);
+  }
+  &:disabled {
+    opacity: 0.1;
+    pointer-events: none;
+  }
+}
+
+button {
+  cursor: pointer;
+}
+
+input {
+  cursor: text;
+  &:focus {
+    outline: none;
+  }
+} */

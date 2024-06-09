@@ -1,7 +1,8 @@
-import { computed, ref } from 'vue'
+import { computed, nextTick, ref } from 'vue'
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import prompts from '@/assets/prompts'
 import templates from '@/assets/templates'
+import { centerEditor } from '@/assets/js/utils'
 
 const MODEL = import.meta.env.VITE_MODEL
 const API_URL = import.meta.env.VITE_API_URL
@@ -12,14 +13,18 @@ export const useCommandStore = defineStore('command', () => {
   const promptsAvailable = ref(prompts)
   const promptsEnabled = ref(promptsAvailable.value)
 
+  const aiEnabled = ref(true)
+
   const templatesAvailable = ref(templates)
   const templatesEnabled = ref(templatesAvailable.value)
 
   const templateName = ref(null)
+  const storyId = ref(null)
 
   const template = computed(() => templatesEnabled.value.find((t) => t.name === templateName.value))
 
   const isGenerating = ref(false)
+  const isError = ref(false)
 
   const env = ref({})
 
@@ -97,7 +102,7 @@ export const useCommandStore = defineStore('command', () => {
 
     // Stream finalized
     if (finalize) {
-      promptsEnabled.value = promptsAvailable.value
+      resetPrompts()
     }
 
     // const response = await fetch(API_URL, {
@@ -120,6 +125,10 @@ export const useCommandStore = defineStore('command', () => {
     //     editor.commands.insertContent(JSON.parse(text).response)
     //   }
     // }
+  }
+
+  function resetPrompts() {
+    promptsEnabled.value = promptsAvailable.value
   }
 
   /************* 
@@ -232,55 +241,66 @@ export const useCommandStore = defineStore('command', () => {
 
     console.log('>>>>>> Response: ')
     console.log(res)
-    const obj = JSON.parse(res)
+    try {
+      const obj = JSON.parse(res)
 
-    const options = []
-    for (const key in obj) {
-      const option = obj[key]
+      const options = []
+      for (const key in obj) {
+        const option = obj[key]
 
-      console.log('- Create option ' + key + ': ' + option[action.name])
+        console.log('- Create option ' + key + ': ' + option[action.name])
 
-      // Create "diverge" options
-      if (action.keys.every((k) => Object.prototype.hasOwnProperty.call(option, k))) {
-        // Option = the selected "diverge" option
-        // Action = the related prompt to be performed after selecting that option
+        // Create "diverge" options
+        if (action.keys.every((k) => Object.prototype.hasOwnProperty.call(option, k))) {
+          // Option = the selected "diverge" option
+          // Action = the related prompt to be performed after selecting that option
 
-        console.log('------ OPTIONS 1')
-        options.push({
-          ...sourcePrompt,
-          // name: option[action.name],
-          name: option[action.name],
-          description: option['description'] ? '. ' + option['description'] + '.' : '',
-          startIndex: index,
-          env: {
-            ...prompt.env,
-            ...option
-          }
-        })
-      } else {
-        console.log('------ OPTIONS 2')
-
-        for (const key in option) {
-          const option2 = option[key]
+          console.log('------ OPTIONS 1')
           options.push({
             ...sourcePrompt,
-            name: option2[action.name],
+            // name: option[action.name],
+            name: option[action.name],
+            description: option['description'],
             startIndex: index,
             env: {
               ...prompt.env,
-              ...option2
+              ...option
             }
           })
+        } else {
+          console.log('------ OPTIONS 2')
+
+          for (const key in option) {
+            const option2 = option[key]
+            options.push({
+              ...sourcePrompt,
+              name: option2[action.name],
+              startIndex: index,
+              env: {
+                ...prompt.env,
+                ...option2
+              }
+            })
+          }
         }
       }
+      promptsEnabled.value = options
+    } catch {
+      console.log('error')
+      isError.value = true
     }
-    promptsEnabled.value = options
   }
 
   /* 
     INIT TEMPLATE
   */
   async function initTemplate(editor, index = 0) {
+    const save = localStorage.getItem(`story-${storyId.value}`)
+    if (save != null) {
+      editor.commands.setContent(JSON.parse(save).editor)
+      nextTick(() => centerEditor(editor, true))
+      return
+    }
     const { view, state } = editor
 
     env.value.full = state.doc.textBetween(0, view.state.doc.nodeSize - 2, '\n')
@@ -296,11 +316,14 @@ export const useCommandStore = defineStore('command', () => {
         await runGenerate(action, null, null, editor, finalize)
         break
       case 'static':
-        editor.commands.setMarkAI()
-        editor.commands.insertContent(
+        editor.commands.setContent(
           action.template.replace(/::([^:]+)::/g, (pattern, match) => env.value[match] ?? pattern)
         )
+        editor.commands.selectAll()
+        editor.commands.setMarkAI()
+        editor.commands.selectTextblockEnd()
         editor.commands.unsetMarkAI()
+        nextTick(() => centerEditor(editor, true))
         break
 
       default:
@@ -315,10 +338,14 @@ export const useCommandStore = defineStore('command', () => {
     promptsEnabled,
     templatesEnabled,
     templateName,
+    storyId,
     template,
     initTemplate,
     run,
-    isGenerating
+    isGenerating,
+    isError,
+    resetPrompts,
+    aiEnabled
   }
 })
 

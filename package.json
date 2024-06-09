@@ -15,16 +15,20 @@
     "@tiptap/starter-kit": "^2.2.2",
     "@tiptap/vue-3": "^2.2.2",
     "pinia": "^2.1.7",
-    "vue": "^3.4.15",
-    "vue-router": "^4.2.5"
+    "vue": "^3.4.27",
+    "vue-router": "^4.2.5",
+    "vue-snap": "^1.0.0-alpha.5"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.3.3",
     "@vitejs/plugin-vue": "^5.0.3",
     "@vue/eslint-config-prettier": "^8.0.0",
+    "autoprefixer": "^10.4.19",
     "eslint": "^8.49.0",
     "eslint-plugin-vue": "^9.17.0",
+    "postcss": "^8.4.38",
     "prettier": "^3.0.3",
+    "unplugin-icons": "^0.19.0",
     "vite": "^5.0.11"
   }
 }

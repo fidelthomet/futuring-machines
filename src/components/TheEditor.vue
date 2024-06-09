@@ -1,9 +1,9 @@
 <script setup>
-import StarterKit from '@tiptap/starter-kit'
-import { BubbleMenu, FloatingMenu, Editor, EditorContent } from '@tiptap/vue-3'
-import MarkAI from '@/tiptap/mark-ai'
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { EditorContent } from '@tiptap/vue-3'
+import { onMounted, onBeforeUnmount } from 'vue'
 import { useCommandStore } from '@/stores/commands'
+import { useEditorStore } from '@/stores/editor'
+import TheCommandPalette from '@/components/TheCommandPalette.vue'
 
 /*
     >>>> MENUS
@@ -17,153 +17,111 @@ import { useCommandStore } from '@/stores/commands'
     – A floating menu appears in the editor when you place the cursor on an new line.
     - Docs: https://tiptap.dev/docs/editor/api/extensions/bubble-menu
 */
-
-const editor = ref(null)
+const editorStore = useEditorStore()
 const commandStore = useCommandStore()
 
-const customPrompt = ref('')
-const startIndex = ref(0)
+// const customPrompt = ref('')
+// const startIndex = ref(0)
 
 onMounted(async () => {
-  editor.value = new Editor({
-    extensions: [StarterKit, MarkAI],
-    content: '',
-    onSelectionUpdate({ editor }) {
-      if (editor.view.state.selection.from === editor.view.state.selection.to)
-        editor.chain().focus().unsetMarkAI().run()
-    },
-    onUpdate({ editor }) {
-      if (editor.isEmpty) {
-        sessionStorage.removeItem(commandStore.templateName)
-      } else {
-        sessionStorage.setItem(commandStore.templateName, JSON.stringify(editor.getJSON()))
-      }
-    }
-  })
-  if (sessionStorage.getItem(commandStore.templateName)) {
-    editor.value.commands.insertContent(
-      JSON.parse(sessionStorage.getItem(commandStore.templateName))
-    )
-  } else {
-    commandStore.initTemplate(editor.value)
-  }
+  editorStore.createEditor()
+  commandStore.initTemplate(editorStore.editor)
 })
 
 onBeforeUnmount(() => {
-  editor.value.destroy()
+  editorStore.editor.destroy()
 })
 
-async function run(editor, prompt) {
-  commandStore.run(editor, prompt, prompt.startIndex ?? 0)
-  startIndex.value = prompt.startIndex + 1
+// async function run(editor, prompt) {
+//   commandStore.run(editor, prompt, prompt.startIndex ?? 0)
+//   startIndex.value = prompt.startIndex + 1
 
-  // Flat prompt after generate options
-  if (prompt.actions[prompt.startIndex ?? 0].type === 'generate options') {
-    prompt.generateOptionsFlag = true
-  }
-}
+//   // Flat prompt after generate options
+//   if (prompt.actions[prompt.startIndex ?? 0].type === 'generate options') {
+//     prompt.generateOptionsFlag = true
+//   }
+// }
 
-function onCustomPrompt(editor, trigger = 'new-line', mode = 'append') {
-  let customPromptObj = {
-    name: 'continue',
-    trigger: trigger,
-    mode: mode,
-    actions: [
-      {
-        type: 'generate',
-        template:
-          'Considering the following story, which is delimited with triple backticks, perform the following task. \n\nTask: ' +
-          customPrompt.value +
-          '. \n\nGenerate one short sentence, using at most 10 words. Write in a narrative way, keeping the tone and style of the story. \n\nStory: ```::full::```'
-      }
-    ]
-  }
-  commandStore.run(editor, customPromptObj, 0)
-}
+// function onCustomPrompt(editor, trigger = 'new-line', mode = 'append') {
+//   let customPromptObj = {
+//     name: 'continue',
+//     trigger: trigger,
+//     mode: mode,
+//     actions: [
+//       {
+//         type: 'generate',
+//         template:
+//           'Considering the following story, which is delimited with triple backticks, perform the following task. \n\nTask: ' +
+//           customPrompt.value +
+//           '. \n\nGenerate one short sentence, using at most 10 words. Write in a narrative way, keeping the tone and style of the story. \n\nStory: ```::full::```'
+//       }
+//     ]
+//   }
+//   commandStore.run(editor, customPromptObj, 0)
+// }
 
-function onShowModal() {
-  customPrompt.value = ''
-}
+// function onShowModal() {
+//   customPrompt.value = ''
+// }
+
+// function onKeyDown(e) {
+//   console.log(e, 'keydown')
+// }
 </script>
 
 <template>
-  <bubble-menu
-    :editor="editor"
-    :tippy-options="{ duration: 100, placement: 'top-start', maxWidth: 800 }"
-    v-if="editor"
-  >
-    <div v-if="!commandStore.isGenerating">
-      <button
-        v-for="prompt in commandStore.promptsEnabled.filter((c) => c.trigger === 'selection')"
-        :key="prompt.name"
-        @click="run(editor, prompt)"
-      >
-        {{ prompt.name }}
-      </button>
-    </div>
-  </bubble-menu>
-  <floating-menu
-    :editor="editor"
-    :tippy-options="{
-      duration: 100,
-      placement: 'bottom-start',
-      maxWidth: 800,
-      onShow: onShowModal
-    }"
-    v-if="editor"
-  >
-    <div v-if="!commandStore.isGenerating">
-      <button
-        v-for="prompt in commandStore.promptsEnabled.filter((c) => c.trigger === 'new-line')"
-        :key="prompt.name"
-        @click="run(editor, prompt)"
-        :disabled="customPrompt !== ''"
-        :class="{
-          diverge:
-            prompt.generateOptionsFlag &&
-            prompt.actions[prompt.startIndex ?? 0].type !== 'generate options'
-        }"
-      >
-        {{ prompt.name }}{{ prompt.description }}
-      </button>
-      <input
-        v-if="startIndex === 0"
-        :editor="editor"
-        v-model="customPrompt"
-        placeholder="...or write here a custom prompt and press ENTER!"
-        @keyup.enter="onCustomPrompt(editor, 'new-line', 'append')"
-      />
-    </div>
-  </floating-menu>
-
-  <editor-content :editor="editor" class="editor" />
-
-  <div class="is-generating" v-if="editor">
-    <span v-if="commandStore.isGenerating">Loading...</span>
-  </div>
+  <editor-content :editor="editorStore.editor" class="editor" />
+  <TheCommandPalette />
 </template>
 
 <style scoped>
-h1 {
-  grid-column: center-start;
-}
 .editor {
+  margin-top: 50vh;
+  margin-bottom: 50vh;
   grid-column: center-start / center-end;
   grid-row: center-start / center-end;
-  color: var(--color-editor-user);
 
-  caret-color: var(--color-ui-primary);
-  &:deep(> div:focus) {
-    outline: none;
-  }
+  font: var(--font-text);
+  letter-spacing: 0.5px;
+  color: var(--color-user);
 
-  &:deep(*::selection) {
-    background-color: var(--color-selection);
-  }
+  caret-color: var(--color-user);
+}
 
-  &:deep(span.mark-ai) {
-    color: var(--color-editor-ai);
-  }
+.editor:deep(> div:focus) {
+  outline: none;
+}
+
+.editor:deep(*::selection) {
+  background-color: color-mix(in lab, var(--color-user), transparent 85%);
+}
+
+.editor:deep(span.mark-ai) {
+  color: var(--color-ai);
+}
+
+.editor:deep(span.mark-ai::selection) {
+  background-color: color-mix(in lab, var(--color-ai), transparent 85%);
+}
+
+.editor:deep(p + p) {
+  margin-top: calc(var(--font-size) * var(--line-height));
+}
+
+.editor:deep(h1, h2, h3, h4) {
+  font: var(--font-heading);
+  letter-spacing: 0;
+}
+
+.editor:deep([data-type='placeholder']) {
+  font: var(--font-heading);
+  font-weight: 425;
+  font-size: 22px;
+  color: var(--color-user);
+  background: color-mix(in lab, var(--color-user), transparent 85%);
+  border-radius: 5px;
+  padding: 0 calc(var(--spacing) / 4);
+  box-decoration-break: clone;
 }
 
 button {

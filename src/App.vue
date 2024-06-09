@@ -10,14 +10,17 @@ import { RouterView } from 'vue-router'
 
 <style scoped>
 main {
-  --padding: 80px;
+  /* --padding: 80px; */
   display: grid;
   grid-template-columns:
-    1fr [center-start] min(100vw - var(--padding) * 2, 800px)
-    [center-end] 1fr;
+    1fr
+    [outer-start] calc(var(--spacing) * 2)
+    [center-start] min(100vw - var(--spacing) * 4, 800px)
+    [center-end] calc(var(--spacing) * 2)
+    [outer-end] 1fr;
   grid-template-rows:
-    var(--padding) [center-start] 1fr
-    [center-end] var(--padding);
+    [center-start] 1fr
+    [center-end];
   /* padding-bottom: 500px; */
 }
 </style>
