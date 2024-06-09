@@ -4,6 +4,7 @@ import ButtonDefault from '@/components/ButtonDefault.vue'
 // import { Carousel, Slide } from 'vue-snap'
 import HorizontalSlider from '@/components/HorizontalSlider.vue'
 import BreadcrumbNavigation from '@/components/BreadcrumbNavigation.vue'
+import ScreenGenerating from '@/components/ScreenGenerating.vue'
 
 import { useCommandStore } from '@/stores/commands'
 import { useEditorStore } from '@/stores/editor'
@@ -82,17 +83,22 @@ onBeforeUnmount(() => {
   <div class="command-palette">
     <template v-if="showPrompts">
       <hr />
-      <BreadcrumbNavigation />
-      <HorizontalSlider class="horizontal-slider" hideArrowsOnBound>
-        <ButtonTile
-          v-for="(prompt, i) in availablePrompts"
-          :key="i"
-          class="slide"
-          @click="run(editorStore.editor, prompt)"
-        >
-          <template v-slot:title>{{ prompt.name }} {{ prompt.description }}</template>
-        </ButtonTile>
-      </HorizontalSlider>
+      <ScreenGenerating class="screen" v-if="commandStore.isGenerating">
+        Generating</ScreenGenerating
+      >
+      <template v-else>
+        <BreadcrumbNavigation />
+        <HorizontalSlider class="horizontal-slider" hideArrowsOnBound>
+          <ButtonTile
+            v-for="(prompt, i) in availablePrompts"
+            :key="i"
+            class="slide"
+            @click="run(editorStore.editor, prompt)"
+          >
+            <template v-slot:title>{{ prompt.name }} {{ prompt.description }}</template>
+          </ButtonTile>
+        </HorizontalSlider>
+      </template>
     </template>
     <hr />
     <div class="controls">
@@ -132,8 +138,8 @@ onBeforeUnmount(() => {
   width: 100%;
   padding-bottom: calc(var(--spacing) / 2);
 
-  grid-column: center-start / center-end;
-  grid-row: center-start / center-end;
+  /* grid-column: center-start / center-end;
+  grid-row: center-start / center-end; */
 
   /* backdrop-filter: blur(10px); */
   background: var(--color-background);
@@ -171,6 +177,10 @@ onBeforeUnmount(() => {
         transform: scaleY(-1);
       }
     }
+  }
+
+  .screen {
+    grid-column: center-start / center-end;
   }
 
   .horizontal-slider {
