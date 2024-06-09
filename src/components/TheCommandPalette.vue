@@ -9,6 +9,9 @@ import { useCommandStore } from '@/stores/commands'
 import { useEditorStore } from '@/stores/editor'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
+import IconUpload from '~icons/base/Upload'
+import IconAI from '~icons/base/AI'
+
 const startIndex = ref(0)
 const openPrompts = ref(false)
 
@@ -99,21 +102,23 @@ onBeforeUnmount(() => {
           :active="showPrompts"
           :disabled="!commandStore.aiEnabled"
           primary
-          >AI</ButtonDefault
-        >
+          ><IconAI
+        /></ButtonDefault>
       </span>
       <span class="right">
         <ButtonDefault
+          class="flip"
           @click="editorStore.editor.commands.undo()"
           :disabled="!editorStore.editor.can().undo()"
-          >undo</ButtonDefault
+          >↩</ButtonDefault
         >
         <ButtonDefault
+          class="flip"
           @click="editorStore.editor.commands.redo()"
           :disabled="!editorStore.editor.can().redo()"
-          >redo</ButtonDefault
+          >↪</ButtonDefault
         >
-        <ButtonDefault disabled>print</ButtonDefault>
+        <ButtonDefault disabled><IconUpload /></ButtonDefault>
       </span>
     </div>
   </div>
@@ -161,6 +166,10 @@ onBeforeUnmount(() => {
     .right {
       display: flex;
       gap: inherit;
+
+      .flip {
+        transform: scaleY(-1);
+      }
     }
   }
 
