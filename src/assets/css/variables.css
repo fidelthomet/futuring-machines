@@ -10,6 +10,7 @@
   --font-text: 400 var(--font-size) / var(--line-height) 'Redaction', serif;
   --font-heading: 700 var(--font-size) / var(--line-height) 'Inter', sans-serif;
   --font-ui: 400 var(--font-size-ui) / var(--line-height) 'Inter', sans-serif;
+  --font-ui-serif: 400 var(--font-size-ui) / var(--line-height) 'Redaction', serif;
 
   --border-radius: 5px;
   --spacing: 20px;
