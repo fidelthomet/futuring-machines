@@ -7,10 +7,12 @@ import MarkAI from '@/tiptap/mark-ai'
 import Placeholder from '@/tiptap/placeholder'
 import Start from '@/tiptap/start'
 import { centerEditor } from '@/assets/js/utils'
+import { useCommandStore } from '@/stores/commands'
 
 let controller = new AbortController()
 
 export const useEditorStore = defineStore('editor', () => {
+  const commandStore = useCommandStore()
   const selection = ref(null)
   const editor = ref(
     new Editor({
@@ -37,14 +39,18 @@ export const useEditorStore = defineStore('editor', () => {
         }
         if (editor.view.state.selection.from === editor.view.state.selection.to)
           editor.chain().focus().unsetMarkAI().run()
+      },
+      onUpdate({ editor }) {
+        localStorage.setItem(
+          `story-${commandStore.storyId}`,
+          JSON.stringify({
+            editor: editor.getJSON(),
+            updated: new Date(),
+            id: commandStore.storyId,
+            template: commandStore.templateName
+          })
+        )
       }
-      // onUpdate({ editor }) {
-      //   if (editor.isEmpty) {
-      //     sessionStorage.removeItem(commandStore.templateName)
-      //   } else {
-      //     sessionStorage.setItem(commandStore.templateName, JSON.stringify(editor.getJSON()))
-      //   }
-      // }
     })
   )
   return {

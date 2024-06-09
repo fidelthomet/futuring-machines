@@ -24,20 +24,27 @@ const router = createRouter({
       component: () => import('../views/SettingsView.vue')
     },
     {
-      path: '/:template',
+      path: '/:template/:id?',
       name: 'editor',
       component: () => import('../views/EditorView.vue')
     }
   ]
 })
 
-router.beforeEach(async (to, from) => {
+router.beforeEach(async (to, from, next) => {
   const dataStore = useCommandStore()
   if (to.name === 'editor') {
+    if (to.params.id == null)
+      return next({
+        name: to.name,
+        params: { template: to.params.template, id: crypto.randomUUID() }
+      })
     dataStore.templateName = to.params.template
+    dataStore.storyId = to.params.id
   } else {
     dataStore.templateName = null
   }
+  next()
 })
 
 export default router

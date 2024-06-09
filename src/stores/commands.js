@@ -19,6 +19,7 @@ export const useCommandStore = defineStore('command', () => {
   const templatesEnabled = ref(templatesAvailable.value)
 
   const templateName = ref(null)
+  const storyId = ref(null)
 
   const template = computed(() => templatesEnabled.value.find((t) => t.name === templateName.value))
 
@@ -288,6 +289,13 @@ export const useCommandStore = defineStore('command', () => {
     INIT TEMPLATE
   */
   async function initTemplate(editor, index = 0) {
+    console.log('init template', storyId.value, localStorage.getItem(`story-${storyId.value}`))
+    const save = localStorage.getItem(`story-${storyId.value}`)
+    if (save != null) {
+      editor.commands.setContent(JSON.parse(save).editor)
+      nextTick(() => centerEditor(editor, true))
+      return
+    }
     const { view, state } = editor
 
     env.value.full = state.doc.textBetween(0, view.state.doc.nodeSize - 2, '\n')
@@ -325,6 +333,7 @@ export const useCommandStore = defineStore('command', () => {
     promptsEnabled,
     templatesEnabled,
     templateName,
+    storyId,
     template,
     initTemplate,
     run,

@@ -1,9 +1,16 @@
 <script setup>
 import { useCommandStore } from '@/stores/commands'
+import { useStoryStore } from '@/stores/story'
 import { RouterLink } from 'vue-router'
 import HorizontalSlider from './HorizontalSlider.vue'
 import ButtonTile from './ButtonTile.vue'
+import { onMounted } from 'vue'
 const commandStore = useCommandStore()
+const storyStore = useStoryStore()
+
+onMounted(() => {
+  storyStore.update()
+})
 </script>
 
 <template>
@@ -22,7 +29,16 @@ const commandStore = useCommandStore()
         </ButtonTile>
       </RouterLink>
     </HorizontalSlider>
-    <h2>Saved stories</h2>
+    <h2>Recent stories</h2>
+    <ul class="selection-list">
+      <RouterLink
+        v-for="story in storyStore.stories"
+        :key="story.id"
+        :to="{ name: 'editor', params: { template: story.template, id: story.id } }"
+      >
+        <li>{{ story.template }} {{ story.updated.toLocaleString() }}</li>
+      </RouterLink>
+    </ul>
   </div>
 </template>
 
@@ -47,7 +63,8 @@ const commandStore = useCommandStore()
     grid-column: center-start / center-end;
   }
 
-  .horizontal-slider {
+  .horizontal-slider,
+  .selection-list {
     grid-column: outer-start / outer-end;
 
     a {
