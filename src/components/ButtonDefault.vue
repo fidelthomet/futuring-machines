@@ -46,9 +46,9 @@ defineProps({
     } */
   }
 
-  /* &.primary {
+  &.primary {
     border: 1px solid currentColor;
-  } */
+  }
 
   &:not(:disabled):hover {
     color: var(--color-user);

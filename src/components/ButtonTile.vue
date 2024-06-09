@@ -1,21 +1,30 @@
 <script setup>
-defineProps({
+import { computed } from 'vue'
+
+const props = defineProps({
   tag: {
     type: String,
     default: 'button'
   },
   width: {
-    type: Number,
+    type: [Number, String],
     default: 210
   },
   height: {
-    type: Number,
+    type: [Number, String],
     default: 140
+  }
+})
+
+const dimensions = computed(() => {
+  return {
+    width: isNaN(props.width) ? props.width : `${props.width}px`,
+    height: isNaN(props.height) ? props.height : `${props.height}px`
   }
 })
 </script>
 <template>
-  <component :is="tag" class="button-tile" :style="{ width: `${width}px`, height: `${height}px` }">
+  <component :is="tag" class="button-tile" :style="dimensions">
     <h2>
       <slot name="title"></slot>
     </h2>

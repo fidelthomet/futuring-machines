@@ -5,6 +5,7 @@ import ButtonDefault from '@/components/ButtonDefault.vue'
 import HorizontalSlider from '@/components/HorizontalSlider.vue'
 import BreadcrumbNavigation from '@/components/BreadcrumbNavigation.vue'
 import ScreenGenerating from '@/components/ScreenGenerating.vue'
+import ScreenError from '@/components/ScreenError.vue'
 
 import { useCommandStore } from '@/stores/commands'
 import { useEditorStore } from '@/stores/editor'
@@ -15,11 +16,13 @@ import IconAI from '~icons/base/AI'
 
 const startIndex = ref(0)
 const openPrompts = ref(false)
+const lastPrompt = ref(null)
 
 const commandStore = useCommandStore()
 const editorStore = useEditorStore()
 
 async function run(editor, prompt) {
+  lastPrompt.value = prompt
   commandStore.run(editor, prompt, prompt.startIndex ?? 0)
   startIndex.value = prompt.startIndex + 1
 
@@ -61,6 +64,15 @@ function togglePromptSelection(force) {
   showPrompts.value ? closePromptSelection(force) : openPromptSelection()
 }
 
+function tryAgain() {
+  run(editorStore.editor, lastPrompt.value)
+}
+
+function cancel() {
+  startIndex.value = 0
+  commandStore.resetPrompts()
+}
+
 let onKeyDownListener = null
 onMounted(() => {
   onKeyDownListener = window.addEventListener('keydown', (e) => {
@@ -83,12 +95,20 @@ onBeforeUnmount(() => {
   <div class="command-palette">
     <template v-if="showPrompts">
       <hr />
-      <ScreenGenerating class="screen" v-if="commandStore.isGenerating">
-        Generating</ScreenGenerating
-      >
+      <ScreenGenerating class="screen" v-if="commandStore.isGenerating" />
+      <ScreenError
+        class="screen"
+        v-else-if="commandStore.isError"
+        @try-again="tryAgain"
+        @cancel="cancel"
+      />
       <template v-else>
         <BreadcrumbNavigation />
-        <HorizontalSlider class="horizontal-slider" hideArrowsOnBound>
+        <HorizontalSlider
+          class="horizontal-slider"
+          hideArrowsOnBound
+          v-if="availablePrompts.length > 3"
+        >
           <ButtonTile
             v-for="(prompt, i) in availablePrompts"
             :key="i"
@@ -98,6 +118,19 @@ onBeforeUnmount(() => {
             <template v-slot:title>{{ prompt.name }} {{ prompt.description }}</template>
           </ButtonTile>
         </HorizontalSlider>
+        <div v-else class="vertical">
+          <ButtonTile
+            v-for="(prompt, i) in availablePrompts"
+            :key="i"
+            class="slide"
+            width="100%"
+            height="auto"
+            @click="run(editorStore.editor, prompt)"
+          >
+            <template v-slot:title>{{ prompt.name }} </template>
+            <template v-slot:description>{{ prompt.description }}</template>
+          </ButtonTile>
+        </div>
       </template>
     </template>
     <hr />
@@ -107,7 +140,6 @@ onBeforeUnmount(() => {
           @click="togglePromptSelection(true)"
           :active="showPrompts"
           :disabled="!commandStore.aiEnabled"
-          primary
           ><IconAI
         /></ButtonDefault>
       </span>
@@ -185,6 +217,13 @@ onBeforeUnmount(() => {
 
   .horizontal-slider {
     grid-column: outer-start / outer-end;
+  }
+
+  .vertical {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing) / 2);
+    grid-column: center-start / center-end;
   }
   /* margin: var(--spacing); */
 
