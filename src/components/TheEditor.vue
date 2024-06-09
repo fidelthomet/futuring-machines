@@ -24,6 +24,7 @@ const commandStore = useCommandStore()
 // const startIndex = ref(0)
 
 onMounted(async () => {
+  editorStore.createEditor()
   commandStore.initTemplate(editorStore.editor)
 })
 

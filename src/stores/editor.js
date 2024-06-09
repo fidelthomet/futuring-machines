@@ -14,8 +14,10 @@ let controller = new AbortController()
 export const useEditorStore = defineStore('editor', () => {
   const commandStore = useCommandStore()
   const selection = ref(null)
-  const editor = ref(
-    new Editor({
+  const editor = ref(null)
+
+  function createEditor() {
+    editor.value = new Editor({
       extensions: [StarterKit, MarkAI, Placeholder, Start],
       content: '',
       onSelectionUpdate({ editor, transaction }) {
@@ -52,10 +54,12 @@ export const useEditorStore = defineStore('editor', () => {
         )
       }
     })
-  )
+  }
+
   return {
     editor,
-    selection
+    selection,
+    createEditor
   }
 })
 

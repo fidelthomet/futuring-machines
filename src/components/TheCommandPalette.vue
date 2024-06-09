@@ -109,13 +109,13 @@ onBeforeUnmount(() => {
         <ButtonDefault
           class="flip"
           @click="editorStore.editor.commands.undo()"
-          :disabled="!editorStore.editor.can().undo()"
+          :disabled="!editorStore.editor?.can().undo()"
           >↩</ButtonDefault
         >
         <ButtonDefault
           class="flip"
           @click="editorStore.editor.commands.redo()"
-          :disabled="!editorStore.editor.can().redo()"
+          :disabled="!editorStore.editor?.can().redo()"
           >↪</ButtonDefault
         >
         <ButtonDefault disabled><IconUpload /></ButtonDefault>
