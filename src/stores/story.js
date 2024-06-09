@@ -15,9 +15,23 @@ export const useStoryStore = defineStore('story', () => {
       })
       .sort((a, b) => (a.updated < b.updated ? 1 : -1))
   }
+
+  function deleteStory(id, all) {
+    if (!all) {
+      localStorage.removeItem(`story-${id}`)
+    } else {
+      update()
+      const storage = { ...localStorage }
+      Object.keys(storage)
+        .filter((key) => /^story-/.test(key))
+        .forEach((key) => localStorage.removeItem(key))
+    }
+    update()
+  }
   return {
     stories,
-    update
+    update,
+    deleteStory
   }
 })
 

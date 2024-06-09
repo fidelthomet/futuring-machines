@@ -5,6 +5,7 @@ import { RouterLink } from 'vue-router'
 import HorizontalSlider from './HorizontalSlider.vue'
 import ButtonTile from './ButtonTile.vue'
 import { onMounted } from 'vue'
+import ButtonDefault from './ButtonDefault.vue'
 const commandStore = useCommandStore()
 const storyStore = useStoryStore()
 
@@ -29,16 +30,23 @@ onMounted(() => {
         </ButtonTile>
       </RouterLink>
     </HorizontalSlider>
-    <h2>Recent stories</h2>
-    <ul class="selection-list">
-      <RouterLink
-        v-for="story in storyStore.stories"
-        :key="story.id"
-        :to="{ name: 'editor', params: { template: story.template, id: story.id } }"
-      >
-        <li>{{ story.template }} {{ story.updated.toLocaleString() }}</li>
-      </RouterLink>
-    </ul>
+    <template v-if="storyStore.stories?.length > 0">
+      <h2>Recent stories</h2>
+      <ul class="selection-list">
+        <RouterLink
+          v-for="story in storyStore.stories"
+          :key="story.id"
+          :to="{ name: 'editor', params: { template: story.template, id: story.id } }"
+        >
+          <li>
+            {{ story.template }} {{ story.updated.toLocaleString() }}
+            <ButtonDefault @click.stop.prevent="storyStore.deleteStory(story.id)"
+              >delete</ButtonDefault
+            >
+          </li>
+        </RouterLink>
+      </ul>
+    </template>
   </div>
 </template>
 
