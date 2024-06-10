@@ -352,7 +352,10 @@ export const useCommandStore = defineStore('command', () => {
         editor.commands.setMarkAI()
         editor.commands.selectTextblockEnd()
         editor.commands.unsetMarkAI()
-        nextTick(() => centerEditor(editor, true))
+        nextTick(() => {
+          centerEditor(editor, true)
+          editor.commands.blur()
+        })
         break
 
       default:
