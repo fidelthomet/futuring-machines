@@ -2,7 +2,7 @@ import { computed, nextTick, ref } from 'vue'
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import prompts from '@/assets/prompts'
 import templates from '@/assets/templates'
-import { centerEditor } from '@/assets/js/utils'
+import { centerEditor, generatePattern } from '@/assets/js/utils'
 
 const MODEL = import.meta.env.VITE_MODEL
 const API_URL = import.meta.env.VITE_API_URL
@@ -10,7 +10,14 @@ const API_URL = import.meta.env.VITE_API_URL
 const decoder = new TextDecoder()
 
 export const useCommandStore = defineStore('command', () => {
-  const promptsAvailable = ref(prompts)
+  const promptsAvailable = ref(
+    prompts.map((p) => {
+      return {
+        pattern: generatePattern(3, 2, 4, 0.25),
+        ...p
+      }
+    })
+  )
   const promptsEnabled = ref(promptsAvailable.value)
 
   const aiEnabled = ref(true)

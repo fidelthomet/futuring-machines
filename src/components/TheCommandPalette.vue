@@ -113,6 +113,7 @@ onBeforeUnmount(() => {
             v-for="(prompt, i) in availablePrompts"
             :key="i"
             class="slide"
+            :pattern="prompt.pattern"
             @click="run(editorStore.editor, prompt)"
           >
             <template v-slot:title>{{ prompt.name }} {{ prompt.description }}</template>

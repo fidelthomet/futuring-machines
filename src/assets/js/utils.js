@@ -12,4 +12,18 @@ function centerEditor(editor, instant) {
   })
 }
 
-export { centerEditor }
+function generatePattern(width, height, segments, moveFactor) {
+  let pattern = `M${r(width)},${r(height)}`
+  for (let i = 0; i < segments; i++) {
+    const segmentType = r(1) < moveFactor ? 'M' : 'L'
+    if (segmentType === 'M') i--
+    pattern += `${segmentType}${r(width)},${r(height)}`
+  }
+  return pattern
+}
+
+function r(max = 1, round = 0.5) {
+  return Math.floor((Math.random() * (max + round)) / round) * round
+}
+
+export { centerEditor, generatePattern }
