@@ -14,7 +14,7 @@ function select() {
 }
 
 onBeforeMount(() => {
-  commandStore.aiEnabled = false
+  // commandStore.aiEnabled = false
 })
 
 onBeforeUnmount(() => {

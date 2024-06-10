@@ -28,7 +28,7 @@ function cancel() {
 </template>
 <style scoped>
 .screen-generating {
-  height: 174px;
+  height: 140px;
   width: 100%;
   display: flex;
   justify-content: center;

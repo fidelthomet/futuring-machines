@@ -29,6 +29,7 @@ defineProps({
   color: var(--color-ai);
   background: none;
   border: none;
+  cursor: pointer;
   padding: 2.5px 10px;
   margin: -2.5px -10px;
   border-radius: 5px;
