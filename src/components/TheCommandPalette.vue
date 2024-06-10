@@ -65,12 +65,30 @@ function togglePromptSelection(force) {
 }
 
 function tryAgain() {
+  commandStore.crumbs.pop()
   run(editorStore.editor, lastPrompt.value)
 }
 
 function cancel() {
   startIndex.value = 0
   commandStore.resetPrompts()
+}
+
+function reset(index) {
+  console.log(index)
+  startIndex.value = index
+  commandStore.isError = false
+  commandStore.crumbs = commandStore.crumbs.filter((_, i) => i < index)
+  console.log(commandStore.lastPromptsEnabled.length)
+  commandStore.lastPromptsEnabled = commandStore.lastPromptsEnabled.filter((_, i) => i < index)
+  commandStore.promptsEnabled =
+    commandStore.lastPromptsEnabled[commandStore.lastPromptsEnabled.length - 1]
+  // commandStore.prom
+  commandStore.controller.abort()
+  if (index === 0) {
+    console.log('reset')
+    commandStore.resetPrompts()
+  }
 }
 
 let onKeyDownListener = null
@@ -95,6 +113,7 @@ onBeforeUnmount(() => {
   <div class="command-palette">
     <template v-if="showPrompts">
       <hr />
+      <BreadcrumbNavigation :crumbs="commandStore.crumbs" @reset="reset" />
       <ScreenGenerating class="screen" v-if="commandStore.isGenerating" />
       <ScreenError
         class="screen"
@@ -103,7 +122,6 @@ onBeforeUnmount(() => {
         @cancel="cancel"
       />
       <template v-else>
-        <BreadcrumbNavigation />
         <HorizontalSlider
           class="horizontal-slider"
           hideArrowsOnBound

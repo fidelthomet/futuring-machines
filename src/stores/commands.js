@@ -34,6 +34,10 @@ export const useCommandStore = defineStore('command', () => {
   const isError = ref(false)
 
   const env = ref({})
+  const crumbs = ref([])
+  const lastPromptsEnabled = ref([])
+
+  let controller = ref(new AbortController())
 
   /************* 
     RUN
@@ -41,7 +45,7 @@ export const useCommandStore = defineStore('command', () => {
 
   async function run(editor, prompt, index = 0) {
     // const prompt = promptsEnabled.value.find((prompt) => prompt.name === name)
-
+    crumbs.value.push(prompt.name)
     const { view, state } = editor
 
     // This is the full story as it's being written in the editor. We add it to the story template.
@@ -71,14 +75,15 @@ export const useCommandStore = defineStore('command', () => {
     console.log('> action type: ' + action.type)
     console.log(prompt)
 
+    let success = true
     // Different behaviours for different prompt types
     switch (action.type) {
       case 'generate':
         if (prompt.mode === 'replace') editor.commands.deleteSelection()
-        await runGenerate(action, prompt.trigger, prompt.mode, editor, finalize)
+        success = await runGenerate(action, prompt.trigger, prompt.mode, editor, finalize)
         break
       case 'generate options':
-        await runGenerateOptions(action, prompt, index)
+        success = await runGenerateOptions(action, prompt, index)
         break
       case 'options':
         promptsEnabled.value = action.options.map((option) => ({
@@ -91,6 +96,7 @@ export const useCommandStore = defineStore('command', () => {
             [action.bind]: option.value ?? option
           }
         }))
+        lastPromptsEnabled.value.push(promptsEnabled.value)
         break
       case 'static':
         editor.commands.setMarkAI()
@@ -103,6 +109,8 @@ export const useCommandStore = defineStore('command', () => {
       default:
         break
     }
+
+    if (!success) return
 
     if (!finalize && action.type === 'generate') {
       run(editor, prompt, index)
@@ -137,6 +145,8 @@ export const useCommandStore = defineStore('command', () => {
 
   function resetPrompts() {
     promptsEnabled.value = promptsAvailable.value
+    crumbs.value = []
+    lastPromptsEnabled.value = []
   }
 
   /************* 
@@ -155,14 +165,18 @@ export const useCommandStore = defineStore('command', () => {
 
     isGenerating.value = true
 
+    controller.value = new AbortController()
     const response = await fetch(API_URL, {
+      signal: controller.value.signal,
       method: 'POST',
       body: JSON.stringify({
         model: MODEL,
         prompt,
         stream: finalize
       })
-    })
+    }).catch(() => (isGenerating.value = false))
+
+    if (!response) return
 
     isGenerating.value = false
 
@@ -213,6 +227,7 @@ export const useCommandStore = defineStore('command', () => {
     } else if (action.bind != null) {
       env.value[action.bind] = await response.json().then((d) => d.response)
     }
+    return true
   }
 
   /************************ 
@@ -231,8 +246,10 @@ export const useCommandStore = defineStore('command', () => {
 
     isGenerating.value = true
 
+    controller.value = new AbortController()
     // API Call
     const response = await fetch(API_URL, {
+      signal: controller.value.signal,
       method: 'POST',
       body: JSON.stringify({
         model: MODEL,
@@ -240,7 +257,9 @@ export const useCommandStore = defineStore('command', () => {
         stream: false,
         format: 'json'
       })
-    })
+    }).catch(() => (isGenerating.value = false))
+
+    if (!response) return
 
     // LLM Response
     const res = await response.json().then((d) => d.response)
@@ -293,10 +312,12 @@ export const useCommandStore = defineStore('command', () => {
         }
       }
       promptsEnabled.value = options
+      lastPromptsEnabled.value.push(promptsEnabled.value)
     } catch {
       console.log('error')
       isError.value = true
     }
+    return true
   }
 
   /* 
@@ -344,6 +365,8 @@ export const useCommandStore = defineStore('command', () => {
 
   return {
     promptsEnabled,
+    crumbs,
+    lastPromptsEnabled,
     templatesEnabled,
     templateName,
     storyId,
@@ -353,7 +376,8 @@ export const useCommandStore = defineStore('command', () => {
     isGenerating,
     isError,
     resetPrompts,
-    aiEnabled
+    aiEnabled,
+    controller
   }
 })
 
