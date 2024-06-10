@@ -18,7 +18,8 @@ onMounted(() => {
   <div class="templates">
     <h1>Futuring Machines</h1>
     <h2>Templates</h2>
-    <HorizontalSlider>
+    <!-- <HorizontalSlider> -->
+    <div class="template-buttons">
       <RouterLink
         v-for="template in commandStore.templatesEnabled"
         :key="template.name"
@@ -29,7 +30,8 @@ onMounted(() => {
           <template v-slot:description>{{ template.description }}</template>
         </ButtonTile>
       </RouterLink>
-    </HorizontalSlider>
+    </div>
+    <!-- </HorizontalSlider> -->
     <template v-if="storyStore.stories?.length > 0">
       <h2>Recent stories</h2>
       <ul class="selection-list">
@@ -73,6 +75,20 @@ onMounted(() => {
 
   .horizontal-slider,
   .selection-list {
+    grid-column: outer-start / outer-end;
+
+    a {
+      text-decoration: none;
+      color: var(--color-user);
+    }
+  }
+
+  .template-buttons {
+    margin: 0 calc(var(--spacing) * 1.5);
+    display: flex;
+    gap: var(--spacing);
+    flex-wrap: wrap;
+
     grid-column: outer-start / outer-end;
 
     a {
