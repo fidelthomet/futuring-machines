@@ -85,6 +85,7 @@ export const useCommandStore = defineStore('command', () => {
           ...prompt,
           name: option.label ?? option,
           startIndex: index,
+          pattern: generatePattern(3, 2, 3, 0, true),
           env: {
             ...prompt.env,
             [action.bind]: option.value ?? option

@@ -1,6 +1,7 @@
 {
   "name": "reframe",
   "trigger": "selection",
+  "pattern": "M0,0 L3,0 L3,2 L0,2 Z M1,1 L2,1",
   "mode": "replace",
   "actions": [
     {

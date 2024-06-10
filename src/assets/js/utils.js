@@ -12,13 +12,14 @@ function centerEditor(editor, instant) {
   })
 }
 
-function generatePattern(width, height, segments, moveFactor) {
+function generatePattern(width, height, segments, moveFactor, close = false) {
   let pattern = `M${r(width)},${r(height)}`
   for (let i = 0; i < segments; i++) {
     const segmentType = r(1) < moveFactor ? 'M' : 'L'
     if (segmentType === 'M') i--
     pattern += `${segmentType}${r(width)},${r(height)}`
   }
+  if (close) pattern += 'Z'
   return pattern
 }
 
