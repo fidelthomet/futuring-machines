@@ -1,6 +1,7 @@
 {
   "name": "continue writing",
   "trigger": "new-line",
+  "pattern": "M0,1 L3,1 L2,0 L3,1 L2,2",
   "mode": "append",
   "actions": [
     {
