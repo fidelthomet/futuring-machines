@@ -42,6 +42,7 @@ const dimensions = computed(() => {
 <style scoped>
 .button-tile {
   border: 1px solid currentColor;
+  cursor: pointer;
   border-radius: var(--border-radius);
   background: none;
   padding: calc(var(--spacing) / 2);
