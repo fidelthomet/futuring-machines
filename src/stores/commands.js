@@ -164,6 +164,7 @@ export const useCommandStore = defineStore('command', () => {
     console.log('Prompt: \n\n' + prompt)
 
     isGenerating.value = true
+    editor.commands.setMarkAI()
 
     controller.value = new AbortController()
     const response = await fetch(API_URL, {
@@ -217,7 +218,7 @@ export const useCommandStore = defineStore('command', () => {
           }
 
           // Add streamed response to the editor – adding linebreaks
-          editor.commands.insertContent(responseStr.replace(/\n/g, '<br>'))
+          editor.commands.insertContent(responseStr)
           // editor.commands.insertContent(JSON.parse(text).response.replace(/\n/g, '<br>'))
         }
       }
