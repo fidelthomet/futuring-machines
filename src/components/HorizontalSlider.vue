@@ -102,6 +102,7 @@ onBeforeUnmount(() => {
 
   .arrow {
     position: absolute;
+    z-index: 1;
     height: 100%;
     width: 30px;
     padding: 0;
