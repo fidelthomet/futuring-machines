@@ -1,0 +1,18 @@
+{
+  "name": "Frage",
+  "trigger": "new-line",
+  "mode": "append",
+  "lang": "de",
+  "actions": [
+    {
+      "type": "generate options",
+      "template": "Generiere drei kritische Fragen aus der folgenden Geschichte, die mit dreifachen Backticks begrenzt ist. Strukturiere deine Fragen so, dass sie kritisches Nachdenken über direkte und indirekte negative zukünftige Konsequenzen bestimmter Trends, Ereignisse oder Entwicklungen fördern, die in der Geschichte behandelt werden.\nJede Frage sollte höchstens 7 Wörter verwenden und in einem einfachen und klaren Stil verfasst sein.\n\nFür jede Frage generiere eine Fortsetzung für die Geschichte aus der Sicht der Hauptfigur, geschrieben als innerer Monolog. Der innere Monolog sollte in einem kritischen Ton verfasst sein und höchstens 10 Wörter umfassen.\nDie Fortsetzung sollte das folgende Format haben: '<innerer Monolog>, dachte <Name der Hauptfigur>'.\nGebe den inneren Monolog in einfachen Anführungszeichen an.\n\nVermeide es, blumige Sprache UM JEDEN PREIS zu verwenden.\nVermeide es, Teile der Geschichte umzuformulieren.\n\nFormatiere jede Frage als ein JSON-Objekt mit den Schlüsseln 'question' und 'continuation'.\nFormatiere deine Antwort als ein JSON-Objekt mit den Schlüsseln 'Q1', 'Q2' und 'Q3'.\n\nGeschichte: ```::full::```",
+      "name": "question",
+      "keys": ["question", "continuation"]
+    },
+    {
+      "type": "static",
+      "template": "'::question::' ::continuation::"
+    }
+  ]
+}

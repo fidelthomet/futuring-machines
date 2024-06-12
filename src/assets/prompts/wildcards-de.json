@@ -1,0 +1,18 @@
+{
+  "name": "Wildcards",
+  "trigger": "new-line",
+  "mode": "append",
+  "lang": "de",
+  "actions": [
+    {
+      "type": "generate options",
+      "template": "Führen Sie die folgende Geschichte weiter, die durch dreifache Backticks begrenzt ist. Generieren Sie drei verschiedene Fortsetzungen. Jede Fortsetzung baut auf einem unerwarteten Ereignis auf, das Konflikte in die Geschichte bringt. Die Fortsetzungen sollten mit 'Eines Tages,' oder 'Plötzlich,' beginnen. Die Fortsetzungen sollten in einem erzählerischen Stil verfasst sein und höchstens 10 Wörter verwenden. \n\nFormatieren Sie jede Fortsetzung als JSON-Objekt mit 'title' und 'continuation' als Schlüssel. Formatieren Sie Ihre Antwort als JSON-Objekt mit 'cont1', 'cont2' und 'cont3' als Schlüssel. Generieren Sie den Text nur auf Deutsch.\n\nGeschichte: ```::full::```",
+      "name": "continuation",
+      "keys": ["title", "continuation"]
+    },
+    {
+      "type": "static",
+      "template": "::continuation::. Wegen dieser"
+    }
+  ]
+}

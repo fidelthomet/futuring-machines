@@ -1,0 +1,17 @@
+{
+  "name": "umgestalten",
+  "trigger": "selection",
+  "pattern": "M0,0 L3,0 L3,2 L0,2 Z M1,1 L2,1",
+  "mode": "replace",
+  "actions": [
+    {
+      "type": "options",
+      "options": ["positiv", "kritisch", "ironisch", "ermächtigend", "wütend", "ängstlich"],
+      "bind": "option"
+    },
+    {
+      "type": "generate",
+      "template": "Schreiben Sie den folgenden Text in einem ::option:: Ton um. Verfassen Sie narrativ. Halten Sie den Text kurz, verwenden Sie höchstens die gleiche Anzahl an Wörtern wie im Eingabetext. \n\n Eingabetext: ```::selection::```. Generieren Sie den Text nur auf Deutsch."
+    }
+  ]
+}
