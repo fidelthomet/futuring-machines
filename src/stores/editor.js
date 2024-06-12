@@ -49,6 +49,7 @@ export const useEditorStore = defineStore('editor', () => {
             editor: editor.getJSON(),
             updated: new Date(),
             id: commandStore.storyId,
+            lang: commandStore.lang,
             template: commandStore.templateName
           })
         )

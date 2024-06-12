@@ -28,6 +28,8 @@ export const useCommandStore = defineStore('command', () => {
   const templateName = ref(null)
   const storyId = ref(null)
 
+  const lang = ref('en')
+
   const template = computed(() => templatesEnabled.value.find((t) => t.name === templateName.value))
 
   const isGenerating = ref(false)
@@ -144,7 +146,9 @@ export const useCommandStore = defineStore('command', () => {
   }
 
   function resetPrompts() {
-    promptsEnabled.value = promptsAvailable.value
+    promptsEnabled.value = promptsAvailable.value.filter(
+      (p) => p.lang === lang.value || (p.lang === null && lang.value === 'en')
+    )
     crumbs.value = []
     lastPromptsEnabled.value = []
   }
@@ -328,6 +332,7 @@ export const useCommandStore = defineStore('command', () => {
     const save = localStorage.getItem(`story-${storyId.value}`)
     if (save != null) {
       editor.commands.setContent(JSON.parse(save).editor)
+      lang.value = JSON.parse(save).lang ?? 'en'
       nextTick(() => centerEditor(editor, true))
       return
     }
@@ -335,6 +340,7 @@ export const useCommandStore = defineStore('command', () => {
 
     env.value.full = state.doc.textBetween(0, view.state.doc.nodeSize - 2, '\n')
     env.value = { ...env.value, ...template.value.env }
+    lang.value = template.value.lang
 
     const action = template.value.actions[index]
     index++
@@ -362,6 +368,8 @@ export const useCommandStore = defineStore('command', () => {
       default:
         break
     }
+
+    resetPrompts()
 
     // Mixed templates
     if (!finalize && action.type === 'generate') initTemplate(editor, index)

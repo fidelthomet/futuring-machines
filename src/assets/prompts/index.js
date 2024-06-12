@@ -9,6 +9,7 @@ import elaborate from './elaborate'
 import innerMonologue from './innerMonologue'
 import reframe from './reframe'
 import pushForwardSelection from './pushForwardSelection'
+import pushForwardSelection_de from './pushForwardSelection-de'
 
 export default [
   continueWriting,
@@ -21,5 +22,6 @@ export default [
   reframe,
   elaborate,
   innerMonologue,
-  pushForwardSelection
+  pushForwardSelection,
+  pushForwardSelection_de
 ]

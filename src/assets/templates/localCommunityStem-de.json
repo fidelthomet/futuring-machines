@@ -1,0 +1,11 @@
+{
+  "name": "DE: Local Community",
+  "description": "What will living in a local community mean in 50 years?",
+  "lang": "de",
+  "actions": [
+    {
+      "type": "static",
+      "template": "Ursula tended her hydroponic garden. <placeholder length=4></placeholder>, her <placeholder length=6></placeholder> humming by her side. Ursula was happy that <placeholder>resolved matter</placeholder>. Carrie helped her to <placeholder>task to fulfil</placeholder>. Self-sufficient domes bloomed around them, a vibrant community thrived within their shared living space. It was a warm winter day in 2074. Suddenly, an alarm blared, disrupting the peace. It is <start/>"
+    }
+  ]
+}
