@@ -1,0 +1,18 @@
+{
+  "name": "Weiter ausführen als inneres Monolog",
+  "trigger": "selection",
+  "mode": "append",
+  "lang": "de",
+  "actions": [
+    {
+      "type": "options",
+      "options": ["kritisch", "optimistisch", "ermutigend", "ängstlich", "ironisch", "zögerlich", "vorhersagend"],
+      "bind": "option"
+    },
+    {
+      "type": "generate",
+      "template": "Führen Sie die folgende Geschichte aus der Sicht der Hauptfigur fort. Schreiben Sie bis zu zwei Sätze. Reflektieren Sie über den folgenden Text mit einem humorvollen, aber ::option:: Ton. Geben Sie die Antwort in Anführungszeichen an.\n\nEingegebener Text: '::selection::'. \n\nGeschichte: ::full::. Generieren Sie den Text nur auf Deutsch.",
+      "bind": "response"
+    }
+  ]
+}

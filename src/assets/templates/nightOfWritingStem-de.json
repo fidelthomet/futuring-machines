@@ -1,0 +1,11 @@
+{
+  "name": "Die Schreibnacht ⌨️✨",
+  "description": "Wie werden wir zukünftig schreiben? Welche Rolle wird KI dabei spielen?",
+  "lang": "de",
+  "actions": [
+    {
+      "type": "static",
+      "template": "<placeholder length=4></placeholder> seufzte. Die Aufgabe, <placeholder length=4></placeholder> zu schreiben, klappte heute irgendwie gar nicht. So alleine in <placeholder length=4></placeholder>, fehlte heute einfach die Inspiration. Dabei war der Weg hierhin mit dem <placeholder length=4></placeholder> so entspannt heute. Vielleicht war es Zeit, <placeholder length=4></placeholder> ins Boot zu holen. Die künstliche Intelligenz konnte nicht <placeholder length=7></placeholder> wie alle immer dachten, aber für <placeholder length=7></placeholder> war es einfach großartig. Zusammen würden sie schon weiterkommen. Um mit der künstlichen Intelligenz zusammenzuarbeiten, muss man <placeholder length=7></placeholder>, erinnerte sich <placeholder length=4></placeholder>. Noch schnell <placeholder length=4></placeholder> als kleinen Snack und dann ab ans Werk. <start/>"
+    }
+  ]
+}

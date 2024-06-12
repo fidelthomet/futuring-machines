@@ -1,7 +1,4 @@
-import careStories from './homesForLife'
-import designMix from './design-mix'
-import climate from './climate'
-import localCommunity from './localCommunityStem'
-import localCommunity_de from './localCommunityStem-de'
+import nightOfWriting from './nightOfWritingStem'
+import nightOfWriting_de from './nightOfWritingStem-de'
 
-export default [careStories, localCommunity, localCommunity_de, climate, designMix]
+export default [nightOfWriting, nightOfWriting_de]

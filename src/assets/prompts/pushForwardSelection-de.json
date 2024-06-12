@@ -1,5 +1,5 @@
 {
-  "name": "forwärts",
+  "name": "Forwärts in die Zukunft",
   "trigger": "selection",
   "pattern": "M0,0 L1,1 L0,2 M1,0 L2,1 L1,2 M2,0 L3,1 L2,2",
   "mode": "append",
@@ -7,12 +7,12 @@
   "actions": [
     {
       "type": "options",
-      "options": ["10 years", "100 years", "1000 years"],
+      "options": ["10 Jahre", "20 Jahre", "50 Jahre"],
       "bind": "option"
     },
     {
       "type": "generate",
-      "template": "Continue the following story pushing the timeline ::option:: in the future. Write only one sentence that elaborates the following aspect mentioned in the story. \n\n Aspect: ::selection::.  \n\n Story: ::full::",
+      "template": "Führen Sie die folgende Geschichte fort und verschieben Sie die Zeitlinie um ::option:: in die Zukunft. Schreiben Sie nur einen Satz, der den folgenden Aspekt aus der Geschichte näher erläutert. \n\n Aspekt: ::selection::. \n\n Geschichte: ::full::. Generieren Sie den Text nur auf Deutsch.",
       "bind": "response"
     }
   ]

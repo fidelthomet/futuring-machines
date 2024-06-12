@@ -150,7 +150,7 @@ export const useCommandStore = defineStore('command', () => {
 
   function resetPrompts() {
     promptsEnabled.value = promptsAvailable.value.filter(
-      (p) => p.lang === lang.value || (p.lang === null && lang.value === 'en')
+      (p) => p.lang === lang.value || (p.lang == null && lang.value === 'en')
     )
     crumbs.value = []
     lastPromptsEnabled.value = []
@@ -390,6 +390,7 @@ export const useCommandStore = defineStore('command', () => {
     templateName,
     storyId,
     template,
+    lang,
     initTemplate,
     run,
     isGenerating,
