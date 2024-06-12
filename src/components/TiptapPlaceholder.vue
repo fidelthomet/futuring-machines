@@ -1,61 +1,18 @@
 <script setup>
 import { nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 const active = ref(false)
 const props = defineProps(nodeViewProps)
 function select(e) {
-  // props.editor.commands.setTextSelection({
-  //   from: props.getPos(),
-  //   to: props.getPos() + props.node.content.size + 1
-  // })
-
-  // active.value = true
-  // props.editor.commands.setTextSelection({
-  //   from: props.getPos(),
-  //   to: props.getPos() + props.node.content.size + 1
-  // })
-
   props.editor.commands.unsetMarkAI()
   active.value = true
   e.target.focus()
-
-  // props.editor.commands.setTextSelection(props.getPos())
-
-  // props.deleteNode()
-  // console.log('select', props.getPos(), )
+  console.log(props.node.attrs)
 }
-function focus(e) {
-  // props.editor.commands.setTextSelection({
-  //   from: props.getPos(),
-  //   to: props.getPos() + props.node.content.size + 1
-  // })
-  // active.value = true
-  // // e.target.focus()
-  // // props.editor.commands.setTextSelection(props.getPos())
-  // // props.editor.commands.unsetMarkAI()
-  // // props.deleteNode()
-  // // console.log('select', props.getPos(), )
-}
+
 function blur() {
   active.value = false
-  // props.editor.commands.setTextSelection({ from: props.getPos(), to: props.getPos() + 1 })
-  // props.editor.commands.setTextSelection(props.getPos())
-  // props.editor.commands.setMarkAI()
-  // props.deleteNode()
-  // console.log('select', props.getPos(), )
-}
-function onKeyDown(e) {
-  // console.log('hey')
-  // const pos = props.getPos()
-  // // props.deleteNode()
-  // console.log(pos, e.keyCode)
-  // props.editor.commands.focus(pos)
-  // // props.editor.commands.setTextSelection(pos + 0)
-  // props.editor.commands.unsetMarkAI()
-  // if (e.inputType === 'insertText' || e.inputType === 'insertCompositionText') {
-  //   console.log('Input Detected', e.data)
-  // }
 }
 </script>
 
@@ -65,11 +22,11 @@ function onKeyDown(e) {
     tabindex="0"
     class="placeholder"
     @click="select"
-    @input="onKeyDown"
     @blur="blur"
-    @focus="focus"
     :class="{ active }"
-    >{{ node.attrs.label }}</NodeViewWrapper
+    ><template v-if="node.attrs.length != null">
+      <template v-for="i in +node.attrs.length" :key="i">&emsp;</template> </template
+    ><template v-else>{{ node.attrs.label }}</template></NodeViewWrapper
   >
 </template>
 
