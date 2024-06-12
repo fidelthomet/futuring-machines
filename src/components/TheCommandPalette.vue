@@ -1,5 +1,6 @@
 <script setup>
 import ButtonTile from '@/components/ButtonTile.vue'
+import ButtonList from '@/components/ButtonList.vue'
 import ButtonDefault from '@/components/ButtonDefault.vue'
 // import { Carousel, Slide } from 'vue-snap'
 import HorizontalSlider from '@/components/HorizontalSlider.vue'
@@ -124,7 +125,7 @@ onBeforeUnmount(() => {
         @cancel="cancel"
       />
       <template v-else>
-        <div class="grid" v-if="availablePrompts.length > 3">
+        <!-- <div class="grid" v-if="availablePrompts.length > 3">
           <ButtonTile
             v-for="(prompt, i) in availablePrompts"
             :key="i"
@@ -136,6 +137,18 @@ onBeforeUnmount(() => {
           >
             <template v-slot:title>{{ prompt.name }} {{ prompt.description }}</template>
           </ButtonTile>
+        </div> -->
+        <div class="list" v-if="availablePrompts.length > 3">
+          <ButtonList
+            v-for="(prompt, i) in availablePrompts"
+            :key="i"
+            class="slide"
+            width="auto"
+            height="auto"
+            @click="run(editorStore.editor, prompt)"
+          >
+            <template v-slot:title>{{ prompt.name }} {{ prompt.description }}</template>
+          </ButtonList>
         </div>
         <div v-else class="vertical">
           <ButtonTile
@@ -249,6 +262,15 @@ onBeforeUnmount(() => {
     flex-direction: column;
     gap: calc(var(--spacing) / 2);
     grid-column: outer-small-start / outer-small-end;
+  }
+
+  .list {
+    grid-column: outer-small-start / outer-small-end;
+    grid-column: center-start / center-end;
+
+    & > button {
+      margin: 0 calc(var(--spacing) / 4) calc(var(--spacing) / 4) 0;
+    }
   }
 
   .vertical {
