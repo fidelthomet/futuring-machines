@@ -251,5 +251,9 @@ onBeforeUnmount(() => {
       flex-basis: 300px;
     }
   } */
+
+  @media print {
+    display: none !important;
+  }
 }
 </style>
