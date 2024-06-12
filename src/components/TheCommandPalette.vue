@@ -122,21 +122,19 @@ onBeforeUnmount(() => {
         @cancel="cancel"
       />
       <template v-else>
-        <HorizontalSlider
-          class="horizontal-slider"
-          hideArrowsOnBound
-          v-if="availablePrompts.length > 3"
-        >
+        <div class="grid" v-if="availablePrompts.length > 3">
           <ButtonTile
             v-for="(prompt, i) in availablePrompts"
             :key="i"
             class="slide"
+            width="auto"
+            height="130"
             :pattern="prompt.pattern"
             @click="run(editorStore.editor, prompt)"
           >
             <template v-slot:title>{{ prompt.name }} {{ prompt.description }}</template>
           </ButtonTile>
-        </HorizontalSlider>
+        </div>
         <div v-else class="vertical">
           <ButtonTile
             v-for="(prompt, i) in availablePrompts"
@@ -236,6 +234,14 @@ onBeforeUnmount(() => {
 
   .horizontal-slider {
     grid-column: outer-start / outer-end;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    flex-direction: column;
+    gap: calc(var(--spacing) / 2);
+    grid-column: center-start / center-end;
   }
 
   .vertical {
