@@ -86,6 +86,11 @@ onBeforeUnmount(() => {
   color: var(--color-user);
 
   caret-color: var(--color-user);
+
+  @media print {
+    margin-top: calc(var(--spacing) * 1.5);
+    margin-bottom: calc(var(--spacing) * 1.5);
+  }
 }
 
 .editor:deep(> div:focus) {
