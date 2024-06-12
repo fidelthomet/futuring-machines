@@ -147,7 +147,7 @@ export const useCommandStore = defineStore('command', () => {
 
   function resetPrompts() {
     promptsEnabled.value = promptsAvailable.value.filter(
-      (p) => p.lang === lang.value || (p.lang === null && lang.value === 'en')
+      (p) => p.lang === lang.value || (p.lang == null && lang.value === 'en')
     )
     crumbs.value = []
     lastPromptsEnabled.value = []
@@ -332,6 +332,7 @@ export const useCommandStore = defineStore('command', () => {
     const save = localStorage.getItem(`story-${storyId.value}`)
     if (save != null) {
       editor.commands.setContent(JSON.parse(save).editor)
+      console.log(JSON.parse(save).lang ?? 'en')
       lang.value = JSON.parse(save).lang ?? 'en'
       nextTick(() => centerEditor(editor, true))
       resetPrompts()
@@ -384,6 +385,7 @@ export const useCommandStore = defineStore('command', () => {
     templateName,
     storyId,
     template,
+    lang,
     initTemplate,
     run,
     isGenerating,
