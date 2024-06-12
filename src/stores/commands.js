@@ -47,7 +47,6 @@ export const useCommandStore = defineStore('command', () => {
   **************/
 
   async function run(editor, prompt, index = 0) {
-    logUserAction("button", { prompt });
     // const prompt = promptsEnabled.value.find((prompt) => prompt.name === name)
     crumbs.value.push(prompt.name)
     const { view, state } = editor
@@ -63,7 +62,11 @@ export const useCommandStore = defineStore('command', () => {
       const { from, to } = view.state.selection
       env.value.selection = state.doc.textBetween(from, to, '\n')
       console.log('Selection: ' + env.value.selection)
+      logUserAction("button", { prompt, selection: env.value.selection });
+    } else {
+      logUserAction("button", { prompt });
     }
+
 
     console.log('env.value: ')
     console.log(env.value)
