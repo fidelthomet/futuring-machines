@@ -42,6 +42,15 @@ export const useCommandStore = defineStore('command', () => {
 
   let controller = ref(new AbortController())
 
+  const hasGeneratedText = ref(false)
+  let lastGeneratedText = ''
+
+  async function logFeedback(feedback) {
+    await logUserAction("feedback", { feedback, lastGeneratedText })
+    lastGeneratedText = ''
+    hasGeneratedText.value = false
+  }
+
   /************* 
     RUN
   **************/
@@ -118,7 +127,11 @@ export const useCommandStore = defineStore('command', () => {
         break
     }
 
-    if (!success) return
+    if (!success) {
+      hasGeneratedText.value = false
+      lastGeneratedText = ''
+      return
+    }
 
     if (!finalize && action.type === 'generate') {
       generatedText += await run(editor, prompt, index)
@@ -129,6 +142,8 @@ export const useCommandStore = defineStore('command', () => {
       resetPrompts()
     }
 
+    hasGeneratedText.value = (generatedText.length > 0)
+    lastGeneratedText = generatedText
     return generatedText
 
     // const response = await fetch(API_URL, {
@@ -402,6 +417,8 @@ export const useCommandStore = defineStore('command', () => {
     isError,
     resetPrompts,
     aiEnabled,
+    hasGeneratedText,
+    logFeedback,
     controller
   }
 })

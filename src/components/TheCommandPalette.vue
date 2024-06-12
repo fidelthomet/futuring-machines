@@ -168,6 +168,18 @@ onBeforeUnmount(() => {
       <span class="right">
         <ButtonDefault
           offset-padding
+          @click="commandStore.logFeedback('positive')"
+          :disabled="!commandStore.hasGeneratedText"
+          >👍</ButtonDefault
+        >
+        <ButtonDefault
+          offset-padding
+          @click="commandStore.logFeedback('negative')"
+          :disabled="!commandStore.hasGeneratedText"
+          >👎</ButtonDefault
+        >
+        <ButtonDefault
+          offset-padding
           class="flip"
           @click="editorStore.editor.commands.undo()"
           :disabled="!editorStore.editor?.can().undo()"
