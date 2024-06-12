@@ -16,8 +16,8 @@ export const logUserAction = async (action, data = undefined) => {
     body: JSON.stringify(logEntry),
   })
   if (!response.ok) {
-    console.log("Failed to connect to backend for logging");
-    console.log(logEntry)
+    console.log("Failed to connect to backend for logging")
+    console.log(JSON.stringify(logEntry))
   }
 }
 

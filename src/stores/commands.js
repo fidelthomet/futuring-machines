@@ -3,6 +3,7 @@ import { defineStore, acceptHMRUpdate } from 'pinia'
 import prompts from '@/assets/prompts'
 import templates from '@/assets/templates'
 import { centerEditor, generatePattern } from '@/assets/js/utils'
+import { logUserAction } from '@/assets/js/logging.js'
 
 const MODEL = import.meta.env.VITE_MODEL
 const API_URL = import.meta.env.VITE_API_URL
@@ -46,6 +47,7 @@ export const useCommandStore = defineStore('command', () => {
   **************/
 
   async function run(editor, prompt, index = 0) {
+    logUserAction("button", { prompt });
     // const prompt = promptsEnabled.value.find((prompt) => prompt.name === name)
     crumbs.value.push(prompt.name)
     const { view, state } = editor

@@ -31,8 +31,8 @@ export function saveStoryAsPDF(editor) {
     doc.addFileToVFS("IBMPlexMono-Regular-normal.ttf", font);
     doc.addFont("IBMPlexMono-Regular-normal.ttf", "IBMPlexMono-Regular", "normal");
     // Prompt user for name, surname, and title
-    const name = prompt('Please enter your name:', '');
-    const title = prompt('Please enter the title:', 'Document Title');
+    const name = prompt('Dein Name / Your name:', 'Anonymous');
+    const title = prompt('Titel deiner Geschichte / Title of your Story:', 'My Story');
 
     if (!name || !title) {
       alert('All fields are required!');
@@ -126,7 +126,7 @@ doc.roundedRect(15, 5, frameWidth + 10, 35, 15, 15, 'FD'); // Frame for title
 
     // Save the document
     doc.setProperties({ compression: 'SLOW' });
-    doc.save('document.pdf');
+    doc.save(title.trim().replaceAll(/[^a-zA-Z0-9]/g, "-") + '.pdf');
     const pdfBlob = doc.output('blob');
     sendPDFToServer(pdfBlob);
     console.log('PDF created successfully');
