@@ -56,6 +56,7 @@ const getDelta = (json) => {
 
 export const deltaLogger = (editor) => {
   let currentDelta = getDelta(editor.getJSON())
+  logUserAction("text-load", currentDelta)
   const debouncedLogDelta = debounce(() => {
     const newDelta = getDelta(editor.getJSON())
     logUserAction("text-change", currentDelta.diff(newDelta))
