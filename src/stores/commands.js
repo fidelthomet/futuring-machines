@@ -334,6 +334,7 @@ export const useCommandStore = defineStore('command', () => {
       editor.commands.setContent(JSON.parse(save).editor)
       lang.value = JSON.parse(save).lang ?? 'en'
       nextTick(() => centerEditor(editor, true))
+      resetPrompts()
       return
     }
     const { view, state } = editor
