@@ -18,10 +18,13 @@ export const useEditorStore = defineStore('editor', () => {
   const editor = ref(null)
 
   function createEditor() {
-    const logDelta = deltaLogger()
+    let logDelta = null
     editor.value = new Editor({
       extensions: [StarterKit, MarkAI, Placeholder, Start],
       content: '',
+      onCreate({ editor }) {
+        logDelta = deltaLogger(editor)
+      },
       onSelectionUpdate({ editor, transaction }) {
         if (!transaction.meta.pointer) {
           centerEditor(editor)
@@ -45,7 +48,7 @@ export const useEditorStore = defineStore('editor', () => {
           editor.chain().focus().unsetMarkAI().run()
       },
       onUpdate({ editor }) {
-        logDelta(editor)
+        logDelta()
         localStorage.setItem(
           `story-${commandStore.storyId}`,
           JSON.stringify({

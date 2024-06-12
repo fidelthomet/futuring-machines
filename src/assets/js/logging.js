@@ -31,24 +31,33 @@ const debounce = (callback, wait) => {
   };
 }
 
-const tapTap2Diff = (json) => {
-  const operations = json.content.filter(elements => elements.content !== undefined).map(elements => elements.content.map(element => {
-    const operation = {insert: element.text}
-    if (element.marks && element.marks.filter(mark => mark.type === "mark-ai").length > 0) {
-      operation.attributes = {ai: true}
-    }
-    return operation})
-  ).reduce((accumulator, currentValue) =>
-    accumulator.concat({insert:"\n"}).concat(currentValue),
-    []
-  )
+const getDelta = (json) => {
+  const operations = json.content
+    .filter(elements => elements.content !== undefined)
+    .map(elements => elements.content.map(element => {
+      if (element.text) {
+        const operation = { insert: element.text }
+        if (element.marks && element.marks.filter(mark => mark.type === "mark-ai").length > 0) {
+          operation.attributes = { ai: true }
+        }
+        return operation
+      } else if (element.type === "placeholder") {
+        return { insert: "____", attributes: { ai: true } }
+      } else {
+        return null;
+      }
+    }).filter(operation => operation !== null))
+    .reduce((accumulator, currentValue) =>
+      accumulator.concat({insert:"\n"}).concat(currentValue),
+      []
+    )
   return new Delta(operations);
 }
 
-export const deltaLogger = () => {
-  let currentDelta = new Delta([]);
-  const debouncedLogDelta = debounce((editor) => {
-    const newDelta = tapTap2Diff(editor.getJSON())
+export const deltaLogger = (editor) => {
+  let currentDelta = getDelta(editor.getJSON())
+  const debouncedLogDelta = debounce(() => {
+    const newDelta = getDelta(editor.getJSON())
     logUserAction("text-change", currentDelta.diff(newDelta))
     currentDelta = newDelta
   }, 1000) // 1 second delay

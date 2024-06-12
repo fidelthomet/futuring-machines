@@ -1,14 +1,20 @@
 import { font } from './pdf-font.js'
+import { jsPDF } from 'jspdf'
 
 async function sendPDFToServer(pdfBlob) {
   try {
-    const response = await axios.post('https://futuringmachines32.webis.de/backend/stories', pdfBlob, {
+    const response = await fetch('/backend/stories', {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/pdf'
       },
-      responseType: 'arraybuffer' // Ensure response is handled correctly as binary data
+      body: pdfBlob
     });
-    console.log('File uploaded successfully', response.data);
+    if (response.ok) {
+      console.log('File uploaded successfully', response.data);
+    } else {
+      console.log('File could not be uploaded');
+    }
   } catch (error) {
     console.error('Error uploading file', error);
     alert('Failed to upload file. Please try again.');
@@ -16,26 +22,25 @@ async function sendPDFToServer(pdfBlob) {
 }
 
 
-function saveStoryAsPDF() {
+export function saveStoryAsPDF(editor) {
   try {
     const doc = new jsPDF();
-    const storyText = editor.value.getText(); // Get the plain text from the editor
+    const storyText = editor.getText(); // Get the plain text from the editor
 
     // Load IBM Plex Mono font
     doc.addFileToVFS("IBMPlexMono-Regular-normal.ttf", font);
     doc.addFont("IBMPlexMono-Regular-normal.ttf", "IBMPlexMono-Regular", "normal");
     // Prompt user for name, surname, and title
-    const name = prompt('Please enter your first name:', 'John');
-    const surname = prompt('Please enter your last name:', 'Doe');
+    const name = prompt('Please enter your name:', '');
     const title = prompt('Please enter the title:', 'Document Title');
 
-    if (!name || !surname || !title) {
+    if (!name || !title) {
       alert('All fields are required!');
       return;
     }
 
     // Example Base64 encoded background image (a small transparent image)
-    const backgroundImageBase64 = 'src/assets/images/Frame_70c.png'; 
+    const backgroundImageBase64 = '/src/assets/images/Frame_70c.png'; 
     // Function to add background image to a page
     const addBackgroundImage = (doc, base64Image) => {
       try {
@@ -83,7 +88,7 @@ doc.roundedRect(15, 5, frameWidth + 10, 35, 15, 15, 'FD'); // Frame for title
     // Author and date information
     doc.setFont("IBMPlexMono-Regular", "normal");
     doc.setFontSize(10);
-    doc.text(`Author: ${name} ${surname}`, 10, doc.internal.pageSize.height - 49);
+    doc.text(`Author: ${name}`, 10, doc.internal.pageSize.height - 49);
     doc.text(`Date: ${new Date().toLocaleDateString()}`, 10, doc.internal.pageSize.height - 44);
 
     // Set the maximum width for text and page height
