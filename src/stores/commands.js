@@ -384,6 +384,7 @@ export const useCommandStore = defineStore('command', () => {
     templateName,
     storyId,
     template,
+    lang,
     initTemplate,
     run,
     isGenerating,
