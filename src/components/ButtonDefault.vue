@@ -43,7 +43,7 @@ defineProps({
   &.offset-padding {
     margin: -2.5px -10px;
   }
-  border-radius: var(--border-radius);
+  border-radius: 5px;
   transition:
     background-color 0.2s,
     border-color 0.2s,
@@ -56,10 +56,6 @@ defineProps({
     /* &:not(:disabled):hover {
       background-color: color-mix(in lab, var(--color-ai), transparent 90%);
     } */
-  }
-
-  &:focus {
-    outline: none;
   }
 
   &.primary {
