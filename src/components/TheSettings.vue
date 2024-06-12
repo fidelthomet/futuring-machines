@@ -1,16 +1,23 @@
 <script setup>
 import ButtonDefault from '@/components/ButtonDefault.vue'
 import { useStoryStore } from '@/stores/story'
+import { ref } from 'vue'
 
 const storyStore = useStoryStore()
+const url = ref(import.meta.env.VITE_STATIC_STORIES_URL)
 </script>
 
 <template>
   <div class="settings">
     <h1>Settings</h1>
-
-    <ButtonDefault class="delete" @click="storyStore.deleteStory(null, true)"
+    <ButtonDefault primary class="delete" @click="storyStore.deleteStory(null, true)"
       >Delete all local stories</ButtonDefault
+    >
+    <br /><br />
+    <span>story import</span><br /><input type="text" v-model="url" /><ButtonDefault
+      primary
+      @click="storyStore.importStories(url)"
+      >Import</ButtonDefault
     >
   </div>
 </template>

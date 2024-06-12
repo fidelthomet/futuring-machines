@@ -28,10 +28,25 @@ export const useStoryStore = defineStore('story', () => {
     }
     update()
   }
+
+  async function importStories(url) {
+    deleteStory(null, true)
+    const stories = await fetch(url).then((r) => r.json())
+
+    for (const key in stories) {
+      if (Object.hasOwnProperty.call(stories, key)) {
+        console.log(stories[key])
+        localStorage.setItem(key, JSON.stringify(stories[key]))
+      }
+    }
+    console.log(stories)
+  }
+
   return {
     stories,
     update,
-    deleteStory
+    deleteStory,
+    importStories
   }
 })
 

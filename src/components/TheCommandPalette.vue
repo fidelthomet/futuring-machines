@@ -154,6 +154,7 @@ onBeforeUnmount(() => {
     <div class="controls">
       <span class="left">
         <ButtonDefault
+          offset-padding
           @click="togglePromptSelection(true)"
           :active="showPrompts"
           :disabled="!commandStore.aiEnabled"
@@ -162,18 +163,20 @@ onBeforeUnmount(() => {
       </span>
       <span class="right">
         <ButtonDefault
+          offset-padding
           class="flip"
           @click="editorStore.editor.commands.undo()"
           :disabled="!editorStore.editor?.can().undo()"
           >↩</ButtonDefault
         >
         <ButtonDefault
+          offset-padding
           class="flip"
           @click="editorStore.editor.commands.redo()"
           :disabled="!editorStore.editor?.can().redo()"
           >↪</ButtonDefault
         >
-        <ButtonDefault disabled><IconUpload /></ButtonDefault>
+        <ButtonDefault offset-padding disabled><IconUpload /></ButtonDefault>
       </span>
     </div>
   </div>

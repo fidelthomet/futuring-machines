@@ -1,0 +1,81 @@
+{
+  "story-38a225c1-3b0a-413c-83ac-40bc032a46a8": {
+    "editor": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "marks": [{ "type": "mark-ai" }],
+              "text": "Ursula tended her hydroponic garden. "
+            },
+            { "type": "text", "text": "ndjo" },
+            { "type": "text", "marks": [{ "type": "mark-ai" }], "text": ", her " },
+            { "type": "text", "text": "kw" },
+            {
+              "type": "text",
+              "marks": [{ "type": "mark-ai" }],
+              "text": " humming by her side. Ursula was happy that "
+            },
+            {
+              "type": "placeholder",
+              "attrs": { "count": 0, "label": "resolved matter", "length": null },
+              "marks": [{ "type": "mark-ai" }]
+            },
+            { "type": "text", "marks": [{ "type": "mark-ai" }], "text": ". Carrie helped her to " },
+            {
+              "type": "placeholder",
+              "attrs": { "count": 0, "label": "task to fulfil", "length": null },
+              "marks": [{ "type": "mark-ai" }]
+            },
+            {
+              "type": "text",
+              "marks": [{ "type": "mark-ai" }],
+              "text": ". Self-sufficient domes bloomed around them, a vibrant community thrived within their shared living space. It was a warm winter day in 2074. Suddenly, an alarm blared, disrupting the peace. It is "
+            },
+            { "type": "text", "text": "not too late: " },
+            {
+              "type": "text",
+              "marks": [{ "type": "mark-ai" }],
+              "text": "Ursula and Carrie rushed to the control room to see what had triggered the alarm, only to find that one of their vital life support systems had failed; they now had to race against time to fix it before the dome's atmosphere became unbreathable - how will they manage to repair the system with the limited resources and technology available to them in their self-sufficient community?"
+            }
+          ]
+        }
+      ]
+    },
+    "updated": "2024-06-12T07:21:43.372Z",
+    "id": "38a225c1-3b0a-413c-83ac-40bc032a46a8",
+    "template": "Local Community"
+  },
+  "story-c6deafa5-a792-4139-aab0-2976f87efae4": {
+    "editor": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "marks": [{ "type": "mark-ai" }],
+              "text": "In 2074, Ava stepped out of her eco-friendly home, taking in the familiar yet altered landscape of her neighborhood. The once lush green trees were now stunted and sparse, a result of the relentless heatwaves that swept across the world. Bonnie, her loyal dog, trotted by her side, their black fur gleaming with sweat despite the early hour. As they began their morning walk, Ava couldn't help but wonder how much longer they could endure this new normal."
+            },
+            {
+              "type": "text",
+              "text": " Suddenly the sun explodes and Bonnie grows to the size of a Mammoth. "
+            },
+            {
+              "type": "text",
+              "marks": [{ "type": "mark-ai" }],
+              "text": "With a sudden burst of light, Ava found herself standing next to a colossal Bonnie, who looked just as surprised as she was. She couldn't help but wonder, how will they navigate this new world together? And more importantly, would the sun ever return to its normal state or had they entered a new era of cosmic chaos?"
+            }
+          ]
+        }
+      ]
+    },
+    "updated": "2024-06-12T07:22:56.921Z",
+    "id": "c6deafa5-a792-4139-aab0-2976f87efae4",
+    "template": "Climate Crisis"
+  }
+}

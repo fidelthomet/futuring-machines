@@ -15,11 +15,20 @@ defineProps({
   disabled: {
     type: Boolean,
     default: false
+  },
+  offsetPadding: {
+    type: Boolean,
+    default: false
   }
 })
 </script>
 <template>
-  <component :is="tag" class="button" :class="{ active, primary }" :disabled="disabled">
+  <component
+    :is="tag"
+    class="button"
+    :class="{ active, primary, 'offset-padding': offsetPadding }"
+    :disabled="disabled"
+  >
     <slot />
   </component>
 </template>
@@ -31,7 +40,9 @@ defineProps({
   border: none;
   cursor: pointer;
   padding: 2.5px 10px;
-  margin: -2.5px -10px;
+  &.offset-padding {
+    margin: -2.5px -10px;
+  }
   border-radius: 5px;
   transition:
     background-color 0.2s,
