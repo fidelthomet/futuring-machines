@@ -1,0 +1,13 @@
+{
+  "name": "Weiter schreiben",
+  "trigger": "new-line",
+  "pattern": "M0,1 L3,1 L2,0 L3,1 L2,2",
+  "mode": "append",
+  "lang": "de",
+  "actions": [
+    {
+      "type": "generate",
+      "template": "Setzen Sie die folgende Geschichte fort, die mit dreifachen Backticks begrenzt ist. Die Fortsetzung sollte nur einen Absatz mit drei Sätzen umfassen.\n\nGeschichte: ```::full::```. Generieren Sie den Text nur auf Deutsch."
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "Kürzen",
+  "trigger": "selection",
+  "mode": "replace",
+  "lang": "de",
+  "actions": [
+    {
+      "type": "generate",
+      "template": "Kürzen Sie den folgenden Text aus einer fiktiven Geschichte, begrenzt durch dreifache Backticks, auf höchstens zwei Sätze. Schreiben Sie in einem erzählerischen Stil und bewahren Sie den Ton und Stil des ursprünglichen Textes. Beenden Sie den Satz im gleichen Absatz.\n\nText: ```::selection::```. Generieren Sie den Text nur auf Deutsch."
+    }
+  ]
+}

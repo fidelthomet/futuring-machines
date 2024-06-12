@@ -5,7 +5,7 @@
   "actions": [
     {
       "type": "options",
-      "options": ["10 years", "100 years", "1000 years"],
+      "options": ["10 years", "20 years", "50 years"],
       "bind": "option"
     },
     {

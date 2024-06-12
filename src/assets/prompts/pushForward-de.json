@@ -1,0 +1,18 @@
+{
+  "name": "Forwärts in die Zukunft",
+  "trigger": "new-line",
+  "mode": "append",
+  "lang": "de",
+  "actions": [
+    {
+      "type": "options",
+      "options": ["10 Jahre", "20 Jahre", "50 Jahre"],
+      "bind": "option"
+    },
+    {
+      "type": "generate",
+      "template": "Führen Sie die folgende Geschichte fort und verschieben Sie die Zeitlinie um ::option:: in die Zukunft. Schreiben Sie nur einen Satz. Erläutern Sie mögliche Auswirkungen oder Folgen der in der Geschichte erwähnten Schlüsselereignisse. \n\n Geschichte: ::full::. Generieren Sie den Text nur auf Deutsch.",
+      "bind": "response"
+    }
+  ]
+}
