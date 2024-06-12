@@ -13,6 +13,7 @@ import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
 import IconUpload from '~icons/base/Upload'
 import IconAI from '~icons/base/AI'
+import { useStoryStore } from '@/stores/story'
 
 const startIndex = ref(0)
 const openPrompts = ref(false)
@@ -20,6 +21,7 @@ const lastPrompt = ref(null)
 
 const commandStore = useCommandStore()
 const editorStore = useEditorStore()
+const storyStore = useStoryStore()
 
 async function run(editor, prompt) {
   lastPrompt.value = prompt
@@ -176,7 +178,9 @@ onBeforeUnmount(() => {
           :disabled="!editorStore.editor?.can().redo()"
           >↪</ButtonDefault
         >
-        <ButtonDefault offset-padding disabled><IconUpload /></ButtonDefault>
+        <ButtonDefault offset-padding @click="storyStore.uploadStory(commandStore.storyId)"
+          ><IconUpload
+        /></ButtonDefault>
       </span>
     </div>
   </div>

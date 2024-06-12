@@ -42,11 +42,25 @@ export const useStoryStore = defineStore('story', () => {
     console.log(stories)
   }
 
+  async function uploadStory(id) {
+    const url = import.meta.env.VITE_STORIES_API_URL
+
+    const story = JSON.parse(localStorage.getItem(`story-${id}`))
+
+    const res = await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify({ [`story-${id}`]: story })
+    })
+
+    console.log(res)
+  }
+
   return {
     stories,
     update,
     deleteStory,
-    importStories
+    importStories,
+    uploadStory
   }
 })
 

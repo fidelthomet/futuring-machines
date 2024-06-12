@@ -4,7 +4,7 @@ import { useStoryStore } from '@/stores/story'
 import { ref } from 'vue'
 
 const storyStore = useStoryStore()
-const url = ref(import.meta.env.VITE_STATIC_STORIES_URL)
+const url = ref(import.meta.env.VITE_STORIES_STATIC_URL)
 </script>
 
 <template>
