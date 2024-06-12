@@ -14,9 +14,11 @@ main {
   display: grid;
   grid-template-columns:
     1fr
-    [outer-start] calc(var(--spacing) * 2)
+    [outer-start] calc(var(--spacing) * 1.5)
+    [outer-small-start] calc(var(--spacing) * 0.5)
     [center-start] min(100vw - var(--spacing) * 4, 800px)
-    [center-end] calc(var(--spacing) * 2)
+    [center-end] calc(var(--spacing) * 0.5)
+    [outer-small-end] calc(var(--spacing) * 1.5)
     [outer-end] 1fr;
   grid-template-rows:
     [center-start] 1fr

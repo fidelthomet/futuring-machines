@@ -248,14 +248,14 @@ onBeforeUnmount(() => {
     grid-template-columns: repeat(4, 1fr);
     flex-direction: column;
     gap: calc(var(--spacing) / 2);
-    grid-column: center-start / center-end;
+    grid-column: outer-small-start / outer-small-end;
   }
 
   .vertical {
     display: flex;
     flex-direction: column;
     gap: calc(var(--spacing) / 2);
-    grid-column: center-start / center-end;
+    grid-column: outer-small-start / outer-small-end;
   }
   /* margin: var(--spacing); */
 
