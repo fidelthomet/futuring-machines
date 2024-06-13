@@ -205,7 +205,7 @@ onBeforeUnmount(() => {
           :disabled="!editorStore.editor?.can().redo()"
           >↪</ButtonDefault
         >
-        <ButtonDefault offset-padding @click="saveStoryAsPDF(editorStore.editor)"
+        <ButtonDefault offset-padding @click="editorStore.log();saveStoryAsPDF(editorStore.editor)"
           ><IconUpload
         /></ButtonDefault>
       </span>
