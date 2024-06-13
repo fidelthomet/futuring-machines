@@ -54,12 +54,15 @@ const getDelta = (json) => {
   return new Delta(operations);
 }
 
-export const deltaLogger = (editor) => {
+export const deltaLogger = (editor, storyId) => {
   let currentDelta = getDelta(editor.getJSON())
   logUserAction("text-load", currentDelta)
   const debouncedLogDelta = debounce(() => {
     const newDelta = getDelta(editor.getJSON())
-    logUserAction("text-change", currentDelta.diff(newDelta))
+    logUserAction("text-change", {
+      storyId: storyId,
+      delta: currentDelta.diff(newDelta)
+    })
     currentDelta = newDelta
   }, 1000) // 1 second delay
   return debouncedLogDelta

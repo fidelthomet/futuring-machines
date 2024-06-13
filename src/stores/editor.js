@@ -9,6 +9,7 @@ import Start from '@/tiptap/start'
 import { centerEditor } from '@/assets/js/utils'
 import { deltaLogger } from '@/assets/js/logging'
 import { useCommandStore } from '@/stores/commands'
+import { logUserAction } from '@/assets/js/logging.js'
 
 let controller = new AbortController()
 
@@ -23,7 +24,7 @@ export const useEditorStore = defineStore('editor', () => {
       extensions: [StarterKit, MarkAI, Placeholder, Start],
       content: '',
       onCreate({ editor }) {
-        logDelta = deltaLogger(editor)
+        logDelta = deltaLogger(editor, commandStore.storyId)
       },
       onSelectionUpdate({ editor, transaction }) {
         if (!transaction.meta.pointer) {
@@ -63,10 +64,20 @@ export const useEditorStore = defineStore('editor', () => {
     })
   }
 
+  function log() {
+    logUserAction("save", {
+      storyId: commandStore.storyId,
+      lang: commandStore.lang,
+      template: commandStore.templateName,
+      editor: editor.value.getJSON()
+    })
+  }
+
   return {
     editor,
     selection,
-    createEditor
+    createEditor,
+    log
   }
 })
 
