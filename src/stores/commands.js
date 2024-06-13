@@ -46,7 +46,7 @@ export const useCommandStore = defineStore('command', () => {
   let lastGeneratedText = ''
 
   async function logFeedback(feedback) {
-    await logUserAction("feedback", { feedback, lastGeneratedText })
+    await logUserAction("feedback", { storyId: storyId.value, feedback, lastGeneratedText })
     lastGeneratedText = ''
     hasGeneratedText.value = false
   }
@@ -71,9 +71,9 @@ export const useCommandStore = defineStore('command', () => {
       const { from, to } = view.state.selection
       env.value.selection = state.doc.textBetween(from, to, '\n')
       console.log('Selection: ' + env.value.selection)
-      logUserAction("button", { prompt, selection: env.value.selection });
+      logUserAction("button", { storyId: storyId.value, prompt, selection: env.value.selection });
     } else {
-      logUserAction("button", { prompt });
+      logUserAction("button", { storyId: storyId.value, prompt });
     }
 
 
