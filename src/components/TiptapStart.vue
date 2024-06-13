@@ -36,8 +36,8 @@ onBeforeUnmount(() => {
   --color-user-light: color-mix(in lab, var(--color-user), white 85%);
   color: var(--color-user) !important;
   background: var(--color-user-light);
-  border-radius: 5px;
-  padding: 0 calc(var(--spacing) / 4);
+  border-radius: calc(2 * var(--border-radius));
+  padding: 0 calc(var(--spacing) / 2);
   box-decoration-break: clone;
   cursor: pointer;
 

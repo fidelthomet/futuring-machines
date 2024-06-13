@@ -9,7 +9,7 @@ import IconGenerating from '~icons/base/Generating'
 </template>
 <style scoped>
 .screen-generating {
-  height: 140px;
+  height: 65px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -17,9 +17,10 @@ import IconGenerating from '~icons/base/Generating'
   /* border: 1px solid green; */
   overflow: hidden;
   position: relative;
+  margin-bottom: 15px;
 
   svg {
-    transform: scale(1);
+    transform: scale(0.5);
   }
 
   svg * {
