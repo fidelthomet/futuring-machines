@@ -1,0 +1,10 @@
+{
+  "name": "Queer Futures ⌨️✨",
+  "description": "How will we live in the future? What will gender roles look like? How will we organize our relationships or shape our families? What will be the important milestones in our lives? What will queer futures look like?",
+  "actions": [
+    {
+      "type": "static",
+      "template": "It was a special day for <placeholder length=4></placeholder>, because <placeholder length=11></placeholder>. When checking the news that morning while eating a breakfast of <placeholder length=4></placeholder>, it became clear that it was actually a special day for many people: <placeholder length=4></placeholder> and <placeholder length=4></placeholder> could finally <placeholder length=8></placeholder>. Most people seemed to be happy about it, but especially <placeholder length=4></placeholder>, were quite loudly against it. With a sigh <placeholder length=4></placeholder> finished the meal and got ready to head out and meet <placeholder length=4></placeholder>, the <placeholder length=6></placeholder> after a short <placeholder length=4></placeholder> trip. When on the way <placeholder length=10></placeholder> <start/>"
+    }
+  ]
+}

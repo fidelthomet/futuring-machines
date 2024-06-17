@@ -1,4 +1,4 @@
-import nightOfWriting from './nightOfWritingStem'
-import nightOfWriting_de from './nightOfWritingStem-de'
+import queerFutures from './queerFuturesStem'
+import queerFutures_de from './queerFuturesStem-de'
 
-export default [nightOfWriting, nightOfWriting_de]
+export default [queerFutures, queerFutures_de]
