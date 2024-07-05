@@ -17,7 +17,7 @@ onMounted(() => {
 <template>
   <div class="templates">
     <h1>Futuring Machines</h1>
-    <h2>Templates</h2>
+    <h2>Story Templates</h2>
     <!-- <HorizontalSlider> -->
     <div class="template-buttons">
       <RouterLink
@@ -25,7 +25,7 @@ onMounted(() => {
         :key="template.name"
         :to="{ name: 'editor', params: { template: template.name } }"
       >
-        <ButtonTile tag="div" :height="300" :width="300">
+        <ButtonTile tag="div" :height="260" :width="240">
           <template v-slot:title>{{ template.name }}</template>
           <template v-slot:description>{{ template.description }}</template>
         </ButtonTile>
@@ -59,17 +59,18 @@ onMounted(() => {
   grid-column: 1 / -1;
   row-gap: var(--spacing);
   /* grid-row: center-start / center-end; */
-  margin-top: calc(var(--spacing) * 4);
+  padding: calc(var(--spacing) * 4) 0;
 
   h1 {
-    font-size: 1.5em;
     /* margin-bottom: 20px; */
-    font: var(--font-heading);
+    font: var(--font-ui-serif);
+    font-size: var(--font-size-heading);
     grid-column: center-start / center-end;
   }
 
   h2 {
     font: var(--font-ui);
+    font-weight: 600;
     grid-column: center-start / center-end;
   }
 

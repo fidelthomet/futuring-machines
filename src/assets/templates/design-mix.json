@@ -1,10 +1,10 @@
 {
-  "name": "Future of Design (mixed template)",
+  "name": "Futures of Design 🌐🔮",
   "description": "What will the design profession look like in 100 years?",
   "actions": [
     {
       "type": "generate",
-      "template": "Kim is a designer living in the year 2124. A friend asks her what she does all day. What does she respond? Respond in the first person. Use at most two sentences.",
+      "template": "Kim is a discursive designer living in the year 2124. A friend asks them what they does all day. What does they respond? Respond in the first person. Use at most two sentences.",
       "bind": "reply"
     },
     {

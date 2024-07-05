@@ -1,4 +1,8 @@
+import localCommunity from './localCommunityStem'
+import homesForLife from './homesForLifeStart'
+import climateFutures from './climate'
 import queerFutures from './queerFuturesStem'
-import queerFutures_de from './queerFuturesStem-de'
+import nightOfWriting from './nightOfWritingStem'
+import designCUI from './design-cui'
 
-export default [queerFutures, queerFutures_de]
+export default [localCommunity, homesForLife, climateFutures, queerFutures, nightOfWriting, designCUI]

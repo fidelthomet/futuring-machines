@@ -6,6 +6,7 @@
   --font-size: 25px;
   --font-size-ui: 16px;
   --line-height: 1.5;
+  --font-size-heading: 2.5em;
 
   --font-text: 400 var(--font-size) / var(--line-height) 'Redaction', serif;
   --font-heading: 700 var(--font-size) / var(--line-height) 'Inter', sans-serif;
