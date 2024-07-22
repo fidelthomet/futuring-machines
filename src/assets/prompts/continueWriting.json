@@ -6,7 +6,7 @@
   "actions": [
     {
       "type": "generate",
-      "template": "Continue the following story, which is delimited with triple backticks. Follow up the event prompted in the last sentence or paragraph. \n\nContinue the story in a narrative way, keeping the style of the story. Keep your answer as short as possible and use one short sentence.\n\nStory: ```::full::```"
+      "template": "Continue the following story, which is delimited with triple backticks. Follow up the event prompted in the last sentence or paragraph or just go for a complete different and unexpected direction. \n\nContinue the story in a narrative way, keeping the style of the story. Keep your answer as short as possible and use one short sentence.\n\nStory: ```::full::```"
     }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "name": "push timeline",
+  "name": "extrapolate",
   "trigger": "selection",
   "pattern": "M0,0 L1,1 L0,2 M1,0 L2,1 L1,2 M2,0 L3,1 L2,2",
   "mode": "append",
@@ -10,8 +10,13 @@
       "bind": "option"
     },
     {
+      "type": "options",
+      "options": ["grow", "collapse", "transform"],
+      "bind": "arc"
+    },
+    {
       "type": "generate",
-      "template": "Continue the following story pushing the timeline ::option:: in the future. Write only one sentence that elaborates the following aspect mentioned in the story. \n\n Aspect: ::selection::.  \n\n Story: ::full::",
+      "template": "Continue the following story pushing the timeline ::option:: in the future. Live in this future has changed in a way in which the world and things ::arc::. Write only one sentence that elaborates the following aspect mentioned in the story. \n\n Aspect: ::selection::.  \n\n Story: ::full::",
       "bind": "response"
     }
   ]

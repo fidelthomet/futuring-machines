@@ -25,7 +25,7 @@ onMounted(() => {
         :key="template.name"
         :to="{ name: 'editor', params: { template: template.name } }"
       >
-        <ButtonTile tag="div" :height="260" :width="240">
+        <ButtonTile tag="div" :height="280" :width="260">
           <template v-slot:title>{{ template.name }}</template>
           <template v-slot:description>{{ template.description }}</template>
         </ButtonTile>

@@ -179,7 +179,7 @@ onBeforeUnmount(() => {
         /></ButtonDefault>
       </span>
       <span class="right">
-        <ButtonDefault
+        <!-- <ButtonDefault
           offset-padding
           @click="commandStore.logFeedback('positive')"
           :disabled="!commandStore.hasGeneratedText"
@@ -190,7 +190,7 @@ onBeforeUnmount(() => {
           @click="commandStore.logFeedback('negative')"
           :disabled="!commandStore.hasGeneratedText"
           >👎</ButtonDefault
-        >
+        > -->
         <ButtonDefault
           offset-padding
           class="flip"
