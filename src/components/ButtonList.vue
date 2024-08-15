@@ -31,13 +31,9 @@ defineProps({
 .button-list {
   border: 1px solid currentColor;
   cursor: pointer;
-  /* border-radius: var(--border-radius); */
   border-radius: calc(5 * var(--border-radius));
   background: none;
   padding: calc(var(--spacing) / 2);
-  /* display: flex;
-  flex-direction: column; */
-  /* gap: calc(var(--spacing) / 2); */
   color: currentColor;
   font: var(--font-ui);
   text-align: left;

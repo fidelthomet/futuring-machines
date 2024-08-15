@@ -17,7 +17,6 @@ onMounted(() => {
   <div class="templates">
     <h1>Futuring Machines</h1>
     <h2>Story Templates</h2>
-    <!-- <HorizontalSlider> -->
     <div class="template-buttons">
       <RouterLink
         v-for="template in commandStore.templatesEnabled"
@@ -30,7 +29,6 @@ onMounted(() => {
         </ButtonTile>
       </RouterLink>
     </div>
-    <!-- </HorizontalSlider> -->
     <template v-if="storyStore.stories?.length > 0">
       <h2>Recent stories</h2>
       <ul class="selection-list">

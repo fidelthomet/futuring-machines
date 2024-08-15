@@ -37,9 +37,7 @@ const availablePrompts = computed(() =>
     : commandStore.promptsEnabled.filter((prompt) => prompt.trigger !== 'selection')
 )
 
-const showPrompts = computed(
-  () => (openPrompts.value || editorStore.selection != null) && commandStore.aiEnabled
-)
+const showPrompts = computed(() => openPrompts.value || editorStore.selection != null)
 
 function closePromptSelection(force) {
   openPrompts.value = false
@@ -121,19 +119,6 @@ onBeforeUnmount(() => {
         @cancel="cancel"
       />
       <template v-else>
-        <!-- <div class="grid" v-if="availablePrompts.length > 3">
-          <ButtonTile
-            v-for="(prompt, i) in availablePrompts"
-            :key="i"
-            class="slide"
-            width="auto"
-            height="130"
-            :pattern="prompt.pattern"
-            @click="run(editorStore.editor, prompt)"
-          >
-            <template v-slot:title>{{ prompt.name }} {{ prompt.description }}</template>
-          </ButtonTile>
-        </div> -->
         <div class="list" v-if="availablePrompts.length > 3">
           <ButtonList
             v-for="(prompt, i) in availablePrompts"
@@ -164,27 +149,11 @@ onBeforeUnmount(() => {
     <hr />
     <div class="controls">
       <span class="left">
-        <ButtonDefault
-          offset-padding
-          @click="togglePromptSelection(true)"
-          :active="showPrompts"
-          :disabled="!commandStore.aiEnabled"
+        <ButtonDefault offset-padding @click="togglePromptSelection(true)" :active="showPrompts"
           ><IconAI
         /></ButtonDefault>
       </span>
       <span class="right">
-        <!-- <ButtonDefault
-          offset-padding
-          @click="commandStore.logFeedback('positive')"
-          :disabled="!commandStore.hasGeneratedText"
-          >👍</ButtonDefault
-        >
-        <ButtonDefault
-          offset-padding
-          @click="commandStore.logFeedback('negative')"
-          :disabled="!commandStore.hasGeneratedText"
-          >👎</ButtonDefault
-        > -->
         <ButtonDefault
           offset-padding
           class="flip"
@@ -213,10 +182,6 @@ onBeforeUnmount(() => {
   width: 100%;
   padding-bottom: calc(var(--spacing) / 2);
 
-  /* grid-column: center-start / center-end;
-  grid-row: center-start / center-end; */
-
-  /* backdrop-filter: blur(10px); */
   background: var(--color-background);
   row-gap: calc(var(--spacing) / 2);
 
@@ -225,12 +190,6 @@ onBeforeUnmount(() => {
     border: none;
     height: 1px;
     --color-user-light: color-mix(in lab, var(--color-user), transparent 70%);
-    /* background: linear-gradient(
-      to right,
-      transparent 0%,
-      var(--color-user-light) calc(var(--spacing) * 1.5) calc(100% - var(--spacing) * 1.5),
-      transparent 100%
-    ); */
     background: var(--color-user-light);
   }
 
@@ -285,13 +244,6 @@ onBeforeUnmount(() => {
     gap: calc(var(--spacing) / 2);
     grid-column: outer-small-start / outer-small-end;
   }
-  /* margin: var(--spacing); */
-
-  /* .horizontal-slider {
-    .slide {
-      flex-basis: 300px;
-    }
-  } */
 
   @media print {
     display: none !important;

@@ -24,7 +24,6 @@ const url = ref(import.meta.env.VITE_STORIES_STATIC_URL)
 <style scoped>
 .settings {
   grid-column: center-start / center-end;
-  /* row-gap: var(--spacing); */
   margin-top: calc(var(--spacing) * 4);
   .delete {
     color: var(--color-user);

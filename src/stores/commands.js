@@ -21,8 +21,6 @@ export const useCommandStore = defineStore('command', () => {
   )
   const promptsEnabled = ref(promptsAvailable.value)
 
-  const aiEnabled = ref(true)
-
   const templatesAvailable = ref(templates)
   const templatesEnabled = ref(templatesAvailable.value)
 
@@ -417,7 +415,6 @@ export const useCommandStore = defineStore('command', () => {
     isGenerating,
     isError,
     resetPrompts,
-    aiEnabled,
     hasGeneratedText,
     logFeedback,
     controller

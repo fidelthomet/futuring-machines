@@ -1,5 +1,4 @@
 <script setup>
-// import IconGenerating from '~icons/base/Generating'
 import ButtonDefault from '@/components/ButtonDefault.vue'
 import { useCommandStore } from '@/stores/commands'
 

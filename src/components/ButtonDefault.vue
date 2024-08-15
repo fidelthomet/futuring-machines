@@ -52,10 +52,6 @@ defineProps({
   &.active {
     color: var(--color-user);
     background-color: color-mix(in lab, var(--color-user), transparent 90%);
-
-    /* &:not(:disabled):hover {
-      background-color: color-mix(in lab, var(--color-ai), transparent 90%);
-    } */
   }
 
   &:focus {

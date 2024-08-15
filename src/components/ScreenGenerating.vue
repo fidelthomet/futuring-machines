@@ -49,13 +49,6 @@ import IconGenerating from '~icons/base/Generating'
     animation-delay: -1.5s;
   }
 }
-
-/* .screen-generating:deep(path) {
-  animation-name: gen1;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
-} */
 </style>
 <style>
 @keyframes gen1 {

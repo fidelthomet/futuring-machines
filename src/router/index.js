@@ -18,9 +18,6 @@ const router = createRouter({
     {
       path: '/settings',
       name: 'settings',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import('../views/SettingsView.vue')
     },
     {
@@ -34,11 +31,12 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const dataStore = useCommandStore()
   if (to.name === 'editor') {
-    if (to.params.id == null)
+    if (to.params.id == null) {
       return next({
         name: to.name,
         params: { template: to.params.template, id: crypto.randomUUID() }
       })
+    }
     dataStore.templateName = to.params.template
     dataStore.storyId = to.params.id
   } else {

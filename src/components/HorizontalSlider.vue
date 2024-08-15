@@ -1,6 +1,5 @@
 <script setup>
 import { onMounted, ref, onBeforeUnmount, computed, nextTick } from 'vue'
-// import { approximatelyEqual, isClient } from '../../utils'
 
 const props = defineProps({
   itemWidth: {

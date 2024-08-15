@@ -1,25 +1,14 @@
 <script setup>
-import { useCommandStore } from '@/stores/commands'
 import { nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3'
-import { onBeforeMount, onBeforeUnmount, ref } from 'vue'
+import { ref } from 'vue'
 
 const active = ref(false)
 const props = defineProps(nodeViewProps)
-const commandStore = useCommandStore()
 function select() {
-  // commandStore.aiEnabled = true
   const pos = props.getPos()
   props.deleteNode()
   props.editor.commands.focus(pos)
 }
-
-onBeforeMount(() => {
-  // commandStore.aiEnabled = false
-})
-
-onBeforeUnmount(() => {
-  commandStore.aiEnabled = true
-})
 </script>
 
 <template>

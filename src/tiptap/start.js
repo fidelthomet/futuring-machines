@@ -8,8 +8,6 @@ export default Node.create({
   group: 'inline',
   inline: true,
   selectable: true,
-  // content: 'inline*',
-
   atom: true,
 
   addAttributes() {

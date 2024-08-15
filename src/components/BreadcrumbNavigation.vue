@@ -4,10 +4,6 @@ defineProps({
     type: Array,
     default: null
   }
-  // prompt: {
-  //   type: String,
-  //   default: null
-  // }
 })
 defineEmits(['reset'])
 </script>
@@ -30,7 +26,6 @@ defineEmits(['reset'])
     }
     &:last-child {
       pointer-events: none;
-      /* font-weight: 600; */
     }
   }
 }
