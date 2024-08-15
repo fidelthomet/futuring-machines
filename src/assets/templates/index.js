@@ -1,11 +1,11 @@
+import climateFutures from './climateFutures'
+import designCUI from './designCui'
 import experientialFutures from './experientialFutures'
 import experientialFuturesDE from './experientialFutures-de'
-import localCommunity from './localCommunityStem'
-import homesForLife from './homesForLifeStart'
-import climateFutures from './climate'
-import queerFutures from './queerFuturesStem'
-import nightOfWriting from './nightOfWritingStem'
-import designCUI from './design-cui'
+import homesForLife from './homesForLife'
+import localCommunity from './localCommunity'
+import nightOfWriting from './nightOfWriting'
+import queerFutures from './queerFutures'
 
 export default [
   experientialFutures,

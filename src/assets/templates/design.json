@@ -1,9 +1,0 @@
-{
-  "name": "Design",
-  "actions": [
-    {
-      "type": "generate",
-      "template": "Write the first paragraph of a story on the state of design practice in 2100."
-    }
-  ]
-}
