@@ -68,7 +68,8 @@ export const useCommandStore = defineStore('command', () => {
     if (prompt.trigger === 'selection') {
       const { from, to } = view.state.selection
       env.value.selection = state.doc.textBetween(from, to, '\n')
-      console.log('Selection: ' + env.value.selection)
+      env.value.before = state.doc.textBetween(0, from, '\n')
+      env.value.after = state.doc.textBetween(to, view.state.doc.nodeSize - 2, '\n')
       logUserAction('button', { storyId: storyId.value, prompt, selection: env.value.selection })
     } else {
       logUserAction('button', { storyId: storyId.value, prompt })
