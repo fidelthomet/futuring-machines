@@ -1,7 +1,5 @@
 <script setup>
-import { computed } from 'vue'
-
-const props = defineProps({
+defineProps({
   tag: {
     type: String,
     default: 'button'
@@ -18,7 +16,6 @@ const props = defineProps({
     type: String
   }
 })
-
 </script>
 <template>
   <component :is="tag" class="button-list">
@@ -35,7 +32,7 @@ const props = defineProps({
   border: 1px solid currentColor;
   cursor: pointer;
   /* border-radius: var(--border-radius); */
-  border-radius: calc(5*var(--border-radius));
+  border-radius: calc(5 * var(--border-radius));
   background: none;
   padding: calc(var(--spacing) / 2);
   /* display: flex;

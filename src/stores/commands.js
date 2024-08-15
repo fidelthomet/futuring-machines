@@ -46,7 +46,7 @@ export const useCommandStore = defineStore('command', () => {
   let lastGeneratedText = ''
 
   async function logFeedback(feedback) {
-    await logUserAction("feedback", { storyId: storyId.value, feedback, lastGeneratedText })
+    await logUserAction('feedback', { storyId: storyId.value, feedback, lastGeneratedText })
     lastGeneratedText = ''
     hasGeneratedText.value = false
   }
@@ -71,11 +71,10 @@ export const useCommandStore = defineStore('command', () => {
       const { from, to } = view.state.selection
       env.value.selection = state.doc.textBetween(from, to, '\n')
       console.log('Selection: ' + env.value.selection)
-      logUserAction("button", { storyId: storyId.value, prompt, selection: env.value.selection });
+      logUserAction('button', { storyId: storyId.value, prompt, selection: env.value.selection })
     } else {
-      logUserAction("button", { storyId: storyId.value, prompt });
+      logUserAction('button', { storyId: storyId.value, prompt })
     }
-
 
     console.log('env.value: ')
     console.log(env.value)
@@ -98,7 +97,7 @@ export const useCommandStore = defineStore('command', () => {
       case 'generate':
         if (prompt.mode === 'replace') editor.commands.deleteSelection()
         generatedText = await runGenerate(action, prompt.trigger, prompt.mode, editor, finalize)
-        success = (generatedText !== false)
+        success = generatedText !== false
         break
       case 'generate options':
         success = await runGenerateOptions(action, prompt, index)
@@ -118,7 +117,10 @@ export const useCommandStore = defineStore('command', () => {
         break
       case 'static':
         editor.commands.setMarkAI()
-        generatedText = action.template.replace(/::([^:]+)::/g, (pattern, match) => env.value[match] ?? pattern)
+        generatedText = action.template.replace(
+          /::([^:]+)::/g,
+          (pattern, match) => env.value[match] ?? pattern
+        )
         editor.commands.insertContent(generatedText)
         editor.commands.unsetMarkAI()
         break
@@ -142,7 +144,7 @@ export const useCommandStore = defineStore('command', () => {
       resetPrompts()
     }
 
-    hasGeneratedText.value = (generatedText.length > 0)
+    hasGeneratedText.value = generatedText.length > 0
     lastGeneratedText = generatedText
     return generatedText
 
@@ -209,7 +211,6 @@ export const useCommandStore = defineStore('command', () => {
     isGenerating.value = false
     let generatedText = ''
 
-
     // Response
     if (finalize) {
       const reader = response.body.getReader()
@@ -227,7 +228,7 @@ export const useCommandStore = defineStore('command', () => {
       }
 
       while (!done) {
-        ({ done, value } = await reader.read())
+        ;({ done, value } = await reader.read())
 
         const text = decoder.decode(value)
 

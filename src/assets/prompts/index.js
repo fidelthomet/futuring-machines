@@ -36,7 +36,7 @@ export default [
   divergeTone_de,
   perspective,
   perspective_de,
-  
+
   condense,
   condense_de,
   reframe,

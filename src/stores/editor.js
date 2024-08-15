@@ -49,7 +49,9 @@ export const useEditorStore = defineStore('editor', () => {
           editor.chain().focus().unsetMarkAI().run()
       },
       onUpdate({ editor }) {
-        if (logDelta !== null) { logDelta() }
+        if (logDelta !== null) {
+          logDelta()
+        }
         localStorage.setItem(
           `story-${commandStore.storyId}`,
           JSON.stringify({
@@ -65,7 +67,7 @@ export const useEditorStore = defineStore('editor', () => {
   }
 
   function log() {
-    logUserAction("save", {
+    logUserAction('save', {
       storyId: commandStore.storyId,
       lang: commandStore.lang,
       template: commandStore.templateName,

@@ -1,6 +1,6 @@
 <script setup>
 import { nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3'
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 
 const active = ref(false)
 const props = defineProps(nodeViewProps)

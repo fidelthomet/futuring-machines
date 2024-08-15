@@ -2,8 +2,6 @@
 import ButtonTile from '@/components/ButtonTile.vue'
 import ButtonList from '@/components/ButtonList.vue'
 import ButtonDefault from '@/components/ButtonDefault.vue'
-// import { Carousel, Slide } from 'vue-snap'
-import HorizontalSlider from '@/components/HorizontalSlider.vue'
 import BreadcrumbNavigation from '@/components/BreadcrumbNavigation.vue'
 import ScreenGenerating from '@/components/ScreenGenerating.vue'
 import ScreenError from '@/components/ScreenError.vue'
@@ -14,7 +12,6 @@ import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
 import IconUpload from '~icons/base/Upload'
 import IconAI from '~icons/base/AI'
-import { useStoryStore } from '@/stores/story'
 
 const startIndex = ref(0)
 const openPrompts = ref(false)
@@ -22,7 +19,6 @@ const lastPrompt = ref(null)
 
 const commandStore = useCommandStore()
 const editorStore = useEditorStore()
-const storyStore = useStoryStore()
 
 async function run(editor, prompt) {
   lastPrompt.value = prompt

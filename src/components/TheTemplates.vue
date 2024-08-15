@@ -2,7 +2,6 @@
 import { useCommandStore } from '@/stores/commands'
 import { useStoryStore } from '@/stores/story'
 import { RouterLink } from 'vue-router'
-import HorizontalSlider from './HorizontalSlider.vue'
 import ButtonTile from './ButtonTile.vue'
 import { onMounted } from 'vue'
 import ButtonDefault from './ButtonDefault.vue'

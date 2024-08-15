@@ -7,4 +7,13 @@ import queerFutures from './queerFuturesStem'
 import nightOfWriting from './nightOfWritingStem'
 import designCUI from './design-cui'
 
-export default [experientialFutures, experientialFuturesDE, localCommunity, homesForLife, climateFutures, queerFutures, nightOfWriting, designCUI]
+export default [
+  experientialFutures,
+  experientialFuturesDE,
+  localCommunity,
+  homesForLife,
+  climateFutures,
+  queerFutures,
+  nightOfWriting,
+  designCUI
+]
