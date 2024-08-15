@@ -1,9 +1,10 @@
-function centerEditor(editor, instant) {
+function centerEditor(editor, instant, limit = 105) {
   const cursorStartY = editor.view.coordsAtPos(editor.view.state.selection.from).top
   const cursorEndY = editor.view.coordsAtPos(editor.view.state.selection.to).bottom
   const cursorHeight = cursorEndY - cursorStartY
+  if (cursorHeight > limit) return
   const cursorCenter = cursorStartY + cursorHeight / 2
-  const windowCenter = window.innerHeight / 2
+  const windowCenter = window.innerHeight / 3
   const offset = cursorCenter - windowCenter
   window.scrollBy({
     top: offset,
