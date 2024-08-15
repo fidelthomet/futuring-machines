@@ -16,8 +16,6 @@ import IconUpload from '~icons/base/Upload'
 import IconAI from '~icons/base/AI'
 import { useStoryStore } from '@/stores/story'
 
-import {  saveStoryAsPDF } from '@/assets/js/pdf.js'
-
 const startIndex = ref(0)
 const openPrompts = ref(false)
 const lastPrompt = ref(null)
@@ -205,9 +203,7 @@ onBeforeUnmount(() => {
           :disabled="!editorStore.editor?.can().redo()"
           >↪</ButtonDefault
         >
-        <ButtonDefault offset-padding @click="editorStore.log();saveStoryAsPDF(editorStore.editor)"
-          ><IconUpload
-        /></ButtonDefault>
+        <ButtonDefault offset-padding @click="editorStore.log()"><IconUpload /></ButtonDefault>
       </span>
     </div>
   </div>
