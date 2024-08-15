@@ -1,5 +1,6 @@
 <script setup>
 import ButtonTile from '@/components/ButtonTile.vue'
+import ButtonList from '@/components/ButtonList.vue'
 import ButtonDefault from '@/components/ButtonDefault.vue'
 // import { Carousel, Slide } from 'vue-snap'
 import HorizontalSlider from '@/components/HorizontalSlider.vue'
@@ -14,6 +15,8 @@ import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import IconUpload from '~icons/base/Upload'
 import IconAI from '~icons/base/AI'
 import { useStoryStore } from '@/stores/story'
+
+import {  saveStoryAsPDF } from '@/assets/js/pdf.js'
 
 const startIndex = ref(0)
 const openPrompts = ref(false)
@@ -124,7 +127,7 @@ onBeforeUnmount(() => {
         @cancel="cancel"
       />
       <template v-else>
-        <div class="grid" v-if="availablePrompts.length > 3">
+        <!-- <div class="grid" v-if="availablePrompts.length > 3">
           <ButtonTile
             v-for="(prompt, i) in availablePrompts"
             :key="i"
@@ -136,6 +139,18 @@ onBeforeUnmount(() => {
           >
             <template v-slot:title>{{ prompt.name }} {{ prompt.description }}</template>
           </ButtonTile>
+        </div> -->
+        <div class="list" v-if="availablePrompts.length > 3">
+          <ButtonList
+            v-for="(prompt, i) in availablePrompts"
+            :key="i"
+            class="slide"
+            width="auto"
+            height="auto"
+            @click="run(editorStore.editor, prompt)"
+          >
+            <template v-slot:title>{{ prompt.name }} {{ prompt.description }}</template>
+          </ButtonList>
         </div>
         <div v-else class="vertical">
           <ButtonTile
@@ -164,6 +179,18 @@ onBeforeUnmount(() => {
         /></ButtonDefault>
       </span>
       <span class="right">
+        <!-- <ButtonDefault
+          offset-padding
+          @click="commandStore.logFeedback('positive')"
+          :disabled="!commandStore.hasGeneratedText"
+          >👍</ButtonDefault
+        >
+        <ButtonDefault
+          offset-padding
+          @click="commandStore.logFeedback('negative')"
+          :disabled="!commandStore.hasGeneratedText"
+          >👎</ButtonDefault
+        > -->
         <ButtonDefault
           offset-padding
           class="flip"
@@ -178,7 +205,7 @@ onBeforeUnmount(() => {
           :disabled="!editorStore.editor?.can().redo()"
           >↪</ButtonDefault
         >
-        <ButtonDefault offset-padding @click="storyStore.uploadStory(commandStore.storyId)"
+        <ButtonDefault offset-padding @click="editorStore.log();saveStoryAsPDF(editorStore.editor)"
           ><IconUpload
         /></ButtonDefault>
       </span>
@@ -249,6 +276,15 @@ onBeforeUnmount(() => {
     flex-direction: column;
     gap: calc(var(--spacing) / 2);
     grid-column: outer-small-start / outer-small-end;
+  }
+
+  .list {
+    grid-column: outer-small-start / outer-small-end;
+    grid-column: center-start / center-end;
+
+    & > button {
+      margin: 0 calc(var(--spacing) / 4) calc(var(--spacing) / 4) 0;
+    }
   }
 
   .vertical {

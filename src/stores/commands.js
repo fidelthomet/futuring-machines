@@ -3,6 +3,7 @@ import { defineStore, acceptHMRUpdate } from 'pinia'
 import prompts from '@/assets/prompts'
 import templates from '@/assets/templates'
 import { centerEditor, generatePattern } from '@/assets/js/utils'
+import { logUserAction } from '@/assets/js/logging.js'
 
 const MODEL = import.meta.env.VITE_MODEL
 const API_URL = import.meta.env.VITE_API_URL
@@ -41,6 +42,15 @@ export const useCommandStore = defineStore('command', () => {
 
   let controller = ref(new AbortController())
 
+  const hasGeneratedText = ref(false)
+  let lastGeneratedText = ''
+
+  async function logFeedback(feedback) {
+    await logUserAction("feedback", { storyId: storyId.value, feedback, lastGeneratedText })
+    lastGeneratedText = ''
+    hasGeneratedText.value = false
+  }
+
   /************* 
     RUN
   **************/
@@ -61,7 +71,11 @@ export const useCommandStore = defineStore('command', () => {
       const { from, to } = view.state.selection
       env.value.selection = state.doc.textBetween(from, to, '\n')
       console.log('Selection: ' + env.value.selection)
+      logUserAction("button", { storyId: storyId.value, prompt, selection: env.value.selection });
+    } else {
+      logUserAction("button", { storyId: storyId.value, prompt });
     }
+
 
     console.log('env.value: ')
     console.log(env.value)
@@ -78,11 +92,13 @@ export const useCommandStore = defineStore('command', () => {
     console.log(prompt)
 
     let success = true
+    let generatedText = ''
     // Different behaviours for different prompt types
     switch (action.type) {
       case 'generate':
         if (prompt.mode === 'replace') editor.commands.deleteSelection()
-        success = await runGenerate(action, prompt.trigger, prompt.mode, editor, finalize)
+        generatedText = await runGenerate(action, prompt.trigger, prompt.mode, editor, finalize)
+        success = (generatedText !== false)
         break
       case 'generate options':
         success = await runGenerateOptions(action, prompt, index)
@@ -102,9 +118,8 @@ export const useCommandStore = defineStore('command', () => {
         break
       case 'static':
         editor.commands.setMarkAI()
-        editor.commands.insertContent(
-          action.template.replace(/::([^:]+)::/g, (pattern, match) => env.value[match] ?? pattern)
-        )
+        generatedText = action.template.replace(/::([^:]+)::/g, (pattern, match) => env.value[match] ?? pattern)
+        editor.commands.insertContent(generatedText)
         editor.commands.unsetMarkAI()
         break
 
@@ -112,16 +127,24 @@ export const useCommandStore = defineStore('command', () => {
         break
     }
 
-    if (!success) return
+    if (!success) {
+      hasGeneratedText.value = false
+      lastGeneratedText = ''
+      return
+    }
 
     if (!finalize && action.type === 'generate') {
-      run(editor, prompt, index)
+      generatedText += await run(editor, prompt, index)
     }
 
     // Stream finalized
     if (finalize) {
       resetPrompts()
     }
+
+    hasGeneratedText.value = (generatedText.length > 0)
+    lastGeneratedText = generatedText
+    return generatedText
 
     // const response = await fetch(API_URL, {
     //   method: 'POST',
@@ -181,9 +204,11 @@ export const useCommandStore = defineStore('command', () => {
       })
     }).catch(() => (isGenerating.value = false))
 
-    if (!response) return
+    if (!response) return false
 
     isGenerating.value = false
+    let generatedText = ''
+
 
     // Response
     if (finalize) {
@@ -202,7 +227,7 @@ export const useCommandStore = defineStore('command', () => {
       }
 
       while (!done) {
-        ;({ done, value } = await reader.read())
+        ({ done, value } = await reader.read())
 
         const text = decoder.decode(value)
 
@@ -223,6 +248,7 @@ export const useCommandStore = defineStore('command', () => {
 
           // Add streamed response to the editor – adding linebreaks
           editor.commands.insertContent(responseStr)
+          generatedText += responseStr
           // editor.commands.insertContent(JSON.parse(text).response.replace(/\n/g, '<br>'))
         }
       }
@@ -232,7 +258,7 @@ export const useCommandStore = defineStore('command', () => {
     } else if (action.bind != null) {
       env.value[action.bind] = await response.json().then((d) => d.response)
     }
-    return true
+    return generatedText
   }
 
   /************************ 
@@ -264,7 +290,7 @@ export const useCommandStore = defineStore('command', () => {
       })
     }).catch(() => (isGenerating.value = false))
 
-    if (!response) return
+    if (!response) return false
 
     // LLM Response
     const res = await response.json().then((d) => d.response)
@@ -391,6 +417,8 @@ export const useCommandStore = defineStore('command', () => {
     isError,
     resetPrompts,
     aiEnabled,
+    hasGeneratedText,
+    logFeedback,
     controller
   }
 })

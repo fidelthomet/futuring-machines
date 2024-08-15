@@ -7,7 +7,9 @@ import MarkAI from '@/tiptap/mark-ai'
 import Placeholder from '@/tiptap/placeholder'
 import Start from '@/tiptap/start'
 import { centerEditor } from '@/assets/js/utils'
+import { deltaLogger } from '@/assets/js/logging'
 import { useCommandStore } from '@/stores/commands'
+import { logUserAction } from '@/assets/js/logging.js'
 
 let controller = new AbortController()
 
@@ -17,9 +19,13 @@ export const useEditorStore = defineStore('editor', () => {
   const editor = ref(null)
 
   function createEditor() {
+    let logDelta = null
     editor.value = new Editor({
       extensions: [StarterKit, MarkAI, Placeholder, Start],
       content: '',
+      onCreate({ editor }) {
+        logDelta = deltaLogger(editor, commandStore.storyId)
+      },
       onSelectionUpdate({ editor, transaction }) {
         if (!transaction.meta.pointer) {
           centerEditor(editor)
@@ -43,6 +49,7 @@ export const useEditorStore = defineStore('editor', () => {
           editor.chain().focus().unsetMarkAI().run()
       },
       onUpdate({ editor }) {
+        if (logDelta !== null) { logDelta() }
         localStorage.setItem(
           `story-${commandStore.storyId}`,
           JSON.stringify({
@@ -57,10 +64,20 @@ export const useEditorStore = defineStore('editor', () => {
     })
   }
 
+  function log() {
+    logUserAction("save", {
+      storyId: commandStore.storyId,
+      lang: commandStore.lang,
+      template: commandStore.templateName,
+      editor: editor.value.getJSON()
+    })
+  }
+
   return {
     editor,
     selection,
-    createEditor
+    createEditor,
+    log
   }
 })
 

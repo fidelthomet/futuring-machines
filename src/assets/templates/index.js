@@ -1,6 +1,10 @@
-import nightOfWriting from './nightOfWritingStem'
-import nightOfWriting_de from './nightOfWritingStem-de'
+import experientialFutures from './experientialFutures'
+import experientialFuturesDE from './experientialFutures-de'
 import localCommunity from './localCommunityStem'
-import localCommunity_de from './localCommunityStem-de'
+import homesForLife from './homesForLifeStart'
+import climateFutures from './climate'
+import queerFutures from './queerFuturesStem'
+import nightOfWriting from './nightOfWritingStem'
+import designCUI from './design-cui'
 
-export default [nightOfWriting, nightOfWriting_de, localCommunity]
+export default [experientialFutures, experientialFuturesDE, localCommunity, homesForLife, climateFutures, queerFutures, nightOfWriting, designCUI]

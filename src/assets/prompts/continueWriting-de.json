@@ -7,7 +7,8 @@
   "actions": [
     {
       "type": "generate",
-      "template": "Setzen Sie die folgende Geschichte fort, die mit dreifachen Backticks begrenzt ist. Die Fortsetzung sollte nur einen Absatz mit drei Sätzen umfassen.\n\nGeschichte: ```::full::```. Generieren Sie den Text nur auf Deutsch."
+      "template": "Setzen Sie die folgende Geschichte fort, die mit dreifachen Backticks begrenzt ist. Die Forsetzung sollte das im letzten Satz oder Absatz angesprochene Ereignis weiterverfolgen oder eine völlig andere und unerwartete Richtung einschlagen. \n\n Setzen Sie die Geschichte erzählerisch fort und behalten Sie den Stil der Geschichte bei. Halten Sie Ihre Antwort so kurz wie möglich und verwenden Sie einen kurzen Satz. Generieren Sie den Text nur auf Deutsch. \n\nGeschichte: ```::full::```",
+      "template-long": "Setzen Sie die folgende Geschichte fort, die mit dreifachen Backticks begrenzt ist. Die Fortsetzung sollte nur einen Absatz mit drei Sätzen umfassen.\n\nGeschichte: ```::full::```. Generieren Sie den Text nur auf Deutsch."
     }
   ]
 }

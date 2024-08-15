@@ -4,6 +4,7 @@ import { onMounted, onBeforeUnmount } from 'vue'
 import { useCommandStore } from '@/stores/commands'
 import { useEditorStore } from '@/stores/editor'
 import TheCommandPalette from '@/components/TheCommandPalette.vue'
+import { logUserAction } from '@/assets/js/logging.js'
 
 /*
     >>>> MENUS
