@@ -7,8 +7,6 @@ const props = defineProps(nodeViewProps)
 function select(e) {
   props.editor.commands.unsetMarkAI()
   active.value = true
-  e.target.focus()
-  console.log(props.node.attrs)
 }
 
 function blur() {
