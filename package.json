@@ -14,6 +14,7 @@
     "@tiptap/pm": "^2.2.2",
     "@tiptap/starter-kit": "^2.2.2",
     "@tiptap/vue-3": "^2.2.2",
+    "@vueuse/core": "^10.11.1",
     "pinia": "^2.1.7",
     "quill-delta": "^5.1.0",
     "vue": "^3.4.27",
