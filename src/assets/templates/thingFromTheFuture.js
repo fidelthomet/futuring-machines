@@ -6,6 +6,10 @@ import continueWriting from '@/assets/prompts/continueWriting'
 export default {
   id: 'thing-from-the-future',
   prompts: [...prompts, wildcards, extrapolate],
+  system: {
+    en: "Start every sentence with 'The fact, that'",
+    de: "Beginne jeden Satz mit 'Der Fakt, dass'"
+  },
   name: {
     en: 'Thing from the Future',
     de: 'Das Ding aus der Zukunft'

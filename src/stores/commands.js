@@ -195,6 +195,9 @@ export const useCommandStore = defineStore('command', () => {
       body: JSON.stringify({
         model: MODEL,
         prompt,
+        ...(template.value.system != null && {
+          system: localize(template.value.system, lang.value)
+        }),
         stream: finalize
       })
     }).catch(() => (isGenerating.value = false))
@@ -280,6 +283,9 @@ export const useCommandStore = defineStore('command', () => {
         model: MODEL,
         prompt,
         stream: false,
+        ...(template.value.system != null && {
+          system: localize(template.value.system, lang.value)
+        }),
         format: 'json'
       })
     }).catch(() => (isGenerating.value = false))
