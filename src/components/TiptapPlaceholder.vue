@@ -7,21 +7,25 @@ const props = defineProps(nodeViewProps)
 function select(e) {
   props.editor.commands.unsetMarkAI()
   active.value = true
-}
 
-function blur() {
-  active.value = false
+  const timeStamp = e.timeStamp
+  const target = e.target
+  const controller = new AbortController()
+
+  window.addEventListener(
+    'click',
+    (e) => {
+      if (e.timeStamp === timeStamp || e.target === target) return
+      controller.abort()
+      active.value = false
+    },
+    { signal: controller.signal }
+  )
 }
 </script>
 
 <template>
-  <NodeViewWrapper
-    as="span"
-    tabindex="0"
-    class="placeholder"
-    @click="select"
-    @blur="blur"
-    :class="{ active }"
+  <NodeViewWrapper as="span" tabindex="0" class="placeholder" @click="select" :class="{ active }"
     ><template v-if="node.attrs.length != null">
       <template v-for="i in +node.attrs.length" :key="i">&emsp;</template> </template
     ><template v-else>{{ node.attrs.label }}</template></NodeViewWrapper
@@ -55,14 +59,6 @@ function blur() {
     outline: none;
   }
 }
-
-/* .placeholder:has(span.mark-ai) {
-  background-color: var(--color-user-light);
-}
-
-.placeholder:deep(span.mark-ai) {
-  color: var(--color-user) !important;
-} */
 
 .placeholder:has(input:focus) {
   color: aqua;
