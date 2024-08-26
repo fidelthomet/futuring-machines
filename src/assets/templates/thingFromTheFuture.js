@@ -1,9 +1,10 @@
 import prompts from '@/assets/prompts'
 import wildcards from '@/assets/prompts/wildcards'
+import extrapolate from '@/assets/prompts/extrapolate'
 
 export default {
   id: 'thing-from-the-future',
-  prompts: [...prompts, wildcards],
+  prompts: [...prompts, wildcards, extrapolate],
   name: {
     en: 'Thing from the Future',
     de: 'Das Ding aus der Zukunft'

@@ -1,0 +1,34 @@
+{
+  "name": { "en": "extrapolate", "de": "Extrapolieren" },
+  "trigger": "selection",
+  "pattern": "M0,0 L1,1 L0,2 M1,0 L2,1 L1,2 M2,0 L3,1 L2,2",
+  "mode": "append",
+  "actions": [
+    {
+      "type": "options",
+      "options": [
+        { "en": "10 years", "de": "10 Jahre" },
+        { "en": "20 years", "de": "20 Jahre" },
+        { "en": "50 years", "de": "50 Jahre" }
+      ],
+      "bind": "option"
+    },
+    {
+      "type": "options",
+      "options": [
+        { "en": "grow", "de": "Wachsen" },
+        { "en": "collapse", "de": "Zusammenbrechen" },
+        { "en": "transform", "de": "Transformieren" }
+      ],
+      "bind": "arc"
+    },
+    {
+      "type": "generate",
+      "template": {
+        "en": "Continue the following story pushing the timeline ::option:: in the future. Live in this future has changed in a way in which the world and things ::arc::. Write only one sentence that elaborates the following aspect mentioned in the story. \n\n Aspect: ::selection::.  \n\n Story: ::full::",
+        "de": "Führen Sie die folgende Geschichte fort und verschieben Sie die Zeitlinie um ::option:: in die Zukunft. Das Leben in dieser Zukunft hat sich in einer Weise verändert, in der die Welt und die Dinge ::arc::. Schreiben Sie nur einen Satz, der den folgenden Aspekt aus der Geschichte näher erläutert. \n\n Aspekt: ::selection::. \n\n Geschichte: ::full::. Generieren Sie den Text nur auf Deutsch."
+      },
+      "bind": "response"
+    }
+  ]
+}
