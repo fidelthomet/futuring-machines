@@ -1,9 +1,12 @@
 <script setup>
 import { RouterView } from 'vue-router'
+import { useEditorStore } from './stores/editor'
+
+const editorStore = useEditorStore()
 </script>
 
 <template>
-  <main>
+  <main @click="editorStore.focus()">
     <RouterView />
   </main>
 </template>

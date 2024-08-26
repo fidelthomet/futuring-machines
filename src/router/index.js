@@ -29,7 +29,7 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
-  const dataStore = useCommandStore()
+  const commandStore = useCommandStore()
   if (to.name === 'editor') {
     if (to.params.id == null) {
       return next({
@@ -37,10 +37,10 @@ router.beforeEach(async (to, from, next) => {
         params: { template: to.params.template, id: crypto.randomUUID() }
       })
     }
-    dataStore.templateName = to.params.template
-    dataStore.storyId = to.params.id
+    commandStore.templateId = to.params.template
+    commandStore.storyId = to.params.id
   } else {
-    dataStore.templateName = null
+    commandStore.templateId = null
   }
   next()
 })

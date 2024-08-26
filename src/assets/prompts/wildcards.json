@@ -5,13 +5,19 @@
   "actions": [
     {
       "type": "generate options",
-      "template": "Continue the following story, which is delimited with triple backticks. Generate three different continuations. Each continuation builds on an unexpected event that brings conflict to the story. Continuations should start with start with 'One day,' or 'Suddenly,'. Continuations should be written in a narrative style and use at most 10 words. \n\nFormat each continuation as a JSON object with 'title' and 'continuation' as the keys. Format your response as a JSON object with 'cont1', 'cont2' and 'cont3' as the keys. \n\nStory: ```::full::```",
+      "template": {
+        "en": "Continue the following story, which is delimited with triple backticks. Generate three different continuations. Each continuation builds on an unexpected event that brings conflict to the story. Continuations should start with start with 'One day,' or 'Suddenly,'. Continuations should be written in a narrative style and use at most 10 words. \n\nFormat each continuation as a JSON object with 'title' and 'continuation' as the keys. Format your response as a JSON object with 'cont1', 'cont2' and 'cont3' as the keys. \n\nStory: ```::full::```",
+        "de": "Führen Sie die folgende Geschichte weiter, die durch dreifache Backticks begrenzt ist. Generieren Sie drei verschiedene Fortsetzungen. Jede Fortsetzung baut auf einem unerwarteten Ereignis auf, das Konflikte in die Geschichte bringt. Die Fortsetzungen sollten mit 'Eines Tages,' oder 'Plötzlich,' beginnen. Die Fortsetzungen sollten in einem erzählerischen Stil verfasst sein und höchstens 10 Wörter verwenden. \n\nFormatieren Sie jede Fortsetzung als JSON-Objekt mit 'title' und 'continuation' als Schlüssel. Formatieren Sie Ihre Antwort als JSON-Objekt mit 'cont1', 'cont2' und 'cont3' als Schlüssel. Generieren Sie den Text nur auf Deutsch.\n\nGeschichte: ```::full::```"
+      },
       "name": "continuation",
       "keys": ["title", "continuation"]
     },
     {
       "type": "static",
-      "template": "::continuation::. Because of that"
+      "template": {
+        "en": "::continuation::. Because of that",
+        "de": "::continuation::. Wegen dieser"
+      }
     }
   ]
 }

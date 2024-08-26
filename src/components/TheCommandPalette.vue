@@ -12,6 +12,7 @@ import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
 import IconUpload from '~icons/base/Upload'
 import IconAI from '~icons/base/AI'
+import LocalizeText from './LocalizeText.vue'
 
 const startIndex = ref(0)
 const openPrompts = ref(false)
@@ -128,7 +129,10 @@ onBeforeUnmount(() => {
             height="auto"
             @click="run(editorStore.editor, prompt)"
           >
-            <template v-slot:title>{{ prompt.name }} {{ prompt.description }}</template>
+            <template v-slot:title>
+              <LocalizeText :text="prompt.name" :lang="commandStore.lang" />
+              <LocalizeText :text="prompt.description" :lang="commandStore.lang" />
+            </template>
           </ButtonList>
         </div>
         <div v-else class="vertical">
@@ -140,8 +144,12 @@ onBeforeUnmount(() => {
             height="auto"
             @click="run(editorStore.editor, prompt)"
           >
-            <template v-slot:title>{{ prompt.name }} </template>
-            <template v-slot:description>{{ prompt.description }}</template>
+            <template v-slot:title>
+              <LocalizeText :text="prompt.name" :lang="commandStore.lang" />
+            </template>
+            <template v-slot:description>
+              <LocalizeText :text="prompt.description" :lang="commandStore.lang" />
+            </template>
           </ButtonTile>
         </div>
       </template>
