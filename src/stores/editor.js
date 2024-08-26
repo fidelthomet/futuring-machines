@@ -52,20 +52,26 @@ export const useEditorStore = defineStore('editor', () => {
         if (logDelta !== null) {
           logDelta()
         }
-        localStorage.setItem(
-          `story-${commandStore.storyId}`,
-          JSON.stringify({
-            editor: editor.getJSON(),
-            updated: new Date(),
-            id: commandStore.storyId,
-            name: localize(commandStore.template.name, commandStore.lang),
-            lang: commandStore.lang,
-            env: commandStore.env,
-            template: commandStore.templateId
-          })
-        )
+        saveStory(editor)
       }
     })
+  }
+
+  function saveStory() {
+    localStorage.setItem(
+      `story-${commandStore.storyId}`,
+      JSON.stringify({
+        editor: editor.value.getJSON(),
+        updated: new Date(),
+        id: commandStore.storyId,
+        name: commandStore.storyName,
+        templateName: localize(commandStore.template.name, commandStore.lang),
+        author: commandStore.storyAuthor,
+        lang: commandStore.lang,
+        env: commandStore.env,
+        template: commandStore.templateId
+      })
+    )
   }
 
   function log() {
@@ -78,7 +84,6 @@ export const useEditorStore = defineStore('editor', () => {
   }
 
   function focus() {
-    console.log('focus')
     editor.value?.commands.focus()
   }
 
@@ -87,7 +92,8 @@ export const useEditorStore = defineStore('editor', () => {
     selection,
     createEditor,
     log,
-    focus
+    focus,
+    saveStory
   }
 })
 

@@ -19,6 +19,9 @@ export const useCommandStore = defineStore('command', () => {
   const templateId = ref(null)
   const storyId = ref(null)
 
+  const storyName = ref(null)
+  const storyAuthor = ref(null)
+
   const lang = ref('en')
 
   const template = computed(() =>
@@ -346,11 +349,15 @@ export const useCommandStore = defineStore('command', () => {
     INIT TEMPLATE
   */
   async function initTemplate(editor) {
+    storyName.value = null
+    storyAuthor.value = null
     resetPrompts()
     try {
       const story = JSON.parse(localStorage.getItem(`story-${storyId.value}`))
       editor.commands.setContent(story.editor)
       lang.value = story.lang
+      storyName.value = story.name
+      storyAuthor.value = story.author
       env.value = { ...story.env }
       nextTick(() => centerEditor(editor, true))
     } catch (e) {
@@ -398,7 +405,9 @@ export const useCommandStore = defineStore('command', () => {
     resetPrompts,
     hasGeneratedText,
     logFeedback,
-    controller
+    controller,
+    storyName,
+    storyAuthor
   }
 })
 

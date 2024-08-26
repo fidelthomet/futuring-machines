@@ -1,9 +1,10 @@
 <script setup>
 import { EditorContent } from '@tiptap/vue-3'
-import { onMounted, onBeforeUnmount } from 'vue'
+import { onMounted, onBeforeUnmount, watch } from 'vue'
 import { useCommandStore } from '@/stores/commands'
 import { useEditorStore } from '@/stores/editor'
 import TheCommandPalette from '@/components/TheCommandPalette.vue'
+import { localize } from '@/assets/js/utils'
 
 const editorStore = useEditorStore()
 const commandStore = useCommandStore()
@@ -16,15 +17,36 @@ onMounted(async () => {
 onBeforeUnmount(() => {
   editorStore.editor.destroy()
 })
+
+watch(
+  () => [commandStore.storyAuthor, commandStore.storyName],
+  () => editorStore.saveStory()
+)
 </script>
 
 <template>
-  <editor-content :editor="editorStore.editor" class="editor" />
+  <div class="editor-wrapper">
+    <input
+      class="input-meta title"
+      :placeholder="localize(commandStore.template?.name, commandStore.lang)"
+      v-model="commandStore.storyName"
+      @click.stop
+      @keydown.stop
+    />
+    <input
+      class="input-meta author"
+      placeholder="anonymous"
+      @click.stop
+      @keydown.stop
+      v-model="commandStore.storyAuthor"
+    />
+    <editor-content :editor="editorStore.editor" class="editor" />
+  </div>
   <TheCommandPalette />
 </template>
 
 <style scoped>
-.editor {
+.editor-wrapper {
   margin-top: 50vh;
   margin-bottom: 50vh;
   grid-column: center-start / center-end;
@@ -40,8 +62,34 @@ onBeforeUnmount(() => {
     margin-top: calc(var(--spacing) * 1.5);
     margin-bottom: calc(var(--spacing) * 1.5);
   }
+
+  .input-meta {
+    font: var(--font-heading);
+    color: inherit;
+    padding: 0;
+    margin: 0;
+    border: none;
+    color: var(--color-user);
+
+    &.title {
+      font-weight: bold;
+    }
+
+    &.author {
+      font-size: var(--font-size-ui);
+      font: var(--font-ui);
+      margin-bottom: var(--spacing);
+    }
+
+    &:focus-visible {
+      outline: none;
+    }
+  }
 }
 
+.input-meta::placeholder {
+  color: var(--color-ai);
+}
 .editor:deep(> div:focus) {
   outline: none;
 }

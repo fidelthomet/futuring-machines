@@ -43,7 +43,8 @@ onMounted(() => {
           :to="{ name: 'editor', params: { template: story.template, id: story.id } }"
         >
           <li>
-            {{ story.name }} {{ story.updated.toLocaleString() }}
+            {{ story.name || story.templateName }} ({{ story.author || 'anonymous' }})
+            {{ story.updated.toLocaleString() }}
             <ButtonDefault @click.stop.prevent="storyStore.deleteStory(story.id)"
               >delete</ButtonDefault
             >
