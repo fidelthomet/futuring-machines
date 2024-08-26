@@ -1,6 +1,7 @@
 import prompts from '@/assets/prompts'
 import wildcards from '@/assets/prompts/wildcards'
 import extrapolate from '@/assets/prompts/extrapolate'
+import continueWriting from '@/assets/prompts/continueWriting'
 
 export default {
   id: 'thing-from-the-future',
@@ -17,13 +18,5 @@ export default {
     en: 'In a <placeholder length=4></placeholder> future there is a <placeholder length=4></placeholder> related to <placeholder length=4></placeholder>. <start/>',
     de: 'In einer <placeholder length=4></placeholder> Zukunft gibt es ein <placeholder length=4></placeholder> in Verbindung mit <placeholder length=4></placeholder>. <start/>'
   },
-  start: {
-    actions: [
-      {
-        type: 'generate',
-        template:
-          'You are a world-famous science fiction author and Hugo Award winner. You specialize in fast narratives with short sentences. Write the first paragraph of a short speculative fiction that addresses the following prompt delimited by three backticks. Include some characters to the story based on the prompt. The paragraph should be no more than two sentences long. Make the sentences as short as possible. Leave the last sentence incomplete. Use a simple and narrative language. \n\nPrompt: ```::full:: What is it?```'
-      }
-    ]
-  }
+  start: continueWriting
 }

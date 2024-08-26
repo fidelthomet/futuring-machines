@@ -1,13 +1,19 @@
 <script setup>
+import { useCommandStore } from '@/stores/commands'
 import { nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3'
 import { ref } from 'vue'
 
 const active = ref(false)
 const props = defineProps(nodeViewProps)
+
+const commandStore = useCommandStore()
+
 function select() {
   const pos = props.getPos()
   props.deleteNode()
   props.editor.commands.focus(pos)
+
+  if (commandStore.template.start) commandStore.run(props.editor, commandStore.template.start)
 }
 </script>
 
