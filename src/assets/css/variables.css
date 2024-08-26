@@ -9,6 +9,7 @@
   --line-height: 1.5;
   --font-size-heading: 2.5em;
 
+
   --font-text: 400 var(--font-size) / var(--line-height) 'Redaction', serif;
   --font-heading: 700 var(--font-size) / var(--line-height) 'Inter', sans-serif;
   --font-ui: 400 var(--font-size-ui) / var(--line-height) 'Inter', sans-serif;
@@ -16,4 +17,8 @@
 
   --border-radius: 12px;
   --spacing: 20px;
+
+  @media print {
+    --font-size: 18px;
+  }
 }
