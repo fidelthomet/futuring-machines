@@ -6,7 +6,7 @@ import { Editor } from '@tiptap/vue-3'
 import MarkAI from '@/tiptap/mark-ai'
 import Placeholder from '@/tiptap/placeholder'
 import Start from '@/tiptap/start'
-import { centerEditor } from '@/assets/js/utils'
+import { centerEditor, localize } from '@/assets/js/utils'
 import { deltaLogger } from '@/assets/js/logging'
 import { useCommandStore } from '@/stores/commands'
 import { logUserAction } from '@/assets/js/logging.js'
@@ -58,8 +58,10 @@ export const useEditorStore = defineStore('editor', () => {
             editor: editor.getJSON(),
             updated: new Date(),
             id: commandStore.storyId,
+            name: localize(commandStore.template.name, commandStore.lang),
             lang: commandStore.lang,
-            template: commandStore.templateName
+            env: commandStore.env,
+            template: commandStore.templateId
           })
         )
       }
@@ -70,16 +72,22 @@ export const useEditorStore = defineStore('editor', () => {
     logUserAction('save', {
       storyId: commandStore.storyId,
       lang: commandStore.lang,
-      template: commandStore.templateName,
+      template: commandStore.templateId,
       editor: editor.value.getJSON()
     })
+  }
+
+  function focus() {
+    console.log('focus')
+    editor.value?.commands.focus()
   }
 
   return {
     editor,
     selection,
     createEditor,
-    log
+    log,
+    focus
   }
 })
 

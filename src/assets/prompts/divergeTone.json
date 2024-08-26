@@ -1,16 +1,25 @@
 {
-  "name": "change tone",
+  "name": { "en": "change tone", "de": "Ton ändern" },
   "trigger": "new-line",
   "mode": "append",
   "actions": [
     {
       "type": "options",
-      "options": ["positive", "critical", "empowering", "ironical", "fearful"],
+      "options": [
+        { "en": "positive", "de": "positiv" },
+        { "en": "critical", "de": "kritisch" },
+        { "en": "empowering", "de": "ermächtigend" },
+        { "en": "ironical", "de": "ironisch" },
+        { "en": "fearful", "de": "ängstlich" }
+      ],
       "bind": "tone"
     },
     {
       "type": "generate options",
-      "template": "Continue the following story, which is delimited with triple backticks. Generate three different continuations. The tone in the development of events should be ::tone::. Continuations should be written in a narrative style and use at most 10 words. \n\nFormat each continuation as a JSON object with 'title' and 'continuation' as the keys. Format your response as a JSON object with 'cont1', 'cont2' and 'cont3' as the keys. \n\nStory: ```::full::```",
+      "template": {
+        "en": "Continue the following story, which is delimited with triple backticks. Generate three different continuations. The tone in the development of events should be ::tone::. Continuations should be written in a narrative style and use at most 10 words. \n\nFormat each continuation as a JSON object with 'title' and 'continuation' as the keys. Format your response as a JSON object with 'cont1', 'cont2' and 'cont3' as the keys. \n\nStory: ```::full::```",
+        "de": "Fahre mit der folgenden Geschichte fort, die mit dreifachen Backticks begrenzt ist. Generiere drei verschiedene Fortsetzungen. Der Ton in der Entwicklung der Ereignisse sollte ::tone:: sein. Die Fortsetzungen sollten in einem erzählerischen Stil geschrieben sein und höchstens 10 Wörter umfassen.\n\nFormatiere jede Fortsetzung als ein JSON-Objekt mit den Schlüsseln 'title' und 'continuation'. Formatiere deine Antwort als ein JSON-Objekt mit den Schlüsseln 'cont1', 'cont2' und 'cont3'. Generiere den Text nur auf Deutsch.\n\nGeschichte: ```::full::```"
+      },
       "name": "continuation",
       "keys": ["title", "continuation"]
     },

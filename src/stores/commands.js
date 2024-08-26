@@ -1,9 +1,10 @@
 import { computed, nextTick, ref } from 'vue'
 import { defineStore, acceptHMRUpdate } from 'pinia'
-import prompts from '@/assets/prompts'
 import templates from '@/assets/templates'
 import { centerEditor, generatePattern } from '@/assets/js/utils'
 import { logUserAction } from '@/assets/js/logging.js'
+import { localize } from '@/assets/js/utils'
+import { useSettingStore } from './setting'
 
 const MODEL = import.meta.env.VITE_MODEL
 const API_URL = import.meta.env.VITE_API_URL
@@ -11,26 +12,21 @@ const API_URL = import.meta.env.VITE_API_URL
 const decoder = new TextDecoder()
 
 export const useCommandStore = defineStore('command', () => {
-  const promptsAvailable = ref(
-    prompts.map((p) => {
-      return {
-        pattern: generatePattern(3, 2, 4, 0.25),
-        ...p
-      }
-    })
-  )
-  const promptsEnabled = ref(promptsAvailable.value)
-
+  const settingsStore = useSettingStore()
   const templatesAvailable = ref(templates)
   const templatesEnabled = ref(templatesAvailable.value)
 
-  const templateName = ref(null)
+  const templateId = ref(null)
   const storyId = ref(null)
 
   const lang = ref('en')
 
-  const template = computed(() => templatesEnabled.value.find((t) => t.name === templateName.value))
+  const template = computed(() =>
+    templatesEnabled.value.find((t) => t.id === templateId.value || t.name === templateId.value)
+  )
 
+  const promptsAvailable = computed(() => template.value?.prompts ?? [])
+  const promptsEnabled = ref(promptsAvailable.value)
   const isGenerating = ref(false)
   const isError = ref(false)
 
@@ -59,6 +55,7 @@ export const useCommandStore = defineStore('command', () => {
     const { view, state } = editor
 
     // This is the full story as it's being written in the editor. We add it to the story template.
+    console.log(prompt)
     env.value.full = state.doc.textBetween(0, view.state.doc.nodeSize - 2, '\n')
 
     // This is sort of a Context object – Combines: Story template + Story Text + Prompt
@@ -74,9 +71,6 @@ export const useCommandStore = defineStore('command', () => {
     } else {
       logUserAction('button', { storyId: storyId.value, prompt })
     }
-
-    console.log('env.value: ')
-    console.log(env.value)
 
     // const command = prompt.template.replace(/::selection::/, selection)
 
@@ -106,17 +100,16 @@ export const useCommandStore = defineStore('command', () => {
           ...prompt,
           name: option.label ?? option,
           startIndex: index,
-          pattern: generatePattern(3, 2, 3, 0, true),
           env: {
             ...prompt.env,
-            [action.bind]: option.value ?? option
+            [action.bind]: localize(option.value ?? option, lang.value)
           }
         }))
         lastPromptsEnabled.value.push(promptsEnabled.value)
         break
       case 'static':
         editor.commands.setMarkAI()
-        generatedText = action.template.replace(
+        generatedText = localize(action.template, lang.value).replace(
           /::([^:]+)::/g,
           (pattern, match) => env.value[match] ?? pattern
         )
@@ -170,9 +163,7 @@ export const useCommandStore = defineStore('command', () => {
   }
 
   function resetPrompts() {
-    promptsEnabled.value = promptsAvailable.value.filter(
-      (p) => p.lang === lang.value || (p.lang == null && lang.value === 'en')
-    )
+    promptsEnabled.value = [...promptsAvailable.value]
     crumbs.value = []
     lastPromptsEnabled.value = []
   }
@@ -182,7 +173,7 @@ export const useCommandStore = defineStore('command', () => {
   **************/
 
   async function runGenerate(action, promptTrigger, promptMode, editor, finalize) {
-    const prompt = action.template.replace(
+    const prompt = localize(action.template, lang.value).replace(
       /::([^:]+)::/g,
       (pattern, match) => env.value[match] ?? pattern
     )
@@ -266,7 +257,7 @@ export const useCommandStore = defineStore('command', () => {
   *************************/
 
   async function runGenerateOptions(action, sourcePrompt, index) {
-    const prompt = action.template.replace(
+    const prompt = localize(action.template, lang.value).replace(
       /::([^:]+)::/g,
       (pattern, match) => env.value[match] ?? pattern
     )
@@ -354,33 +345,22 @@ export const useCommandStore = defineStore('command', () => {
   /* 
     INIT TEMPLATE
   */
-  async function initTemplate(editor, index = 0) {
-    const save = localStorage.getItem(`story-${storyId.value}`)
-    if (save != null) {
-      editor.commands.setContent(JSON.parse(save).editor)
-      lang.value = JSON.parse(save).lang ?? 'en'
+  async function initTemplate(editor) {
+    resetPrompts()
+    try {
+      const story = JSON.parse(localStorage.getItem(`story-${storyId.value}`))
+      editor.commands.setContent(story.editor)
+      lang.value = story.lang
+      env.value = { ...story.env }
       nextTick(() => centerEditor(editor, true))
-      resetPrompts()
-      return
-    }
-    const { view, state } = editor
+    } catch (e) {
+      env.value = { ...template.value.env, full: getFullText(editor) }
+      lang.value = settingsStore.lang
 
-    env.value.full = state.doc.textBetween(0, view.state.doc.nodeSize - 2, '\n')
-    env.value = { ...env.value, ...template.value.env }
-    lang.value = template.value.lang
-
-    const action = template.value.actions[index]
-    index++
-    const finalize = index == template.value.actions.length
-
-    switch (action.type) {
-      case 'generate':
-        if (template.value.mode === 'replace') editor.commands.deleteSelection()
-        await runGenerate(action, null, null, editor, finalize)
-        break
-      case 'static':
+      if (template.value.template != null) {
+        const content = localize(template.value.template)
         editor.commands.setContent(
-          action.template.replace(/::([^:]+)::/g, (pattern, match) => env.value[match] ?? pattern)
+          content.replace(/::([^:]+)::/g, (pattern, match) => env.value[match] ?? pattern)
         )
         editor.commands.selectAll()
         editor.commands.setMarkAI()
@@ -390,16 +370,16 @@ export const useCommandStore = defineStore('command', () => {
           centerEditor(editor, true)
           editor.commands.blur()
         })
-        break
-
-      default:
-        break
+        return
+      } else if (template.value.start) {
+        run(editor, template.value.start)
+      }
     }
+  }
 
-    resetPrompts()
-
-    // Mixed templates
-    if (!finalize && action.type === 'generate') initTemplate(editor, index)
+  function getFullText(editor) {
+    const { view, state } = editor
+    return state.doc.textBetween(0, view.state.doc.nodeSize - 2, '\n')
   }
 
   return {
@@ -407,7 +387,7 @@ export const useCommandStore = defineStore('command', () => {
     crumbs,
     lastPromptsEnabled,
     templatesEnabled,
-    templateName,
+    templateId,
     storyId,
     template,
     lang,

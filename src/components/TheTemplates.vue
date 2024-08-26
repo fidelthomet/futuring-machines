@@ -3,10 +3,15 @@ import { useCommandStore } from '@/stores/commands'
 import { useStoryStore } from '@/stores/story'
 import { RouterLink } from 'vue-router'
 import ButtonTile from './ButtonTile.vue'
+import LocalizeText from '@/components/LocalizeText.vue'
 import { onMounted } from 'vue'
 import ButtonDefault from './ButtonDefault.vue'
+import { useSettingStore } from '@/stores/setting'
+import { localize } from '@/assets/js/utils'
+
 const commandStore = useCommandStore()
 const storyStore = useStoryStore()
+const settingStore = useSettingStore()
 
 onMounted(() => {
   storyStore.update()
@@ -20,12 +25,12 @@ onMounted(() => {
     <div class="template-buttons">
       <RouterLink
         v-for="template in commandStore.templatesEnabled"
-        :key="template.name"
-        :to="{ name: 'editor', params: { template: template.name } }"
+        :key="template.id"
+        :to="{ name: 'editor', params: { template: template.id ?? localize(template.name) } }"
       >
         <ButtonTile tag="div" :height="280" :width="260">
-          <template v-slot:title>{{ template.name }}</template>
-          <template v-slot:description>{{ template.description }}</template>
+          <template v-slot:title><LocalizeText :text="template.name" /></template>
+          <template v-slot:description><LocalizeText :text="template.description" /></template>
         </ButtonTile>
       </RouterLink>
     </div>
@@ -38,7 +43,7 @@ onMounted(() => {
           :to="{ name: 'editor', params: { template: story.template, id: story.id } }"
         >
           <li>
-            {{ story.template }} {{ story.updated.toLocaleString() }}
+            {{ story.name }} {{ story.updated.toLocaleString() }}
             <ButtonDefault @click.stop.prevent="storyStore.deleteStory(story.id)"
               >delete</ButtonDefault
             >

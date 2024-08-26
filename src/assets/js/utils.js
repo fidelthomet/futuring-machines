@@ -1,3 +1,5 @@
+import { useSettingStore } from '@/stores/setting'
+
 function centerEditor(editor, instant, limit = 105) {
   const cursorStartY = editor.view.coordsAtPos(editor.view.state.selection.from).top
   const cursorEndY = editor.view.coordsAtPos(editor.view.state.selection.to).bottom
@@ -28,4 +30,14 @@ function r(max = 1, round = 0.5) {
   return Math.floor((Math.random() * (max + round)) / round) * round
 }
 
-export { centerEditor, generatePattern }
+function localize(text, lang) {
+  const settingsStore = useSettingStore()
+  return (
+    text?.[lang] ??
+    text?.[settingsStore.lang] ??
+    settingsStore.langOptions.map((l) => text?.[l]).find((t) => t != null) ??
+    text
+  )
+}
+
+export { centerEditor, generatePattern, localize }

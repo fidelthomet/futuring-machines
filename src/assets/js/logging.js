@@ -3,6 +3,7 @@ const BACKEND_URL = '/backend'
 import Delta from 'quill-delta'
 
 export const logUserAction = async (action, data = undefined) => {
+  return
   // Create the log entry
   const logEntry = { action }
   if (data !== undefined) {
