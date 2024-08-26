@@ -214,7 +214,7 @@ export const useCommandStore = defineStore('command', () => {
 
       // For 'append' mode: set the cursor to the end of the editor position
       if (promptTrigger === 'selection' && promptMode === 'append') {
-        editor.commands.focus('end')
+        editor.commands.focus(editor.view.state.selection.to)
       }
 
       while (!done) {
