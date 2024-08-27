@@ -200,9 +200,13 @@ export const useCommandStore = defineStore('command', () => {
         }),
         stream: finalize
       })
-    }).catch(() => (isGenerating.value = false))
+    })
 
-    if (!response) return false
+    if (!response?.ok) {
+      isError.value = true
+      isGenerating.value = false
+      return false
+    }
 
     isGenerating.value = false
     let generatedText = ''
@@ -288,9 +292,13 @@ export const useCommandStore = defineStore('command', () => {
         }),
         format: 'json'
       })
-    }).catch(() => (isGenerating.value = false))
+    })
 
-    if (!response) return false
+    if (!response?.ok) {
+      isError.value = true
+      isGenerating.value = false
+      return false
+    }
 
     // LLM Response
     const res = await response.json().then((d) => d.response)
