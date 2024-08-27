@@ -8,6 +8,7 @@ import { onMounted } from 'vue'
 import ButtonDefault from './ButtonDefault.vue'
 import { useSettingStore } from '@/stores/setting'
 import { localize } from '@/assets/js/utils'
+import IconImport from '~icons/base/Import'
 
 const commandStore = useCommandStore()
 const storyStore = useStoryStore()
@@ -16,6 +17,18 @@ const settingStore = useSettingStore()
 onMounted(() => {
   storyStore.update()
 })
+
+function importFile(e) {
+  const file = e.target.files[0]
+  const reader = new FileReader()
+  reader.addEventListener('load', (event) => {
+    const id = JSON.parse(event.target.result).id
+    if (id == null) return
+    localStorage.setItem(`story-${id}`, event.target.result)
+    storyStore.update()
+  })
+  reader.readAsText(file)
+}
 </script>
 
 <template>
@@ -52,6 +65,19 @@ onMounted(() => {
         </RouterLink>
       </ul>
     </template>
+    <div class="import">
+      <ButtonDefault
+        tag="label"
+        for="file-import"
+        type="file"
+        accept="application/json"
+        disable-padding
+        title="import"
+      >
+        Import Story&nbsp;<IconImport />
+      </ButtonDefault>
+      <input id="file-import" type="file" accept="application/json" @change="importFile" />
+    </div>
   </div>
 </template>
 
@@ -101,6 +127,17 @@ onMounted(() => {
     }
   }
 
+  .import {
+    grid-column: center-start / center-end;
+    margin-left: -10px;
+    display: flex;
+
+    label {
+      display: flex;
+      align-items: center;
+    }
+  }
+
   nav {
     display: flex;
     grid-column: outer-start / outer-end;
@@ -123,6 +160,10 @@ onMounted(() => {
         color: var(--color-ui-secondary);
       }
     }
+  }
+
+  #file-import {
+    display: none;
   }
 }
 </style>

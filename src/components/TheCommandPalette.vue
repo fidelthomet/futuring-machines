@@ -13,6 +13,7 @@ import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import IconUpload from '~icons/base/Upload'
 import IconAI from '~icons/base/AI'
 import LocalizeText from './LocalizeText.vue'
+import { useStoryStore } from '@/stores/story'
 
 const startIndex = ref(0)
 const openPrompts = ref(false)
@@ -20,6 +21,7 @@ const lastPrompt = ref(null)
 
 const commandStore = useCommandStore()
 const editorStore = useEditorStore()
+const storyStore = useStoryStore()
 
 async function run(editor, prompt) {
   lastPrompt.value = prompt
@@ -116,6 +118,11 @@ onBeforeUnmount(() => {
   editorStore.editor.off('update', closePromptSelection)
   editorStore.editor.off('selectionUpdate', closePromptSelection)
 })
+
+function upload() {
+  // storyStore.uploadStory(commandStore.storyId)
+  storyStore.downloadStory(commandStore.storyId)
+}
 </script>
 <template>
   <div class="command-palette">
@@ -191,7 +198,7 @@ onBeforeUnmount(() => {
           :disabled="!editorStore.editor?.can().redo()"
           >↪</ButtonDefault
         >
-        <ButtonDefault offset-padding @click="editorStore.log()"><IconUpload /></ButtonDefault>
+        <ButtonDefault offset-padding @click="upload"><IconUpload /></ButtonDefault>
       </span>
     </div>
   </div>

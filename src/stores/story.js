@@ -55,12 +55,29 @@ export const useStoryStore = defineStore('story', () => {
     console.log(res)
   }
 
+  async function downloadStory(id) {
+    const project = id && localStorage.getItem(`story-${id}`)
+    const blob = id && new Blob([project], { type: 'application/json' })
+    const link = document.createElement('a')
+    link.download = `${id?.split('-')[0] ?? 'db'}.json`
+    link.href = window.URL.createObjectURL(blob)
+    link.dataset.downloadurl = ['text/json', link.download, link.href].join(':')
+    const evt = new MouseEvent('click', {
+      view: window,
+      bubbles: true,
+      cancelable: true
+    })
+    link.dispatchEvent(evt)
+    link.remove()
+  }
+
   return {
     stories,
     update,
     deleteStory,
     importStories,
-    uploadStory
+    uploadStory,
+    downloadStory
   }
 })
 
