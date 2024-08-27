@@ -1,14 +1,19 @@
 <script setup>
 import { useCommandStore } from '@/stores/commands'
 import LocalizeText from './LocalizeText.vue'
+import IconRepeat from '~icons/base/Repeat'
 
 defineProps({
   crumbs: {
     type: Array,
     default: null
+  },
+  repeatable: {
+    type: Boolean,
+    default: false
   }
 })
-defineEmits(['reset'])
+defineEmits(['reset', 'try-again'])
 
 const commandStore = useCommandStore()
 </script>
@@ -16,9 +21,13 @@ const commandStore = useCommandStore()
   <div class="breadcrumb-navigation">
     <span @click="$emit('reset', 0)">prompts</span>
     <template v-for="(crumb, i) in crumbs" :key="i">
-      <span> / </span>
-      <span @click="$emit('reset', i + 1)">
+      <span class="separator"> / </span>
+      <span v-if="i + 1 < crumbs.length" @click="$emit('reset', i + 1)">
         <LocalizeText :text="crumb" :lang="commandStore.lang" />
+      </span>
+      <span v-else :class="{ disabled: !repeatable, repeatable }" @click="$emit('try-again')">
+        <LocalizeText :text="crumb" :lang="commandStore.lang" />
+        <IconRepeat v-if="repeatable" />
       </span>
     </template>
   </div>
@@ -29,10 +38,16 @@ const commandStore = useCommandStore()
   span {
     &:hover {
       cursor: pointer;
-      text-decoration: underline;
+      color: var(--color-user);
     }
-    &:last-child {
+
+    &.separator,
+    &.disabled {
       pointer-events: none;
+    }
+
+    &.repeatable {
+      display: inline-flex;
     }
   }
 }

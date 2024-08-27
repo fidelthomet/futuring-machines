@@ -38,6 +38,15 @@ const availablePrompts = computed(() =>
     : commandStore.promptsEnabled.filter((prompt) => prompt.trigger !== 'selection')
 )
 
+const repeatable = computed(() => {
+  console.log(lastPrompt.value?.actions, startIndex.value, -1)
+  return (
+    lastPrompt.value?.actions?.[prompt.startIndex ?? 0]?.type === 'generate options' &&
+    !commandStore.isGenerating &&
+    !commandStore.isError
+  )
+})
+
 const showPrompts = computed(() => openPrompts.value || editorStore.selection != null)
 
 function closePromptSelection(force) {
@@ -64,6 +73,7 @@ function togglePromptSelection(force) {
 
 function tryAgain() {
   commandStore.crumbs.pop()
+  console.log('teryyr')
   run(editorStore.editor, lastPrompt.value)
 }
 
@@ -111,7 +121,12 @@ onBeforeUnmount(() => {
   <div class="command-palette">
     <template v-if="showPrompts">
       <hr />
-      <BreadcrumbNavigation :crumbs="commandStore.crumbs" @reset="reset" />
+      <BreadcrumbNavigation
+        :crumbs="commandStore.crumbs"
+        @reset="reset"
+        :repeatable="repeatable"
+        @try-again="tryAgain"
+      />
       <ScreenGenerating class="screen" v-if="commandStore.isGenerating" />
       <ScreenError
         class="screen"
