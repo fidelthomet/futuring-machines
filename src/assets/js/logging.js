@@ -1,9 +1,9 @@
-const BACKEND_URL = '/backend'
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
 
 import Delta from 'quill-delta'
 
 export const logUserAction = async (action, data = undefined) => {
-  return
+  if (BACKEND_URL == null) return
   // Create the log entry
   const logEntry = { action }
   if (data !== undefined) {
