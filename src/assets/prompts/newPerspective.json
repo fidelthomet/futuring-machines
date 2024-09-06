@@ -1,0 +1,24 @@
+{
+  "name": { "en": "add new perspective", "de": "Neue Perspektive hinzufügen" },
+  "trigger": "new-line",
+  "mode": "append",
+  "actions": [
+    {
+      "type": "options","options": [
+        { "en": "new human character", "de": "neuer menschlicher Charakter" },
+        { "en": "object", "de": "Objekt" },
+        { "en": "animal", "de": "Tier" },
+        { "en": "plant", "de": "Pflanze" }
+      ],
+      "bind": "option"
+    },
+    {
+      "type": "generate",
+      "template": {
+        "en": "Continue the following story, which is delimited with triple backticks, from the perspective of a ::option::. The continuation should be written in a narrative style. Keep your answer as short as possible and use one short sentence. \n\nStory: ```::full::```",
+        "de": "Fahre mit der folgenden Geschichte fort, die mit dreifachen Backticks begrenzt ist, aus der Perspektive eines ::option::. Die Fortsetzung sollte in einem erzählerischen Stil geschrieben sein. Halten Sie Ihre Antwort so kurz wie möglich und verwenden Sie einen kurzen Satz.\n\nGeschichte: ```::full::```. Generieren Sie den Text nur auf Deutsch."
+      },
+      "bind": "response"
+    }
+  ]
+}

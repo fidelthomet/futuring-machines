@@ -1,5 +1,5 @@
 {
-  "name": "wildcards",
+  "name": { "en": "wildcards", "de": "Wildcards" },
   "trigger": "new-line",
   "mode": "append",
   "actions": [

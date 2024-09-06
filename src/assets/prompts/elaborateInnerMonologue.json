@@ -1,0 +1,30 @@
+{
+  "name": { "en": "elaborate in inner monologue", "de": "Weiter ausführen als inneres Monolog" },
+  "trigger": "selection",
+  "mode": "append",
+  "actions": [
+    {
+      "type": "options",
+      "options": [
+        { "en": "critical", "de": "kritisch" },
+        { "en": "optimistic", "de": "optimistisch" },
+        { "en": "pessimistic", "de": "pessimistisch" },
+        { "en": "empowering", "de": "ermächtigend" },
+        { "en": "angry", "de": "wütend" },
+        { "en": "fearful", "de": "ängstlich" },
+        { "en": "ironical", "de": "ironisch" },
+        { "en": "analytical", "de": "analytisch" },
+        { "en": "hesitant", "de": "zögerlich" }
+      ],
+      "bind": "option"
+    },
+    {
+      "type": "generate",
+      "template": {
+        "en": "Continue the following story from the viewpoint of the main character. Write up to one sentence. You reflect on the following text with a humorous, yet ::option:: tone. Give the response within quotes. \n\n Input text: '::selection::'. \n\n Story: ::full::",
+        "de": "Führen Sie die folgende Geschichte aus der Sicht der Hauptfigur fort. Schreiben Sie bis zu einem Satz. Reflektieren Sie über den folgenden Text mit einem humorvollen, aber ::option:: Ton. Geben Sie die Antwort in Anführungszeichen an.\n\nEingegebener Text: '::selection::'. \n\nGeschichte: ::full::. Generieren Sie den Text nur auf Deutsch."
+      },
+      "bind": "response"
+    }
+  ]
+}

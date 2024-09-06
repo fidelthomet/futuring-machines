@@ -1,10 +1,11 @@
-import condense from '@/assets/prompts/condense'
-import divergeTone from '@/assets/prompts/divergeTone'
-import wildcards from '@/assets/prompts/wildcards'
+import prompts from '@/assets/prompts'
+//import wildcards from '@/assets/prompts/wildcards'
+//import elaborate from '@/assets/prompts/elaborate'
 
 export default {
   name: 'Futures of Design',
-  prompts: [wildcards, divergeTone, condense],
+  //prompts: [...prompts, wildcards, elaborate],
+  prompts,
   description: 'What will the design of conversational interfaces look like in 100 years?',
   start: {
     mode: 'append',

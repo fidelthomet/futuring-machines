@@ -1,0 +1,31 @@
+{
+  "name": { "en": "reframe", "de": "Umdenken" },
+  "trigger": "selection",
+  "pattern": "M0,0 L3,0 L3,2 L0,2 Z M1,1 L2,1",
+  "mode": "replace",
+  "actions": [
+    {
+      "type": "options",
+      "options": [
+        { "en": "positive", "de": "positiv" },
+        { "en": "critical", "de": "kritisch" },
+        { "en": "optimistic", "de": "optimistisch" },
+        { "en": "pessimistic", "de": "pessimistisch" },
+        { "en": "empowering", "de": "ermächtigend" },
+        { "en": "angry", "de": "wütend" },
+        { "en": "fearful", "de": "ängstlich" },
+        { "en": "ironical", "de": "ironisch" },
+        { "en": "analytical", "de": "analytisch" },
+        { "en": "hesitant", "de": "zögerlich" }
+      ],
+      "bind": "option"
+    },
+    {
+      "type": "generate",
+      "template": {
+        "en": "Rewrite the following text in a more ::option:: tone. Write in a narrative way. Keep the text short, using at most the same mount of words than the input text. \n\n Input text: ```::selection::```.",
+        "de": "Schreiben Sie den folgenden Text in einem ::option:: Ton um. Verfassen Sie narrativ. Halten Sie den Text kurz, verwenden Sie höchstens die gleiche Anzahl an Wörtern wie im Eingabetext. \n\n Eingabetext: ```::selection::```. Generieren Sie den Text nur auf Deutsch."
+      }
+    }
+  ]
+}

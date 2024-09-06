@@ -1,15 +1,13 @@
 import prompts from '@/assets/prompts'
-import wildcards from '@/assets/prompts/wildcards'
-import extrapolate from '@/assets/prompts/extrapolate'
 import continueWriting from '@/assets/prompts/continueWriting'
+//import wildcards from '@/assets/prompts/wildcards'
+//import extrapolate from '@/assets/prompts/extrapolate'
+//import question from '@/assets/prompts/question'
 
 export default {
   id: 'thing-from-the-future',
-  prompts: [...prompts, wildcards, extrapolate],
-  system: {
-    en: "Start every sentence with 'The fact, that'",
-    de: "Beginne jeden Satz mit 'Der Fakt, dass'"
-  },
+  prompts,
+  //prompts: [...prompts, wildcards, extrapolate, question],
   name: {
     en: 'Thing from the Future',
     de: 'Das Ding aus der Zukunft'
@@ -22,5 +20,9 @@ export default {
     en: 'In a <placeholder length=4></placeholder> future there is a <placeholder length=4></placeholder> related to <placeholder length=4></placeholder>. <start/>',
     de: 'In einer <placeholder length=4></placeholder> Zukunft gibt es ein <placeholder length=4></placeholder> in Verbindung mit <placeholder length=4></placeholder>. <start/>'
   },
-  start: continueWriting
+  start: continueWriting,
+  system: {
+    en: "Start every sentence with 'The fact, that'",
+    de: "Beginne jeden Satz mit 'Der Fakt, dass'"
+  },
 }
