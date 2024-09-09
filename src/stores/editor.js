@@ -65,7 +65,7 @@ export const useEditorStore = defineStore('editor', () => {
         updated: new Date(),
         id: commandStore.storyId,
         name: commandStore.storyName,
-        templateName: localize(commandStore.template.name, commandStore.lang),
+        templateName: localize(commandStore.template?.name, commandStore.lang),
         author: commandStore.storyAuthor,
         lang: commandStore.lang,
         env: commandStore.env,
