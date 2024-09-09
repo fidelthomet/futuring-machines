@@ -203,9 +203,14 @@ export const useCommandStore = defineStore('command', () => {
         }),
         stream: finalize
       })
+    }).catch(() => {
+      isError.value = true
+      isGenerating.value = false
+      return false
     })
 
     if (!response?.ok) {
+      console.log('not good')
       isError.value = true
       isGenerating.value = false
       return false
@@ -295,6 +300,10 @@ export const useCommandStore = defineStore('command', () => {
         }),
         format: 'json'
       })
+    }).catch(() => {
+      isError.value = true
+      isGenerating.value = false
+      return false
     })
 
     if (!response?.ok) {
