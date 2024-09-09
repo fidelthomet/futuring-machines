@@ -41,9 +41,9 @@ const availablePrompts = computed(() =>
 )
 
 const repeatable = computed(() => {
-  console.log(lastPrompt.value?.actions, startIndex.value, -1)
+  const index = startIndex.value ? startIndex.value - 1 : 0
   return (
-    lastPrompt.value?.actions?.[prompt.startIndex ?? 0]?.type === 'generate options' &&
+    lastPrompt.value?.actions?.[index]?.type === 'generate options' &&
     !commandStore.isGenerating &&
     !commandStore.isError
   )
