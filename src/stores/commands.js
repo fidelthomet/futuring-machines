@@ -60,16 +60,19 @@ export const useCommandStore = defineStore('command', () => {
     // This is the full story as it's being written in the editor. We add it to the story template.
     console.log(prompt)
     env.value.full = state.doc.textBetween(0, view.state.doc.nodeSize - 2, '\n')
+    const { from, to } = view.state.selection
+    env.value.before = state.doc.textBetween(0, from, '\n')
+    env.value.after = state.doc.textBetween(to, view.state.doc.nodeSize - 2, '\n')
 
     // This is sort of a Context object – Combines: Story template + Story Text + Prompt
     env.value = { ...env.value, ...prompt.env }
 
     // When text selected
     if (prompt.trigger === 'selection') {
-      const { from, to } = view.state.selection
+      // const { from, to } = view.state.selection
       env.value.selection = state.doc.textBetween(from, to, '\n')
-      env.value.before = state.doc.textBetween(0, from, '\n')
-      env.value.after = state.doc.textBetween(to, view.state.doc.nodeSize - 2, '\n')
+      // env.value.before = state.doc.textBetween(0, from, '\n')
+      // env.value.after = state.doc.textBetween(to, view.state.doc.nodeSize - 2, '\n')
       logUserAction('button', { storyId: storyId.value, prompt, selection: env.value.selection })
     } else {
       logUserAction('button', { storyId: storyId.value, prompt })
@@ -200,9 +203,14 @@ export const useCommandStore = defineStore('command', () => {
         }),
         stream: finalize
       })
+    }).catch(() => {
+      isError.value = true
+      isGenerating.value = false
+      return false
     })
 
     if (!response?.ok) {
+      console.log('not good')
       isError.value = true
       isGenerating.value = false
       return false
@@ -292,6 +300,10 @@ export const useCommandStore = defineStore('command', () => {
         }),
         format: 'json'
       })
+    }).catch(() => {
+      isError.value = true
+      isGenerating.value = false
+      return false
     })
 
     if (!response?.ok) {
