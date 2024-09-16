@@ -3,9 +3,10 @@ import prompts from '@/assets/prompts'
 //import elaborate from '@/assets/prompts/elaborate'
 
 export default {
-  name: 'Futures of Design',
-  //prompts: [...prompts, wildcards, elaborate],
+  id: 'futures-of-design',
+  name: 'Futures of Design 🌐🔮',
   prompts,
+  //prompts: [...prompts, wildcards, elaborate], // Custom Prompts here
   description: 'What will the design of conversational interfaces look like in 100 years?',
   start: {
     mode: 'append',

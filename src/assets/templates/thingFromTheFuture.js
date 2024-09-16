@@ -9,8 +9,8 @@ export default {
   prompts,
   //prompts: [...prompts, wildcards, extrapolate, question],
   name: {
-    en: 'Thing from the Future',
-    de: 'Das Ding aus der Zukunft'
+    en: 'Thing from the Future 🍶🚀',
+    de: 'Das Ding aus der Zukunft 🍶🚀'
   },
   description: {
     en: "Let's explore experiential futures! What will things from the future be? How will we co-habit and collaborate with them in our daily lives?",
@@ -24,5 +24,5 @@ export default {
   system: {
     en: "Start every sentence with 'The fact, that'",
     de: "Beginne jeden Satz mit 'Der Fakt, dass'"
-  },
+  }
 }
