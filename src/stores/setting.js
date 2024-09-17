@@ -5,7 +5,7 @@ export const useSettingStore = defineStore('setting', () => {
   const langOptions = import.meta.env.VITE_LANG_OPTIONS.split(',')
   const lang = useStorage(
     'lang',
-    langOptions.find((l) => new RegExp(`^${l}`).test(navigator.lang)) ?? langOptions[1]
+    langOptions.find((l) => new RegExp(`^${l}`).test(navigator.language)) ?? langOptions[0]
   )
 
   return {
