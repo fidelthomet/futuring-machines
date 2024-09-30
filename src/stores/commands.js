@@ -195,6 +195,16 @@ export const useCommandStore = defineStore('command', () => {
     isGenerating.value = true
     editor.commands.setMarkAI()
 
+    // PRINT PROMPT
+    console.log({
+      model: MODEL,
+      prompt,
+      ...(template.value.system != null && {
+        system: systemPrompt
+      }),
+      stream: finalize
+    })
+
     controller.value = new AbortController()
     const response = await fetch(API_URL, {
       signal: controller.value.signal,
@@ -236,7 +246,8 @@ export const useCommandStore = defineStore('command', () => {
 
       // For 'append' mode: set the cursor to the end of the editor position
       if (promptTrigger === 'selection' && promptMode === 'append') {
-        editor.commands.focus(editor.view.state.selection.to)
+        // editor.commands.focus(editor.view.state.selection.to)
+        editor.commands.focus('end')
       }
 
       while (!done) {
