@@ -1,0 +1,24 @@
+{
+  "name": { "en": "push timeline", "de": "Vorwärts in die Zukunft" },
+  "trigger": "selection",
+  "mode": "replace",
+  "actions": [
+    {
+      "type": "options",
+      "options": [
+        { "en": "10 years", "de": "10 Jahre" },
+        { "en": "20 years", "de": "20 Jahre" },
+        { "en": "50 years", "de": "50 Jahre" }
+      ],
+      "bind": "option"
+    },
+    {
+      "type": "generate",
+      "template": {
+        "en": "Rewrite the following text as if it was set ::option:: in the future. Text: ::selection::",
+        "de": "Schreiben Sie den folgenden Text so um, als ob er ::option:: in der Zukunft spielen würde. Text: ::selection::"
+      },
+      "bind": "response"
+    }
+  ]
+}
