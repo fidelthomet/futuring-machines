@@ -1,5 +1,5 @@
 {
-  "name": { "en": "reframe", "de": "Umdenken" },
+  "name": { "en": "rewrite", "de": "Umschreiben" },
   "trigger": "selection",
   "pattern": "M0,0 L3,0 L3,2 L0,2 Z M1,1 L2,1",
   "mode": "replace",
@@ -14,9 +14,7 @@
         { "en": "empowering", "de": "ermächtigend" },
         { "en": "angry", "de": "wütend" },
         { "en": "fearful", "de": "ängstlich" },
-        { "en": "ironical", "de": "ironisch" },
-        { "en": "analytical", "de": "analytisch" },
-        { "en": "hesitant", "de": "zögerlich" }
+        { "en": "ironical", "de": "ironisch" }
       ],
       "bind": "option"
     },

@@ -20,9 +20,5 @@ export default {
     en: 'In a <placeholder length=4></placeholder> future there is a <placeholder length=4></placeholder> related to <placeholder length=4></placeholder>. <start/>',
     de: 'In einer <placeholder length=4></placeholder> Zukunft gibt es ein <placeholder length=4></placeholder> in Verbindung mit <placeholder length=4></placeholder>. <start/>'
   },
-  start: continueWriting,
-  system: {
-    en: "Start every sentence with 'The fact, that'",
-    de: "Beginne jeden Satz mit 'Der Fakt, dass'"
-  }
+  start: continueWriting
 }

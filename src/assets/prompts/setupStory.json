@@ -1,0 +1,14 @@
+{
+  "name": "Setup Story",
+  "trigger": "selection",
+  "mode": "replace",
+  "actions": [
+    {
+      "type": "generate",
+      "template": {
+        "en": "I'm writing a speculative fiction short story. \n\nHere some details for the story: \n\n```::full::``` \n\nFollowing Blake Snyder's Save The Cat method, write Setup Scene in just one paragraph of up to 100 words that: \n\n1) Shows the protagonist in their everyday life in a normal daily situation. \n2) Show where the protagonist live and give some details of that place and environment, like its name and characteristics. \n3) Hints at their wishes, desires and fears. \n4) Introduces their best friend and gives a sense of their relationship dynamic. \n\nThe setup scene should: \n\n1. Use a clear, concise and direct language. \n2. Imply a much larger narrative. \n3. Use concrete nouns and strong verbs. \n4. Avoid using too many adjectives and adverbs. \n5. Create a sense of tension or conflict. \n6. Do not be too direct: Imply the conflict rather than state it. \n7. Leave room for reader interpretation. \n8. Add an emotional undercurrent without being explicit. \n9. Avoid being wordy. Make it minimal, allowing the reader to infer the deeper meaning. \n10. Revolve around the theme introduced in the story details. \n\nUse vivid sensory details and bits of dialogue to bring the scene to life.",
+        "de": "\n\nGeschichte: ```::before::```"
+      }
+    }
+  ]
+}

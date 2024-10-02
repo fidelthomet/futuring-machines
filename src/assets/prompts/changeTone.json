@@ -9,9 +9,11 @@
         { "en": "positive", "de": "positiv" },
         { "en": "critical", "de": "kritisch" },
         { "en": "empowering", "de": "ermächtigend" },
+        { "en": "constructive", "de": "konstruktiv" },
+        { "en": "optimistic", "de": "optimistisch" },
         { "en": "pessimistic", "de": "pessimistisch" },
-        { "en": "ironical", "de": "ironisch" },
-        { "en": "fearful", "de": "ängstlich" }
+        { "en": "fearful", "de": "ängstlich" },
+        { "en": "ironical", "de": "ironisch" }
       ],
       "bind": "tone"
     },

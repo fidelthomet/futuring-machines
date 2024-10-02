@@ -107,7 +107,7 @@ watch(
 }
 
 .editor:deep(p + p) {
-  margin-top: calc(var(--font-size) * var(--line-height));
+  /* margin-top: calc(var(--font-size) * var(--line-height)); */
 }
 
 .editor:deep(h1, h2, h3, h4) {

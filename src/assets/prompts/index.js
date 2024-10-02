@@ -5,11 +5,11 @@ import wildcards from './wildcards'
 import changeTone from './changeTone'
 import newPerspective from './newPerspective'
 import condense from './condense'
-import reframe from './reframe'
+import rewrite from './rewrite'
 import elaborate from './elaborate'
 import elaborateInnerMonologue from './elaborateInnerMonologue'
 import pushTimeline from './pushTimeline'
-import extrapolate from './extrapolate'
+//import extrapolate from './extrapolate'
 
 export default [
   continueWriting,
@@ -18,11 +18,11 @@ export default [
   wildcards,
   changeTone,
   newPerspective,
+  pushTimeline,
   
   condense,
-  reframe,
+  rewrite,
   elaborate,
   elaborateInnerMonologue,
-  pushTimeline,
-  extrapolate
+  //extrapolate
 ]

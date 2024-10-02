@@ -26,8 +26,8 @@
     {
       "type": "generate",
       "template": {
-        "en": "Continue the following story, which is delimited with triple backticks. Address the topic ::topic:: (::description::) in a narrative way. \n\nContinue the story in one sentence of at most 10 words.\n\nStory: ```::full::```",
-        "de": "Setzen Sie die folgende Geschichte fort, die mit dreifachen Backticks begrenzt ist. Gehen Sie auf das Thema ::topic:: (::description::) auf narrative Weise ein.\n\nSetzen Sie die Geschichte in einem Satz mit höchstens 15 Wörtern fort.\n\nGeschichte: ```::full::```"
+        "en": "Continue the following story, which is delimited with triple backticks. Address the topic ::topic:: (::description::) in a narrative way. \n\nStory: ```::full::```",
+        "de": "Setzen Sie die folgende Geschichte fort, die mit dreifachen Backticks begrenzt ist. Gehen Sie auf das Thema ::topic:: (::description::) auf narrative Weise ein. \n\nGeschichte: ```::full::```"
       }
     }
   ]

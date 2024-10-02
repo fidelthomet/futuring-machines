@@ -15,8 +15,8 @@
     {
       "type": "generate",
       "template": {
-        "en": "Continue the following story, which is delimited with triple backticks, from the perspective of a ::option::. The continuation should be written in a narrative style. Keep your answer as short as possible and use one short sentence. \n\nStory: ```::full::```",
-        "de": "Fahre mit der folgenden Geschichte fort, die mit dreifachen Backticks begrenzt ist, aus der Perspektive eines ::option::. Die Fortsetzung sollte in einem erzählerischen Stil geschrieben sein. Halten Sie Ihre Antwort so kurz wie möglich und verwenden Sie einen kurzen Satz.\n\nGeschichte: ```::full::```. Generieren Sie den Text nur auf Deutsch."
+        "en": "Continue the following story, which is delimited with triple backticks, introducing the perspective of a new character: a ::option::. \n\nStory: ```::full::```",
+        "de": "Fahre mit der folgenden Geschichte fort, die mit dreifachen Backticks begrenzt ist, und führen Sie die Perspektive eines neuen Charakters ein: ::option::. \n\nGeschichte: ```::full::```. Generieren Sie den Text nur auf Deutsch."
       },
       "bind": "response"
     }
