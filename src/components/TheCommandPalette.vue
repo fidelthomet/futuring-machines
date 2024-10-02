@@ -122,7 +122,7 @@ onBeforeUnmount(() => {
 function upload() {
   editorStore.log()
   // storyStore.uploadStory(commandStore.storyId)
-  // storyStore.downloadStory(commandStore.storyId)
+  storyStore.downloadStory(commandStore.storyId)
 }
 </script>
 <template>
