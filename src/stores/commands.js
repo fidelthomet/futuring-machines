@@ -1,8 +1,8 @@
-import { computed, nextTick, ref } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import templates from '@/assets/templates'
 import { centerEditor, generatePattern } from '@/assets/js/utils'
-import { logUserAction } from '@/assets/js/logging.js'
+import { logUserAction, debounce } from '@/assets/js/logging.js'
 import { localize } from '@/assets/js/utils'
 import { useSettingStore } from './setting'
 
@@ -20,7 +20,16 @@ export const useCommandStore = defineStore('command', () => {
   const storyId = ref(null)
 
   const storyName = ref(null)
+  const storyNameChangeLog = debounce(() => {
+    logUserAction('name-change', { storyId: storyId.value, name: storyName.value })
+  }, 1000)
+  watch(storyName, storyNameChangeLog)
+
   const storyAuthor = ref(null)
+  const storyAuthorChangeLog = debounce(() => {
+    logUserAction('author-change', { storyId: storyId.value, author: storyAuthor.value })
+  }, 1000)
+  watch(storyAuthor, storyAuthorChangeLog)
 
   const lang = ref('en')
 
@@ -340,6 +349,7 @@ export const useCommandStore = defineStore('command', () => {
     console.log(res)
     try {
       const obj = JSON.parse(res)
+      logUserAction('options', { storyId: storyId.value, options: obj })
 
       const options = []
       for (const key in obj) {
