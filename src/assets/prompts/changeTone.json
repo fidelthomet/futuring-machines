@@ -1,5 +1,5 @@
 {
-  "name": { "en": "change tone", "de": "Ton ändern" },
+  "name": { "en": "continue with tone", "de": "Weiterschreiben mit Ton" },
   "trigger": "new-line",
   "mode": "append",
   "actions": [
@@ -20,15 +20,18 @@
     {
       "type": "generate options",
       "template": {
-        "en": "Continue the following story, which is delimited with triple backticks. Generate three different continuations. The tone in the development of events should be ::tone::. Continuations should be written in a narrative style and use at most 10 words. \n\nFormat each continuation as a JSON object with 'title' and 'continuation' as the keys. Format your response as a JSON object with 'cont1', 'cont2' and 'cont3' as the keys. \n\nStory: ```::full::```",
-        "de": "Fahre mit der folgenden Geschichte fort, die mit dreifachen Backticks begrenzt ist. Generiere drei verschiedene Fortsetzungen. Der Ton in der Entwicklung der Ereignisse sollte ::tone:: sein. Die Fortsetzungen sollten in einem erzählerischen Stil geschrieben sein und höchstens 10 Wörter umfassen.\n\nFormatiere jede Fortsetzung als ein JSON-Objekt mit den Schlüsseln 'title' und 'continuation'. Formatiere deine Antwort als ein JSON-Objekt mit den Schlüsseln 'cont1', 'cont2' und 'cont3'. Generiere den Text nur auf Deutsch.\n\nGeschichte: ```::full::```"
+        "en": "Suggest three topic ideas to further develop the following story, which is delimited with triple backticks. The development of events should have a ::tone:: tone. For each topic idea generate also a short description. Limit the length of each description to up to 10 words. \n\nFormat each story continuation as a JSON object with 'topic' and 'description' as the keys. Format your response as a JSON object with 'topic1', 'topic2' and 'topic3' as the keys. \n\nStory: ```::full::```",
+        "de": "Schlagen Sie vier Themenideen vor, um die folgende Geschichte weiterzuentwickeln, die mit dreifachen Backticks begrenzt ist. Der Ton in der Entwicklung der Ereignisse sollte ::tone:: sein. \n\nFormatiere jede Fortsetzung als ein JSON-Objekt mit den Schlüsseln 'title' und 'continuation'. Formatiere deine Antwort als ein JSON-Objekt mit den Schlüsseln 'cont1', 'cont2' und 'cont3'. Generiere den Text nur auf Deutsch.\n\nGeschichte: ```::full::```"
       },
-      "name": "continuation",
-      "keys": ["title", "continuation"]
+      "name": "topic",
+      "keys": ["topic", "description"]
     },
     {
-      "type": "static",
-      "template": "::continuation::"
+      "type": "generate",
+      "template": {
+        "en": "Continue the following story, which is delimited with triple backticks, addressing the following topic: ::topic:: (::description::) with a ::tone:: tone. \n\nStory: ```::full::```",
+        "de": "Setzen Sie die folgende Geschichte fort, die mit dreifachen Backticks begrenzt ist. Gehen Sie auf das Thema ein: ::topic:: (::description::). \n\nGeschichte: ```::full::```"
+      }
     }
   ]
 }

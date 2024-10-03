@@ -2,7 +2,7 @@ import continueWriting from './continueWriting'
 import addressImpacts from './addressImpacts'
 import question from './question'
 import wildcards from './wildcards'
-import changeTone from './changeTone'
+import changeTone from './changeToneStatic'
 import newPerspective from './newPerspective'
 import condense from './condense'
 import rewrite from './rewrite'
@@ -13,10 +13,10 @@ import pushTimeline from './pushTimeline'
 
 export default [
   continueWriting,
+  changeTone,
   addressImpacts,
   question,
   wildcards,
-  changeTone,
   newPerspective,
   pushTimeline,
   

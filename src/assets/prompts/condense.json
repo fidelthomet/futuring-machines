@@ -6,8 +6,8 @@
     {
       "type": "generate",
       "template": {
-        "en": "Shorten the following text from a fiction story, delimited by triple backticks, in at most 10 words. Write in a narrative way, keeping the tone and style of the input text. \n\nText: ```::selection::```",
-        "de": "Kürzen Sie den folgenden Text aus einer fiktiven Geschichte, begrenzt durch dreifache Backticks, auf höchstens zwei Sätze. Schreiben Sie in einem erzählerischen Stil und bewahren Sie den Ton und Stil des ursprünglichen Textes. Beenden Sie den Satz im gleichen Absatz.\n\nText: ```::selection::```. Generieren Sie den Text nur auf Deutsch."
+        "en": "Shorten the following input text, delimited by triple backticks. Reduce the input text to use no more than 2 short sentences. Keep the essential information, key ideas, and main points intact. Keep the tone and style of the input text. \n\nInput Text: ```::selection::```",
+        "de": "Kürzen Sie den folgenden Input Text, begrenzt durch dreifache Backticks. Reduzieren Sie den Input Text auf nicht mehr als 2 kurze Sätze. Behalten Sie die wesentlichen Informationen, Schlüsselideen und Hauptpunkte bei. Bewahren Sie den Ton und Stil des ursprünglichen Textes. Beenden Sie den Satz im gleichen Absatz.\n\nInput Text: ```::selection::```. Generieren Sie den Text nur auf Deutsch."
       }
     }
   ]
