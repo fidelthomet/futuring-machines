@@ -11,6 +11,7 @@ import { useEditorStore } from '@/stores/editor'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
 import IconUpload from '~icons/base/Upload'
+import IconPrint from '~icons/base/Print'
 import IconAI from '~icons/base/AI'
 import LocalizeText from './LocalizeText.vue'
 import { useStoryStore } from '@/stores/story'
@@ -199,7 +200,7 @@ function upload() {
           :disabled="!editorStore.editor?.can().redo()"
           >↪</ButtonDefault
         >
-        <ButtonDefault offset-padding @click="upload"><IconUpload /></ButtonDefault>
+        <ButtonDefault offset-padding @click="printPage"><IconPrint /></ButtonDefault>
       </span>
     </div>
   </div>
