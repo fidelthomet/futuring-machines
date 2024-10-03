@@ -127,7 +127,7 @@ function upload() {
 </script>
 <template>
   <div class="command-palette">
-    <template v-if="showPrompts">
+    <template v-if="showPrompts || commandStore.isGenerating || commandStore.isError">
       <hr />
       <BreadcrumbNavigation
         :crumbs="commandStore.crumbs"
