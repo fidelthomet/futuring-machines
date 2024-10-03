@@ -15,8 +15,8 @@
     {
       "type": "generate",
       "template": {
-        "en": "Continue the following story, which is delimited with triple backticks, introducing the perspective of a new character: a ::option::. \n\nStory: ```::full::```",
-        "de": "Fahre mit der folgenden Geschichte fort, die mit dreifachen Backticks begrenzt ist, und führen Sie die Perspektive eines neuen Charakters ein: ::option::. \n\nGeschichte: ```::full::```. Generieren Sie den Text nur auf Deutsch."
+        "en": "Continue the following story, which is delimited with triple backticks, introducing the perspective of a new character: a ::option::. \n\nStory: ```::before::```",
+        "de": "Fahre mit der folgenden Geschichte fort, die mit dreifachen Backticks begrenzt ist, und führen Sie die Perspektive eines neuen Charakters ein: ::option::. \n\nGeschichte: ```::before::```. Generieren Sie den Text nur auf Deutsch."
       },
       "bind": "response"
     }

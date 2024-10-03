@@ -17,8 +17,8 @@
     {
       "type": "generate options",
       "template": {
-        "en": "Suggest three topic ideas to further develop the following story, which is delimited with triple backticks. The topic ideas should focus on ::option:: factors. For each topic idea generate also a short description. Limit the length of each description to up to 10 words. \n\nFormat each idea as a JSON object with 'topic' and 'description' as the keys. Format your response as a JSON object with 'topic1', 'topic2' and 'topic3' as the keys. \n\nStory: ```::full::```",
-        "de": "Schlagen Sie vier Themenideen vor, um die folgende Geschichte weiterzuentwickeln, die mit dreifachen Backticks begrenzt ist. Die Themenideen sollten sich auf ::option:: Faktoren konzentrieren. Für jede Themenidee erstellen Sie auch eine kurze Beschreibung. Beschränken Sie die Länge jeder Beschreibung auf bis zu 15 Wörter.\n\nFormatieren Sie jede Idee als JSON-Objekt mit 'topic' und 'description' als Schlüssel. Formatieren Sie Ihre Antwort als JSON-Objekt mit 'topic1', 'topic2' und 'topic3' als Schlüssel. Generieren Sie den Text nur auf Deutsch.\n\nGeschichte: ```::full::```"
+        "en": "Suggest three topic ideas to further develop the following story, which is delimited with triple backticks. The topic ideas should focus on ::option:: factors. For each topic idea generate also a short description. Limit the length of each description to up to 10 words. \n\nFormat each idea as a JSON object with 'topic' and 'description' as the keys. Format your response as a JSON object with 'topic1', 'topic2' and 'topic3' as the keys. \n\nStory: ```::before::```",
+        "de": "Schlagen Sie vier Themenideen vor, um die folgende Geschichte weiterzuentwickeln, die mit dreifachen Backticks begrenzt ist. Die Themenideen sollten sich auf ::option:: Faktoren konzentrieren. Für jede Themenidee erstellen Sie auch eine kurze Beschreibung. Beschränken Sie die Länge jeder Beschreibung auf bis zu 15 Wörter.\n\nFormatieren Sie jede Idee als JSON-Objekt mit 'topic' und 'description' als Schlüssel. Formatieren Sie Ihre Antwort als JSON-Objekt mit 'topic1', 'topic2' und 'topic3' als Schlüssel. Generieren Sie den Text nur auf Deutsch.\n\nGeschichte: ```::before::```"
       },
       "name": "topic",
       "keys": ["topic", "description"]
@@ -26,8 +26,8 @@
     {
       "type": "generate",
       "template": {
-        "en": "Continue the following story, which is delimited with triple backticks, addressing the following topic: ::topic:: (::description::). \n\nStory: ```::full::```",
-        "de": "Setzen Sie die folgende Geschichte fort, die mit dreifachen Backticks begrenzt ist. Gehen Sie auf das Thema ein: ::topic:: (::description::). \n\nGeschichte: ```::full::```"
+        "en": "Continue the following story, which is delimited with triple backticks, addressing the following topic: ::topic:: (::description::). \n\nStory: ```::before::```",
+        "de": "Setzen Sie die folgende Geschichte fort, die mit dreifachen Backticks begrenzt ist. Gehen Sie auf das Thema ein: ::topic:: (::description::). \n\nGeschichte: ```::before::```"
       }
     }
   ]

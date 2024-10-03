@@ -20,8 +20,8 @@
     {
       "type": "generate",
       "template": {
-        "en": "Continue the following story with up to one sentence. Use at most 20 words. Elaborate the aspect addressed in the following text with a ::option:: tone. Text: '::selection::'. \n\nStory: ::full::",
-        "de": "Führen Sie die folgende Geschichte mit bis zu ein Satz fort. Verwenden Sie höchstens 30 Wörter. Arbeiten Sie den im folgenden Text behandelten Aspekt in einem ::option:: Ton aus. Text: '::selection::'. \n\nGeschichte: ::full::. Generieren Sie den Text nur auf Deutsch."
+        "en": "Continue the following story, which is delimited with triple backticks. Write up to one sentence. Elaborate the aspect addressed in the following text with a ::option:: tone. Text: '::selection::'. \n\nStory: ```::full::```",
+        "de": "Führen Sie die folgende Geschichte fort, die mit dreifachen Backticks begrenzt ist. Schreiben Sie bis zu einem Satz. Arbeiten Sie den im folgenden Text behandelten Aspekt in einem ::option:: Ton aus. Text: '::selection::'. \n\nGeschichte: ```::full::```. Generieren Sie den Text nur auf Deutsch."
       },
       "bind": "response"
     }

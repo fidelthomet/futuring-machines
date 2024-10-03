@@ -16,8 +16,8 @@
     {
       "type": "generate",
       "template": {
-        "en": "Continue the following story pushing the timeline ::option:: in the future. Elaborate possible implications or consequences of the key events mentioned in the story. \n\n Story: ::full::",
-        "de": "Führen Sie die folgende Geschichte fort und verschieben Sie die Zeitlinie um ::option:: in die Zukunft. Erläutern Sie mögliche Auswirkungen oder Folgen der in der Geschichte erwähnten Schlüsselereignisse. \n\n Geschichte: ::full::. Generieren Sie den Text nur auf Deutsch."
+        "en": "Continue the following story pushing the timeline ::option:: in the future. Elaborate possible implications or consequences of the key events mentioned in the story. \n\n Story: ::before::",
+        "de": "Führen Sie die folgende Geschichte fort und verschieben Sie die Zeitlinie um ::option:: in die Zukunft. Erläutern Sie mögliche Auswirkungen oder Folgen der in der Geschichte erwähnten Schlüsselereignisse. \n\n Geschichte: ::before::. Generieren Sie den Text nur auf Deutsch."
       },
       "bind": "response"
     }
