@@ -1,0 +1,37 @@
+{
+  "name": { "en": "continue with tone", "de": "Weiterschreiben mit Ton" },
+  "trigger": "new-line",
+  "mode": "append",
+  "actions": [
+    {
+      "type": "options",
+      "options": [
+        { "en": "positive", "de": "positiv" },
+        { "en": "critical", "de": "kritisch" },
+        { "en": "empowering", "de": "ermächtigend" },
+        { "en": "constructive", "de": "konstruktiv" },
+        { "en": "optimistic", "de": "optimistisch" },
+        { "en": "pessimistic", "de": "pessimistisch" },
+        { "en": "fearful", "de": "ängstlich" },
+        { "en": "ironical", "de": "ironisch" }
+      ],
+      "bind": "tone"
+    },
+    {
+      "type": "generate options",
+      "template": {
+        "en": "Suggest three topic ideas to further develop the following story, which is delimited with triple backticks. The development of events should have a ::tone:: tone. For each topic idea generate also a short description. Limit the length of each description to up to 10 words. \n\nFormat each story continuation as a JSON object with 'topic' and 'description' as the keys. Format your response as a JSON object with 'topic1', 'topic2' and 'topic3' as the keys. \n\nStory: ```::before::```",
+        "de": "Schlagen Sie vier Themenideen vor, um die folgende Geschichte weiterzuentwickeln, die mit dreifachen Backticks begrenzt ist. Der Ton in der Entwicklung der Ereignisse sollte ::tone:: sein. \n\nFormatiere jede Fortsetzung als ein JSON-Objekt mit den Schlüsseln 'title' und 'continuation'. Formatiere deine Antwort als ein JSON-Objekt mit den Schlüsseln 'cont1', 'cont2' und 'cont3'. Generiere den Text nur auf Deutsch.\n\nGeschichte: ```::before::```"
+      },
+      "name": "topic",
+      "keys": ["topic", "description"]
+    },
+    {
+      "type": "generate",
+      "template": {
+        "en": "Continue the following story, which is delimited with triple backticks, addressing the following topic: ::topic:: (::description::) with a ::tone:: tone. \n\nStory: ```::before::```",
+        "de": "Setzen Sie die folgende Geschichte fort, die mit dreifachen Backticks begrenzt ist. Gehen Sie auf das Thema ein: ::topic:: (::description::). \n\nGeschichte: ```::before::```"
+      }
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "name": { "en": "continue with tone", "de": "Weiterschreiben mit Ton" },
+  "trigger": "new-line",
+  "mode": "append",
+  "actions": [
+    {
+      "type": "options",
+      "options": [
+        { "en": "positive", "de": "positiv" },
+        { "en": "critical", "de": "kritisch" },
+        { "en": "empowering", "de": "ermächtigend" },
+        { "en": "constructive", "de": "konstruktiv" },
+        { "en": "optimistic", "de": "optimistisch" },
+        { "en": "pessimistic", "de": "pessimistisch" },
+        { "en": "fearful", "de": "ängstlich" },
+        { "en": "ironical", "de": "ironisch" }
+      ],
+      "bind": "tone"
+    },
+    {
+      "type": "generate options",
+      "template": {
+        "en": "Continue the following story, which is delimited with triple backticks. Generate three different continuations. Continuations should address the viewpoint of the main character and their allies, who take a ::tone:: attitude. The tone in the development of events should be ::tone::. Continuations should use no more than 1 short sentence. \n\nFormat each continuation as a JSON object with 'title' and 'continuation' as the keys. Format your response as a JSON object with 'cont1', 'cont2' and 'cont3' as the keys. \n\nStory: ```::before::```",
+        "de": "Fahre mit der folgenden Geschichte fort, die mit dreifachen Backticks begrenzt ist. Generiere drei verschiedene Fortsetzungen. Der Ton in der Entwicklung der Ereignisse sollte ::tone:: sein. Die Fortsetzungen sollten nicht mehr als 1 kurzer Satz umfassen.\n\nFormatiere jede Fortsetzung als ein JSON-Objekt mit den Schlüsseln 'title' und 'continuation'. Formatiere deine Antwort als ein JSON-Objekt mit den Schlüsseln 'cont1', 'cont2' und 'cont3'. Generiere den Text nur auf Deutsch.\n\nGeschichte: ```::before::```"
+      },
+      "name": "continuation",
+      "keys": ["title", "continuation"]
+    },
+    {
+      "type": "static",
+      "template": "::continuation::"
+    }
+  ]
+}

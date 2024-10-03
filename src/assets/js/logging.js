@@ -24,7 +24,7 @@ export const logUserAction = async (action, data = undefined) => {
   }
 }
 
-const debounce = (callback, wait) => {
+export const debounce = (callback, wait) => {
   let timeoutId = null
   return (...args) => {
     window.clearTimeout(timeoutId)

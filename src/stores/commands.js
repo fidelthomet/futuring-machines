@@ -1,8 +1,8 @@
-import { computed, nextTick, ref } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import templates from '@/assets/templates'
 import { centerEditor, generatePattern } from '@/assets/js/utils'
-import { logUserAction } from '@/assets/js/logging.js'
+import { logUserAction, debounce } from '@/assets/js/logging.js'
 import { localize } from '@/assets/js/utils'
 import { useSettingStore } from './setting'
 
@@ -20,7 +20,16 @@ export const useCommandStore = defineStore('command', () => {
   const storyId = ref(null)
 
   const storyName = ref(null)
+  const storyNameChangeLog = debounce(() => {
+    logUserAction('name-change', { storyId: storyId.value, name: storyName.value })
+  }, 1000)
+  watch(storyName, storyNameChangeLog)
+
   const storyAuthor = ref(null)
+  const storyAuthorChangeLog = debounce(() => {
+    logUserAction('author-change', { storyId: storyId.value, author: storyAuthor.value })
+  }, 1000)
+  watch(storyAuthor, storyAuthorChangeLog)
 
   const lang = ref('en')
 
@@ -184,12 +193,26 @@ export const useCommandStore = defineStore('command', () => {
       (pattern, match) => env.value[match] ?? pattern
     )
 
+    const systemPrompt = localize(template.value.system, lang.value)
+
     console.log('GENERATE')
     console.log('API_URL: ' + API_URL + ', Model: ' + MODEL)
+    console.log('Language: ' + lang.value)
+    console.log('System Prompt: \n\n' + systemPrompt)
     console.log('Prompt: \n\n' + prompt)
 
     isGenerating.value = true
     editor.commands.setMarkAI()
+
+    // PRINT PROMPT
+    console.log({
+      model: MODEL,
+      prompt,
+      ...(template.value.system != null && {
+        system: systemPrompt
+      }),
+      stream: finalize
+    })
 
     controller.value = new AbortController()
     const response = await fetch(API_URL, {
@@ -199,7 +222,7 @@ export const useCommandStore = defineStore('command', () => {
         model: MODEL,
         prompt,
         ...(template.value.system != null && {
-          system: localize(template.value.system, lang.value)
+          system: systemPrompt
         }),
         stream: finalize
       })
@@ -232,7 +255,8 @@ export const useCommandStore = defineStore('command', () => {
 
       // For 'append' mode: set the cursor to the end of the editor position
       if (promptTrigger === 'selection' && promptMode === 'append') {
-        editor.commands.focus(editor.view.state.selection.to)
+        // editor.commands.focus(editor.view.state.selection.to)
+        editor.commands.focus('end')
       }
 
       while (!done) {
@@ -280,8 +304,12 @@ export const useCommandStore = defineStore('command', () => {
       (pattern, match) => env.value[match] ?? pattern
     )
 
+    const systemPrompt = localize(template.value.system, lang.value)
+
     console.log('GENERATE WITH OPTIONS')
     console.log('API_URL: ' + API_URL + ', Model: ' + MODEL)
+    console.log('Language: ' + lang.value)
+    console.log('System Prompt: \n\n' + systemPrompt)
     console.log('Prompt: \n\n' + prompt)
 
     isGenerating.value = true
@@ -296,7 +324,7 @@ export const useCommandStore = defineStore('command', () => {
         prompt,
         stream: false,
         ...(template.value.system != null && {
-          system: localize(template.value.system, lang.value)
+          system: systemPrompt
         }),
         format: 'json'
       })
@@ -321,6 +349,7 @@ export const useCommandStore = defineStore('command', () => {
     console.log(res)
     try {
       const obj = JSON.parse(res)
+      logUserAction('options', { storyId: storyId.value, options: obj })
 
       const options = []
       for (const key in obj) {
@@ -378,17 +407,25 @@ export const useCommandStore = defineStore('command', () => {
     storyName.value = null
     storyAuthor.value = null
     resetPrompts()
+    console.log("INIT TEMPLATE")
     try {
       const story = JSON.parse(localStorage.getItem(`story-${storyId.value}`))
       editor.commands.setContent(story.editor)
+
+      console.log("Initializing existing story")
+      console.log("Story Language: " + story.lang)
+
       lang.value = story.lang
       storyName.value = story.name
       storyAuthor.value = story.author
       env.value = { ...story.env }
       nextTick(() => centerEditor(editor, true))
     } catch (e) {
-      env.value = { ...template.value.env, full: getFullText(editor) }
+      env.value = { ...template.value.env, full: getFullText(editor) }  
       lang.value = settingsStore.lang
+
+      console.log("Initializing new template")
+      console.log("Browser Language: " + settingsStore.lang)
 
       if (template.value.template != null) {
         const content = localize(template.value.template)

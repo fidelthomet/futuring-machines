@@ -1,0 +1,29 @@
+{
+  "name": { "en": "elaborate", "de": "Weiter ausführen" },
+  "trigger": "selection",
+  "mode": "append",
+  "actions": [
+    {
+      "type": "options",
+      "options": [
+        { "en": "positive", "de": "positiv" },
+        { "en": "critical", "de": "kritisch" },
+        { "en": "empowering", "de": "ermächtigend" },
+        { "en": "constructive", "de": "konstruktiv" },
+        { "en": "optimistic", "de": "optimistisch" },
+        { "en": "pessimistic", "de": "pessimistisch" },
+        { "en": "fearful", "de": "ängstlich" },
+        { "en": "ironical", "de": "ironisch" }
+      ],
+      "bind": "option"
+    },
+    {
+      "type": "generate",
+      "template": {
+        "en": "Continue the following story, which is delimited with triple backticks. Write up to one sentence. Elaborate the aspect addressed in the following text with a ::option:: tone. Text: '::selection::'. \n\nStory: ```::full::```",
+        "de": "Führen Sie die folgende Geschichte fort, die mit dreifachen Backticks begrenzt ist. Schreiben Sie bis zu einem Satz. Arbeiten Sie den im folgenden Text behandelten Aspekt in einem ::option:: Ton aus. Text: '::selection::'. \n\nGeschichte: ```::full::```. Generieren Sie den Text nur auf Deutsch."
+      },
+      "bind": "response"
+    }
+  ]
+}

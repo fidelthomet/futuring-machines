@@ -1,0 +1,25 @@
+{
+  "name": { "en": "push timeline", "de": "Vorwärts in die Zukunft" },
+  "trigger": "new-line",
+  "mode": "append",
+  "actions": [
+    {
+      "type": "options",
+      "options": ["10 years", "20 years", "50 years"],
+      "options": [
+        { "en": "10 years", "de": "positiv" },
+        { "en": "20 years", "de": "kritisch" },
+        { "en": "50 years", "de": "ängstlich" }
+      ],
+      "bind": "option"
+    },
+    {
+      "type": "generate",
+      "template": {
+        "en": "Continue the following story pushing the timeline ::option:: in the future. Elaborate possible implications or consequences of the key events mentioned in the story. \n\n Story: ::before::",
+        "de": "Führen Sie die folgende Geschichte fort und verschieben Sie die Zeitlinie um ::option:: in die Zukunft. Erläutern Sie mögliche Auswirkungen oder Folgen der in der Geschichte erwähnten Schlüsselereignisse. \n\n Geschichte: ::before::. Generieren Sie den Text nur auf Deutsch."
+      },
+      "bind": "response"
+    }
+  ]
+}

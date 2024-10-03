@@ -1,18 +1,16 @@
 import prompts from '@/assets/prompts'
-import wildcards from '@/assets/prompts/wildcards'
-import extrapolate from '@/assets/prompts/extrapolate'
 import continueWriting from '@/assets/prompts/continueWriting'
+//import wildcards from '@/assets/prompts/wildcards'
+//import extrapolate from '@/assets/prompts/extrapolate'
+//import question from '@/assets/prompts/question'
 
 export default {
   id: 'thing-from-the-future',
-  prompts: [...prompts, wildcards, extrapolate],
-  system: {
-    en: "Start every sentence with 'The fact, that'",
-    de: "Beginne jeden Satz mit 'Der Fakt, dass'"
-  },
+  prompts,
+  //prompts: [...prompts, wildcards, extrapolate, question],
   name: {
-    en: 'Thing from the Future',
-    de: 'Das Ding aus der Zukunft'
+    en: 'Thing from the Future 🍶🚀',
+    de: 'Das Ding aus der Zukunft 🍶🚀'
   },
   description: {
     en: "Let's explore experiential futures! What will things from the future be? How will we co-habit and collaborate with them in our daily lives?",
