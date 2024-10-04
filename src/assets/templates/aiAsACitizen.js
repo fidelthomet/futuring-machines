@@ -14,8 +14,8 @@ export default {
     de: 'In welchen Smart-City-Zukünften würdest du gerne leben?'
   },
   template: {
-    en: 'The story is placed in 2050 in a small city in Brandengurg, Germany, called Herzberg (Elster). The protagonist is... <br><br><start/>',
-    de: 'Die Geschichte spielt im Jahr 2050 in einer kleinen Stadt in Brandengurg, Deutschland, namens Herzberg (Elster). Hauptcharakter ist...  <br><br><start/>'
+    en: "<br><code>/////////////////////////////////<br><br>Let's setup the story first:<br><br>🧑🏽‍🎤 The protagonist<br>🦄 The others<br>🌐 The place where they live<br>🌟 The topic<br><br>/////////////////////////////////</code><br><br><br><start>→ Let AI start! 🔮✍️</start>",
+    de: "<br><code>/////////////////////////////////<br><br>Let's setup the story first:<br><br>🧑🏽‍🎤 The protagonist<br>🦄 The others<br>🌐 The place where they live<br>🌟 The topic<br><br>/////////////////////////////////</code><br><br><br><start>Lass die KI starten! ✍️🔮</start>"
   },
   start: setupStory,
   system: system

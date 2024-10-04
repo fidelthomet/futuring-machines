@@ -7,5 +7,5 @@ import aiAsACitizen from './aiAsACitizen.js'
 //import nightOfWritingStem from './nightOfWritingStem.js'
 //import queerFuturesStem from './queerFuturesStem.js'
 
-export default [blank, setupStoryExample, aiAsACitizen]
+export default [aiAsACitizen, setupStoryExample, blank]
 //export default [blank, thingFromTheFuture, localCommunity, nightOfWritingStem, queerFuturesStem, futuresOfDesign]
