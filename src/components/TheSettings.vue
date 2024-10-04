@@ -25,6 +25,9 @@ const url = ref(import.meta.env.VITE_STORIES_STATIC_URL)
       @click="storyStore.importStories(url)"
       >Import</ButtonDefault
     >
+
+    <h2>export</h2>
+    <InputSegment :options="settingStore.shareOptions" v-model="settingStore.share" name="export" />
   </div>
 </template>
 <style scoped>

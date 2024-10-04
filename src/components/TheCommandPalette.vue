@@ -11,9 +11,13 @@ import { useEditorStore } from '@/stores/editor'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
 import IconUpload from '~icons/base/Upload'
+import IconDownload from '~icons/base/Download'
+import IconUpDownload from '~icons/base/UpDownload'
+import IconPrint from '~icons/base/Print'
 import IconAI from '~icons/base/AI'
 import LocalizeText from './LocalizeText.vue'
 import { useStoryStore } from '@/stores/story'
+import { useSettingStore } from '@/stores/setting'
 
 const startIndex = ref(0)
 const openPrompts = ref(false)
@@ -22,6 +26,7 @@ const lastPrompt = ref(null)
 const commandStore = useCommandStore()
 const editorStore = useEditorStore()
 const storyStore = useStoryStore()
+const settingStore = useSettingStore()
 
 async function run(editor, prompt) {
   lastPrompt.value = prompt
@@ -119,15 +124,20 @@ onBeforeUnmount(() => {
   editorStore.editor.off('selectionUpdate', closePromptSelection)
 })
 
-function upload() {
+function share() {
   editorStore.log()
-  storyStore.uploadStory(commandStore.storyId)
-  storyStore.downloadStory(commandStore.storyId)
+  console.log(settingStore.share)
+  if (settingStore.share !== 'upload') storyStore.downloadStory(commandStore.storyId)
+  if (settingStore.share !== 'download') storyStore.uploadStory(commandStore.storyId)
+}
+
+function printPage() {
+  window.print()
 }
 </script>
 <template>
   <div class="command-palette">
-    <template v-if="showPrompts">
+    <template v-if="showPrompts || commandStore.isGenerating || commandStore.isError">
       <hr />
       <BreadcrumbNavigation
         :crumbs="commandStore.crumbs"
@@ -199,7 +209,12 @@ function upload() {
           :disabled="!editorStore.editor?.can().redo()"
           >↪</ButtonDefault
         >
-        <ButtonDefault offset-padding @click="upload"><IconUpload /></ButtonDefault>
+        <ButtonDefault offset-padding @click="printPage"><IconPrint /></ButtonDefault>
+        <ButtonDefault offset-padding @click="share">
+          <IconUpload v-if="settingStore.share === 'upload'" />
+          <IconDownload v-if="settingStore.share === 'download'" />
+          <IconUpDownload v-if="settingStore.share === 'both'" />
+        </ButtonDefault>
       </span>
     </div>
   </div>

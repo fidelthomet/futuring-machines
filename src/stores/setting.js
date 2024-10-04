@@ -8,9 +8,14 @@ export const useSettingStore = defineStore('setting', () => {
     langOptions.find((l) => new RegExp(`^${l}`).test(navigator.language)) ?? langOptions[0]
   )
 
+  const shareOptions = ['upload', 'download', 'both']
+  const share = useStorage('share', 'upload')
+
   return {
     lang,
-    langOptions
+    langOptions,
+    share,
+    shareOptions
   }
 })
 
