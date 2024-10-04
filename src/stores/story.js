@@ -49,13 +49,21 @@ export const useStoryStore = defineStore('story', () => {
 
     const headers = {}
     headers["Content-Type"] = "application/json"
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: headers,
-      body: localStorage.getItem(`story-${id}`)
-    })
+    try {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: headers,
+        body: localStorage.getItem(`story-${id}`)
+      })
+      
+      console.log(res)
 
-    console.log(res)
+      // User feedback
+      alert((res.ok) ? "Story uploaded successfully! 🚀": "Error uploading story! ❌")
+      
+    } catch (error) {
+      alert("Error uploading story! ❌")
+    }
   }
 
   async function downloadStory(id) {

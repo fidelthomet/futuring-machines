@@ -1,7 +1,7 @@
 {
   "name": "Setup Story",
-  "trigger": "selection",
-  "mode": "replace",
+  "trigger": "start",
+  "mode": "append",
   "actions": [
     {
       "type": "generate",
