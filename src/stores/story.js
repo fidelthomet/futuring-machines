@@ -47,9 +47,11 @@ export const useStoryStore = defineStore('story', () => {
 
     // const story = JSON.parse(localStorage.getItem(`story-${id}`))
 
+    const headers = {}
+    headers["Content-Type"] = "application/json"
     const res = await fetch(url, {
       method: 'POST',
-      // body: JSON.stringify({ [`story-${id}`]: story })
+      headers: headers,
       body: localStorage.getItem(`story-${id}`)
     })
 
