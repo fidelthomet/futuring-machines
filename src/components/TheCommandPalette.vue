@@ -126,7 +126,7 @@ onBeforeUnmount(() => {
 
 function share() {
   editorStore.log()
-  console.log(settingStore.share)
+  console.log("Share Story option: " + settingStore.share)
   if (settingStore.share !== 'upload') storyStore.downloadStory(commandStore.storyId)
   if (settingStore.share !== 'download') storyStore.uploadStory(commandStore.storyId)
 }
