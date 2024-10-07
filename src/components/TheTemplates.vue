@@ -6,28 +6,37 @@ import ButtonTile from './ButtonTile.vue'
 import LocalizeText from '@/components/LocalizeText.vue'
 import { onMounted } from 'vue'
 import ButtonDefault from './ButtonDefault.vue'
-import { useSettingStore } from '@/stores/setting'
 import { localize } from '@/assets/js/utils'
 import IconImport from '~icons/base/Import'
 
 const commandStore = useCommandStore()
 const storyStore = useStoryStore()
-const settingStore = useSettingStore()
 
 onMounted(() => {
   storyStore.update()
 })
 
 function importFile(e) {
-  const file = e.target.files[0]
-  const reader = new FileReader()
-  reader.addEventListener('load', (event) => {
-    const id = JSON.parse(event.target.result).id
-    if (id == null) return
-    localStorage.setItem(`story-${id}`, event.target.result)
-    storyStore.update()
+  const promises = [...e.target.files].map((file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.addEventListener('load', (event) => {
+        try {
+          const id = JSON.parse(event.target.result).id
+
+          if (id == null) return reject()
+          localStorage.setItem(`story-${id}`, event.target.result)
+          resolve()
+        } catch (error) {
+          console.error(error)
+          reject(error)
+        }
+      })
+      reader.readAsText(file)
+    })
   })
-  reader.readAsText(file)
+
+  Promise.allSettled(promises).then(() => storyStore.update())
 }
 </script>
 
@@ -76,7 +85,7 @@ function importFile(e) {
       >
         Import Story&nbsp;<IconImport />
       </ButtonDefault>
-      <input id="file-import" type="file" accept="application/json" @change="importFile" />
+      <input id="file-import" type="file" accept="application/json" @change="importFile" multiple />
     </div>
   </div>
 </template>
