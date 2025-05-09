@@ -1,5 +1,5 @@
 {
-  "name": { "en": "elaborate in inner monologue", "de": "Weiter ausführen als inneres Monolog" },
+  "name": { "en": "elaborate in inner monologue", "de": "Weiter ausführen (inneres Monolog)" },
   "trigger": "selection",
   "mode": "append",
   "actions": [

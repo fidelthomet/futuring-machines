@@ -7,9 +7,9 @@
       "type": "options",
       "options": ["10 years", "20 years", "50 years"],
       "options": [
-        { "en": "10 years", "de": "positiv" },
-        { "en": "20 years", "de": "kritisch" },
-        { "en": "50 years", "de": "ängstlich" }
+        { "en": "10 years", "de": "10 Jahre" },
+        { "en": "20 years", "de": "20 Jahre" },
+        { "en": "50 years", "de": "50 Jahre" }
       ],
       "bind": "option"
     },
